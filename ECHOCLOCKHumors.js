@@ -377,7 +377,44 @@ env.ACTIONS.momentum = {
                length; 1
           }
      }
-}
+},
+
+env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your own in half
+     slug: "player_law",
+     name: "3rd Law",
+     type: 'target',
+     desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
+     anim: "basic-attack",
+     help: "'100% -2HP * (XT:REGEN+FOCUS) 25%C +2T STUN +3T VULNERABLE\nSELF::-REGEN+FOCUS/2'",
+     usage: {
+          act: "%USER CHANNELS ENERGY INTO A SPRINT",
+          crit: "%TARGET GETS KNOCKED OVER",
+          hit: "%TARGET GETS SLAMMED INTO",
+          miss: "%TARGET SIDESTEPS"
+     },
+     accuracy: 1,
+     crit: 0.25,
+     amt: 2,
+     exec: function(user, target) {
+          let amt = amt*(Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
+          if (hasStatus(user, 'focused')) {
+               let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
+               addStatus({target: user, status: "focused", length: half, noReact: true})
+          }
+          if (hasStatus(user, 'regen')) {          
+               removeStatus(user, "regen")
+               let half = 0 - Math.floor(hasStatus(user, "regen") / 2)
+               addStatus({target: user, status: "regen", length: half, noReact: true})
+          }
+          critStatus: {
+               name: 'stun',
+               length; 2
+          }
+          genExecStatus: {
+               addStatus(target, 'vulnerable')
+          }
+     }
+},
 
 env.ACTIONS.level_statuses ={
      slug: "level_statuses",
@@ -508,100 +545,7 @@ env.ACTIONS.level_statuses ={
                })
           }
      }
-}
-
-env.ACTIONS.special_wild_frenzy = {
-     slug: "special_wild_frenzy",
-     name: "Frenzied Flail",
-     type: 'special',
-     desc: "'flail around';'a chance to keep hitting'",
-     anim: "basic-attack",
-     help: "100% -2HP, 25%C USE THIS ACTION AGAIN ON RANDOM TARGET",
-     usage: {
-          act: "%USER BEGINS TO FLAIL",
-          crit: "%USER KEEPS FLAILING",
-          hit: "%TARGET GETS WHACKED",
-          miss: "%TARGET EVADES"
-     },
-     accuracy: 1,
-     crit: 0.25,
-     amt: 2,
-     exec: function(user, target, beingUsedAsync) { //stole a bit of frenzy's code,
-          let action = this
-          
-          let targetTeam
-                 switch(user.team.name) {
-                     case "ally": targetTeam = env.rpg.enemyTeam; break;
-                     case "enemy": targetTeam = env.rpg.allyTeam; break;
-                 }
-          
-          let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
-          
-          if(validTargets.length) for (let i = 0; i < 1; i++) {
-               let baseDelay = ((env.ADVANCE_RATE * 0.2) * i)
-               let animDelay = baseDelay + anim.duration;
-               if (validTargets) {
-                    let target = validTargets.sample()
-
-                    setTimeout(()=>anim.exec(this, user, target), baseDelay)
-                    setTimeout(()=>{
-                         env.GENERIC_ACTIONS.singleTarget({
-                              action: this,
-                              user,
-                              target,
-                              hitSfx: { name: 'shot2' },
-                              critSfx: { name: 'shot6' }
-                         })
-                    }, animDelay);
-               }
-          }
-
-          critExec: ({target})=> {
-                    if(target.hp > 0 && target.state != "lastStand") {
-                        env.setTimeout(()=>{
-                            useAction(user, this, target, {beingUsedAsync: true, reason: "frenzy"})
-                        }, 400)
-                    }
-                }
-     }
-}
-
-env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your own in half
-     slug: "player_law",
-     name: "3rd Law",
-     type: 'target',
-     desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
-     anim: "basic-attack",
-     help: "'100% -2HP * (XT:REGEN+FOCUS) 25%C +2T STUN +3T VULNERABLE\nSELF::-REGEN+FOCUS/2'",
-     usage: {
-          act: "%USER CHANNELS ENERGY INTO A SPRINT",
-          crit: "%TARGET GETS KNOCKED OVER",
-          hit: "%TARGET GETS SLAMMED INTO",
-          miss: "%TARGET SIDESTEPS"
-     },
-     accuracy: 1,
-     crit: 0.25,
-     amt: 2,
-     exec: function(user, target) {
-          let amt = amt*(Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
-          if (hasStatus(user, 'focused')) {
-               let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
-               addStatus({target: user, status: "focused", length: half, noReact: true})
-          }
-          if (hasStatus(user, 'regen')) {          
-               removeStatus(user, "regen")
-               let half = 0 - Math.floor(hasStatus(user, "regen") / 2)
-               addStatus({target: user, status: "regen", length: half, noReact: true})
-          }
-          critStatus: {
-               name: 'stun',
-               length; 2
-          }
-          genExecStatus: {
-               addStatus(target, 'vulnerable')
-          }
-     }
-}
+},
 
 env.ACTIONS.player_rig = {
      slug: "player_rig",
@@ -776,7 +720,63 @@ env.ACTIONS.player_rig = {
                }
           }
      }
-}
+},
+
+env.ACTIONS.special_wild_frenzy = {
+     slug: "special_wild_frenzy",
+     name: "Frenzied Flail",
+     type: 'special',
+     desc: "'flail around';'a chance to keep hitting'",
+     anim: "basic-attack",
+     help: "100% -2HP, 25%C USE THIS ACTION AGAIN ON RANDOM TARGET",
+     usage: {
+          act: "%USER BEGINS TO FLAIL",
+          crit: "%USER KEEPS FLAILING",
+          hit: "%TARGET GETS WHACKED",
+          miss: "%TARGET EVADES"
+     },
+     accuracy: 1,
+     crit: 0.25,
+     amt: 2,
+     exec: function(user, target, beingUsedAsync) { //stole a bit of frenzy's code,
+          let action = this
+          
+          let targetTeam
+                 switch(user.team.name) {
+                     case "ally": targetTeam = env.rpg.enemyTeam; break;
+                     case "enemy": targetTeam = env.rpg.allyTeam; break;
+                 }
+          
+          let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
+          
+          if(validTargets.length) for (let i = 0; i < 1; i++) {
+               let baseDelay = ((env.ADVANCE_RATE * 0.2) * i)
+               let animDelay = baseDelay + anim.duration;
+               if (validTargets) {
+                    let target = validTargets.sample()
+
+                    setTimeout(()=>anim.exec(this, user, target), baseDelay)
+                    setTimeout(()=>{
+                         env.GENERIC_ACTIONS.singleTarget({
+                              action: this,
+                              user,
+                              target,
+                              hitSfx: { name: 'shot2' },
+                              critSfx: { name: 'shot6' }
+                         })
+                    }, animDelay);
+               }
+          }
+
+          critExec: ({target})=> {
+                    if(target.hp > 0 && target.state != "lastStand") {
+                        env.setTimeout(()=>{
+                            useAction(user, this, target, {beingUsedAsync: true, reason: "frenzy"})
+                        }, 400)
+                    }
+                }
+     }
+},
 
 env.ACTIONS.player_overload = {
      slug: 'player_overload',

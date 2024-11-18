@@ -290,10 +290,10 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
 
 env.MODIFIERS.eternal_decay = {
 	name: "Eternal Decay",
-		getHelp: ()=> { return env.STATUS_EFFECTS.eternal_decay.help },
-		alterations: {
-			all: [["STATUS", "eternal_decay"]]
-		}
+	getHelp: ()=> { return env.STATUS_EFFECTS.eternal_decay.help },
+	alterations: {
+		all: [ ["STATUS", "eternal_decay"] ]
+	}
 }
 
 env.STATUS_EFFECTS.eternal_decay = {

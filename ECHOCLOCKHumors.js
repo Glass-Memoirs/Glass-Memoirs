@@ -357,7 +357,7 @@ env.ACTIONS.momentum = {
      slug: "momentum",
      name: "Momentum",
      type: 'target',
-     desc: "'redirect beneficial effects into power';'removes them once the hit connects'",
+     description: "'redirect beneficial effects into power';'removes them once the hit connects'",
      anim: "basic-attack",
      help: "'100% -2HP + (XT:REGEN/FOCUS)\nSELF::-REGEN/FOCUS'",
      usage: {
@@ -384,7 +384,7 @@ env.ACTIONS.level_statuses ={
      slug: "level_statuses",
      name: "Level",
      type: 'target',
-     desc: "'collapse beyond both yourself and the foe';'remove all statuses'",
+     description: "'collapse beyond both yourself and the foe';'remove all statuses'",
      anim: "basic-attack",
      help: "80% -2HP REMOVE ALL STATUS EFFECTS",
      usage: {
@@ -515,7 +515,7 @@ env.ACTIONS.special_wild_frenzy = {
      slug: 'special_wild_frenzy',
      name: 'Frenzied Flail',
      type: 'special',
-     desc: "'flail around';'a chance to keep hitting'",
+     description: "'flail around';'a chance to keep hitting'",
      anim: "basic-attack",
      help: "100% -2HP, 25%C USE THIS ACTION AGAIN ON RANDOM TARGET",
      usage: {

@@ -251,8 +251,7 @@ env.COMBAT_COMPONENTS.entropy = {
      },
 
      utility: { //randomly strike enemies with attack, has chance to keep going
-          alterations: [["evade", "wild_frenzy"]],
-
+          alterations: [["evade", "special_wild_frenzy"]],
           stats: {
                maxhp: 4
           }
@@ -284,7 +283,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      name: "Exponential Overload",
      image: "/img/sprites/combat/augs/cripple.gif",
      description: "'focus movement into quick planned strikes';'improves striking'",
-     alterations: [["wild_frenzy", "player_overload"]],
+     alterations: [["special_wild_frenzy", "player_overload"]],
      component: ["evade", "entropy"],
      cost: 2
 }

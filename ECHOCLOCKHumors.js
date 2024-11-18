@@ -223,8 +223,8 @@ content.insertAdjacentHTML('beforeend', `<style>
     --background-size: auto;
     --background-position: center;
     --background-color: var(--dark-color);
-    --accent-color: var(--bastard-color);
-    --font-color: var(--bastard-color);
+    --accent-color: var(--bright-color);
+    --font-color: var(--neutral-color);
 }
 </style>`);
 

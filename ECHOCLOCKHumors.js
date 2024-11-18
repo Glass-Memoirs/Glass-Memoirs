@@ -261,7 +261,7 @@ env.COMBAT_COMPONENTS.entropy = {
 env.ACTOR_AUGMENTS.generic.third_law = {
      slug: "third_law",
      name: "3rd Law",
-     image: "/img/sprites/combat/augs/.gif",
+     image: "/img/sprites/combat/augs/cripple.gif",
      description: "'barrel into foes with great energy';'half beneficial effects for power'",
      alterations: [["momentum", "player_law"]],
      component: ["primary", "entropy"],

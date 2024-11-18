@@ -283,7 +283,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      name: "Exponential Overload",
      image: "/img/sprites/combat/augs/cripple.gif",
      description: "'focus movement into quick planned strikes';'improves striking'",
-     alterations: [["special_wild_frenzy", "player_overload"]],
+     alterations: [["wild_frenzy", "player_overload"]],
      component: ["utility", "entropy"],
      cost: 2
 }
@@ -722,8 +722,8 @@ env.ACTIONS.player_rig = {
      }
 },
 
-env.ACTIONS.special_wild_frenzy = {
-     slug: "special_wild_frenzy",
+env.ACTIONS.wild_frenzy = {
+     slug: "wild_frenzy",
      name: "Frenzied Flail",
      type: 'target',
      desc: "'flail around';'a chance to keep hitting'",

@@ -770,7 +770,7 @@ env.ACTIONS.special_wild_frenzy = {
                 	                }, 400)
         	                   }
                               }
-                         })
+                         }
 },
 
 env.ACTIONS.player_overload = {

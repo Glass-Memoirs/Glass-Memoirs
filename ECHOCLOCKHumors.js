@@ -369,7 +369,7 @@ env.ACTIONS.momentum = {
      crit: 0.3,
      amt: 2,
      exec: function(user, target) {
-          let amt = amt*(Math.floor(hasStatus(target, 'focused'))+Math.floor(hasStatus(target, 'regen')))
+          let amt = this.amt*(Math.floor(hasStatus(target, 'focused'))+Math.floor(hasStatus(target, 'regen')))
           removeStatus(user, "focused")
           removeStatus(user, "regen")
           critStatus: {
@@ -396,7 +396,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
      crit: 0.25,
      amt: 2,
      exec: function(user, target) {
-          let amt = amt*(Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
+          let amt = this.amt*(Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
           if (hasStatus(user, 'focused')) {
                let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
                addStatus({target: user, status: "focused", length: half, noReact: true})

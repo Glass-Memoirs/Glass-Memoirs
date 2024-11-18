@@ -410,7 +410,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
                name: 'stun',
                length; 2
           }
-          genExecStatus: {
+          genExec: {
                addStatus(target, 'vulnerable')
           }
      }
@@ -762,7 +762,7 @@ env.ACTIONS.special_wild_frenzy = {
                     }, 500)
                }
           }
-     },
+     }
 	     critExec: ({target})=> {
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{

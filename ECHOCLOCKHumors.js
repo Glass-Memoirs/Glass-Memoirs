@@ -325,11 +325,11 @@ env.STATUS_EFFECTS.eternal_decay = {
                     if(extra) context.length += extra
                 }
             },
-        },
+	},
 
-        help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
-    },
-}
+help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
+},
+
 
 env.STATUS_EFFECTS.exp_over = {
      slug: "exp_over",

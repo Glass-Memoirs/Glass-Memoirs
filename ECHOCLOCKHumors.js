@@ -748,11 +748,8 @@ env.ACTIONS.special_wild_frenzy = {
           let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
           
           if(validTargets.length) for (let i = 0; i < 1; i++) {
-               let baseDelay = ((env.ADVANCE_RATE * 0.2) * i)
                if (validTargets) {
                     let target = validTargets.sample()
-
-                    setTimeout(()=>anim.exec(this, user, target), baseDelay)
                     setTimeout(()=>{
                          env.GENERIC_ACTIONS.singleTarget({
                               action: this,

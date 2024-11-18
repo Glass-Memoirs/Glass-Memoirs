@@ -386,7 +386,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
      type: 'target',
      desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
      anim: "basic-attack",
-     help: "'100% -2HP * (XT:REGEN+FOCUS) 25%C +2T STUN +3T VULNERABLE\nSELF::-REGEN+FOCUS/2'",
+     help: "'100% -2HP * (XT:REGEN+FOCUS) 25%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
      usage: {
           act: "%USER CHANNELS ENERGY INTO A SPRINT",
           crit: "%TARGET GETS KNOCKED OVER",
@@ -396,16 +396,19 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
      accuracy: 1,
      crit: 0.25,
      exec: function(user, target) {
-          let amt = this.amt*(Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
+          let amt = this.amt*(Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion')))
           if (hasStatus(user, 'focused')) {
                let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
                addStatus({target: user, status: "focused", length: half, noReact: true})
           }
           if (hasStatus(user, 'regen')) {          
-               removeStatus(user, "regen")
                let half = 0 - Math.floor(hasStatus(user, "regen") / 2)
                addStatus({target: user, status: "regen", length: half, noReact: true})
           }
+	  if (hasStatus(user, 'evasion')) {
+	       let half = 0 - Math.floor(hasStatus(user, 'evasion') / 2)
+	       addStatus({target: user, status: "evasion", length: half, noReact: true})
+	  }
           critStatus: {
                name: 'stun',
                length; 2
@@ -728,7 +731,7 @@ env.ACTIONS.wild_frenzy = {
      type: 'target',
      desc: "'flail around';'a chance to keep hitting'",
      anim: "basic-attack",
-     help: "100% -2HP, 25%C USE THIS ACTION AGAIN ON RANDOM TARGET",
+     help: "100% -2HP, 15%C USE THIS ACTION AGAIN ON RANDOM TARGET",
      usage: {
           act: "%USER BEGINS TO FLAIL",
           crit: "%USER KEEPS FLAILING",
@@ -736,7 +739,7 @@ env.ACTIONS.wild_frenzy = {
           miss: "%TARGET EVADES"
      },
      accuracy: 1,
-     crit: 0.25,
+     crit: 0.15,
      amt: 2,
      exec: function(user, target, beingUsedAsync) { //stole a bit of frenzy's code,
           let action = this
@@ -754,23 +757,24 @@ env.ACTIONS.wild_frenzy = {
                     let target = validTargets.sample()
                     setTimeout(()=>{
                          env.GENERIC_ACTIONS.singleTarget({
-                              action: this,
+                              action,
                               user,
                               target,
                               hitSfx: { name: 'shot2' },
-                              critSfx: { name: 'shot6' }
-                    })
-               }, 500)
-          }
-     }
-	     critExec: ({target})=> {
+                              critSfx: { name: 'shot6' },
+			      critExec: ({target})=> {
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{
                                              useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})
                 	                }, 400)
         	                   }
                               }
-                         }
+                         })
+                    }, 500)
+               }
+     	  }
+	     
+     }
 },
 
 env.ACTIONS.player_overload = {

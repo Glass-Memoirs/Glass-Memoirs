@@ -319,7 +319,7 @@ env.STATUS_EFFECTS.eternal_decay = {
                     })
 
                     let newStatus = env.STATUS_EFFECTS[context.status]
-                    context.status = newStatus
+                    if (newStatus != context.status) context.status = newStatus
                     if(extra) context.length += extra
                 }
             },

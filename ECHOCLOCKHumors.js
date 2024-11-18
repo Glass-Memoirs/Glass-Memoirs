@@ -754,23 +754,24 @@ env.ACTIONS.wild_frenzy = {
                     let target = validTargets.sample()
                     setTimeout(()=>{
                          env.GENERIC_ACTIONS.singleTarget({
-                              action: this,
+                              action,
                               user,
                               target,
                               hitSfx: { name: 'shot2' },
-                              critSfx: { name: 'shot6' }
-                    })
-               }, 500)
-          }
-     }
-	     critExec: ({target})=> {
+                              critSfx: { name: 'shot6' },
+			      critExec: ({target})=> {
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{
                                              useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})
                 	                }, 400)
         	                   }
                               }
-                         }
+                         })
+                    }, 500)
+               }
+     	  }
+	     
+     }
 },
 
 env.ACTIONS.player_overload = {

@@ -264,7 +264,7 @@ env.ACTOR_AUGMENTS.generic.third_law = {
      image: "/img/sprites/combat/augs/.gif",
      description: "'barrel into foes with great energy';'half beneficial effects for power'",
      alterations: [["momentum", "player_law"]],
-     components: ["primary", "entropy"],
+     component: ["primary", "entropy"],
      cost: 2
 }
 
@@ -274,7 +274,7 @@ env.ACTOR_AUGMENTS.generic.rig_field = {
      image: "/img/sprites/combat/augs/barrier.gif",
      description: "'rig the fight in your favour';'steal beneficial statuses from the foe'",
      alterations: [["level_statuses", "player_rig"]],
-     components: ["secondary", "entropy"],
+     component: ["secondary", "entropy"],
      cost: 2
 }
 

@@ -411,7 +411,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
                length; 2
           }
           genExec: {
-               addStatus(target, 'vulnerable')
+               addStatus({target: target, status: 'vulnerable', length: 2, noReact: true})
           }
      }
 },

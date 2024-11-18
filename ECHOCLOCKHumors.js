@@ -299,6 +299,36 @@ env.MODIFIERS.eternal_decay = {
 env.STATUS_EFFECTS.eternal_decay = {
 	slug: "eternal_decay",
 	name: "Eternal Decay",
+	passive: "modifier",
+	beneficial: false,
+	icon: "/img/sprites/combat/passives/light_glee.gif",
+	events: {
+            onBeforeAddStatus: function(context) {
+                let chance = 0.5
+                let extra = 0
+                if(env.crittaMap) if(env.crittaMap.getModQty("global_megaglee")) {
+                    chance = 1;
+                    extra = (env.crittaMap.getModQty("global_megaglee") - 1)
+                }
+
+                if(Math.random() < chance) {
+
+                    sendFloater({
+                        target: this.status.affecting,
+                        type: "arbitrary",
+                        arbitraryString: "DECAYED!",
+                        isGood: false
+                    })
+
+                    let newStatus = env.STATUS_EFFECTS[context.status]
+                    context.status = newStatus
+                    if(extra) context.length += extra
+                }
+            },
+        },
+
+        help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
+    },
 }
 
 env.STATUS_EFFECTS.exp_over = {
@@ -569,7 +599,7 @@ env.ACTIONS.player_rig = {
      type: "target",
      desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
      anim: "basic-attack",
-     help: "'FOES:: 100% -1HP, -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
+     help: "'FOES:: 100% -2HP, -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
      usage: {
           act: "%USER SHUFFLES THE POWER",
           crit: "%TARGET FEELS DREAD",
@@ -578,7 +608,7 @@ env.ACTIONS.player_rig = {
      },
      accuracy: 1,
      crit: 0.1,
-     amt: 1,
+     amt: 2,
      exec: function(user,target) {
           critExec: { //sorry lmao, its the tower of fuck
                if (hasStatus(target, 'puncture')) {

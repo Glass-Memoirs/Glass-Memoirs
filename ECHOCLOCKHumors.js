@@ -759,8 +759,8 @@ env.ACTIONS.special_wild_frenzy = {
                               target,
                               hitSfx: { name: 'shot2' },
                               critSfx: { name: 'shot6' }
-                    }, 500)
-               }
+                    })
+               }, 500)
           }
      }
 	     critExec: ({target})=> {

@@ -725,7 +725,7 @@ env.ACTIONS.player_rig = {
 env.ACTIONS.special_wild_frenzy = {
      slug: "special_wild_frenzy",
      name: "Frenzied Flail",
-     type: 'special',
+     type: 'target',
      desc: "'flail around';'a chance to keep hitting'",
      anim: "basic-attack",
      help: "100% -2HP, 25%C USE THIS ACTION AGAIN ON RANDOM TARGET",

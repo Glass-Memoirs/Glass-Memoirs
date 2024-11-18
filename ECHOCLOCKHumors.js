@@ -771,7 +771,7 @@ env.ACTIONS.wild_frenzy = {
         	                   }
                               }
                          }
-}
+},
 
 env.ACTIONS.player_overload = {
      slug: 'player_overload',

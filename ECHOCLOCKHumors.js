@@ -759,7 +759,11 @@ env.ACTIONS.special_wild_frenzy = {
                               target,
                               hitSfx: { name: 'shot2' },
                               critSfx: { name: 'shot6' }
-			      critExec: ({target})=> {
+                    }, 500)
+               }
+          }
+     },
+	     critExec: ({target})=> {
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{
                                              useAction(user, this, target, {beingUsedAsync: true, reason: "frenzy"})
@@ -767,10 +771,6 @@ env.ACTIONS.special_wild_frenzy = {
         	                   }
                               }
                          })
-                    }, 500)
-               }
-          }
-     }
 },
 
 env.ACTIONS.player_overload = {

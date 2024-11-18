@@ -233,7 +233,7 @@ env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",
      slug: "entropy",
      description: "'repetition and chaos'",
-     help: "'charge';'';'surges'",
+     help: "'charge';'balance';'surges'",
 
      primary: { //damage scales by positive effects on user
           alterations: [["primary", "momentum"]],     
@@ -284,7 +284,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      image: "/img/sprites/combat/augs/cripple.gif",
      description: "'focus movement into quick planned strikes';'improves striking'",
      alterations: [["special_wild_frenzy", "player_overload"]],
-     component: ["evade", "entropy"],
+     component: ["utility", "entropy"],
      cost: 2
 }
 

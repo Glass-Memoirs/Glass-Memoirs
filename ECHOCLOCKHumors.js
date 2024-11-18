@@ -256,6 +256,7 @@ env.COMBAT_COMPONENTS.entropy = {
                maxhp: 4
           }
      },
+     combatModifiers: ["eternal_decay"]
 }
 
 env.ACTOR_AUGMENTS.generic.third_law = {

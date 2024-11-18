@@ -343,6 +343,8 @@ env.STATUS_EFFECTS.exp_over = {
                 }, 500)
 
                 removeStatus(this.status.affecting, "exp_over")
+		addStatus({target:user, status: 'stun', length: 2, noReact: true})
+		addStatus({target:user, status: 'vulnerable', length: 3, noReact: true})
             },
 
                 onCreated: function({statusObj}) {
@@ -757,18 +759,17 @@ env.ACTIONS.special_wild_frenzy = {
                               target,
                               hitSfx: { name: 'shot2' },
                               critSfx: { name: 'shot6' }
+			      critExec: ({target})=> {
+                                   if(target.hp > 0 && target.state != "lastStand") {
+                                        env.setTimeout(()=>{
+                                             useAction(user, this, target, {beingUsedAsync: true, reason: "frenzy"})
+                	                }, 400)
+        	                   }
+                              }
                          })
                     }, 500)
                }
           }
-
-          critExec: ({target})=> {
-                    if(target.hp > 0 && target.state != "lastStand") {
-                        env.setTimeout(()=>{
-                            useAction(user, this, target, {beingUsedAsync: true, reason: "frenzy"})
-                        }, 400)
-                    }
-                }
      }
 },
 
@@ -787,7 +788,7 @@ env.ACTIONS.player_overload = {
      disableIf: (actor)=>{ if(hasStatus(actor, "fear")) return "PROHIBITED BY FEAR" },
      exec: function(user, target) {
           play("talkchoir7", 1.5)
-          addStatus({target:user, status: "exp_over", length: 1, noReact:true})
+          addStatus({target: user, status: "exp_over", length: 1, noReact:true})
           addStatus({target: user, status: "focused", length: 1, noReact:true});
           return 'nothing'
      },

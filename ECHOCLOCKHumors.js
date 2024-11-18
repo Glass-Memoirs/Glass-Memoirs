@@ -749,7 +749,6 @@ env.ACTIONS.special_wild_frenzy = {
           
           if(validTargets.length) for (let i = 0; i < 1; i++) {
                let baseDelay = ((env.ADVANCE_RATE * 0.2) * i)
-               let animDelay = baseDelay + anim.duration;
                if (validTargets) {
                     let target = validTargets.sample()
 
@@ -762,7 +761,7 @@ env.ACTIONS.special_wild_frenzy = {
                               hitSfx: { name: 'shot2' },
                               critSfx: { name: 'shot6' }
                          })
-                    }, animDelay);
+                    }, 500);
                }
           }
 

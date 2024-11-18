@@ -251,7 +251,7 @@ env.COMBAT_COMPONENTS.entropy = {
      },
 
      utility: { //randomly strike enemies with attack, has chance to keep going
-          alterations: [["evade", "special_wild_frenzy"]],
+          alterations: [["evade", "wild_frenzy"]],
           stats: {
                maxhp: 4
           }

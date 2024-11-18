@@ -542,7 +542,7 @@ env.ACTIONS.level_statuses ={
                          removeStatus(user, 'siphon')
                     }
 
-               })
+               }, 500)
           }
      }
 },

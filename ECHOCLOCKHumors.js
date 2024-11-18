@@ -766,7 +766,7 @@ env.ACTIONS.wild_frenzy = {
 	     critExec: ({target})=> {
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{
-                                             useAction(user, this, target, {beingUsedAsync: true, reason: "frenzy"})
+                                             useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})
                 	                }, 400)
         	                   }
                               }

@@ -311,7 +311,7 @@ env.STATUS_EFFECTS.eternal_decay = {
             if(actor.statusEffects.length) for (let i = 0; i <= ((actor.statusEffects.length)-1); i++) {
                 let chance = 0.5
                 let extra = 0
-                context.status = actor.statusEffects.i
+                let Replace = new String(actor.statusEffects.i)
                 if(Math.random() < chance) {
 
                    sendFloater({
@@ -321,11 +321,11 @@ env.STATUS_EFFECTS.eternal_decay = {
                         isGood: false
                     })
 
-                    let newStatus = env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)]
+                    let newStatus = new String(env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)])
 		    console.log(newStatus)
                     if(typeof newStatus == "undefined") {
-		    	addStatus({target: actor, status: newStatus, length: Math.floor(hasStatus(actor, actor.statusEffects.i)), noReact: true})
-			removeStatus(actor, actor.statusEffects.i)
+		    	addStatus({target: actor, status: newStatus, length: Math.floor(hasStatus(actor, Replace)), noReact: true})
+			removeStatus(actor, Replace)
 		    }
                     if(extra) context.length += extra
                 }

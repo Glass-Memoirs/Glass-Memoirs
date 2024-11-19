@@ -314,7 +314,7 @@ env.STATUS_EFFECTS.eternal_decay = {
 	events: {
         
         onTurn: function(context) {
-	    
+	    	actor = this.status.affecting
 	    	let statusPool = []
 			for (let i in env.STATUS_EFFECTS) {
         		let statusData = env.STATUS_EFFECTS[i]

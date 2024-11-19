@@ -346,6 +346,15 @@ env.STATUS_EFFECTS.eternal_decay = {
      help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
 },
 
+env.STATUS_EFFECTS.shattered_eyes = {
+	slug: "shattered_eyes",
+	name: "Shattered Eyes",
+	beneficial: false,
+	events: {},
+		
+	help: `Nothing here yet!`
+},
+
 
 env.STATUS_EFFECTS.exp_over = {
      slug: "exp_over",

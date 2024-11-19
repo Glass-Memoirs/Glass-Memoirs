@@ -314,35 +314,42 @@ env.STATUS_EFFECTS.eternal_decay = {
 	events: {
         
         onTurn: function(context) {
-	    actor = this.status.affecting
-	    let validEffects = actor.statusEffects.filter( status => (!status.infinite) || ((!status.passive) || (!status.passive == "modifier")))
-	    let statusPool = []
-        for (let i in env.STATUS_EFFECTS) {
-        	let statusData = env.STATUS_EFFECTS[i]
-        	let usable = true
-            //prevent durationless statuses from appearing (and by extend, other passives)
-            if(statusData.infinite) {usable = false}
-            //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
-            if(statusData.passive) {usable = false}
-            //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
-            if(i.includes("global_")) {usable = false}
-            //prevent misalign statuses from appearing, despite their duration existence
-            if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-            //and imperfect reset. i do not know how terrible that will end up.
-            if(i == "imperfect_reset") {usable = false}
-            //redirection probably needs an origin, so exclude it
-            if(i == "redirection") {usable = false}
+	    	actor = this.status.affecting
+	    
+	    	let statusPool = []
+			for (let i in env.STATUS_EFFECTS) {
+        		let statusData = env.STATUS_EFFECTS[i]
+        		let usable = true
+            	//prevent durationless statuses from appearing (and by extend, other passives)
+            	if(statusData.infinite) {usable = false}
+            	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
+            	if(statusData.passive) {usable = false}
+            	//APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
+            	if(i.includes("global_")) {usable = false}
+				//prevent misalign statuses from appearing, despite their duration existence
+            	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+            	//and imperfect reset. i do not know how terrible that will end up.
+            	if(i == "imperfect_reset") {usable = false}
+            	//redirection probably needs an origin, so exclude it
+            	if(i == "redirection") {usable = false}
           
             //console.log(i, usable)
             if(usable) statusPool.push(i)
         }
-        let selectedStatus = statusPool.sample()
+		let validEffects = []
+		for (let i in actor.statusEffects) {
+			let Deciding = actor.statusEffects[i]
+			for ( let j in statusPool) {
+				if (Deciding = statusPool[j]) validEffects.push[i]
+			}
+		}
 	    console.log(validEffects)
             if(validEffects.length) for (let i = 0; i <= ((validEffects.length)-1); i++) {
+				let selectedStatus = statusPool.sample()
                 let chance = 0.5
                 let extra = 0
                 let Replace = validEffects[i]
-		console.log(Replace)
+				console.log(Replace)
                 if(Math.random() < chance) {
 
                    sendFloater({
@@ -355,7 +362,6 @@ env.STATUS_EFFECTS.eternal_decay = {
 
 		    	addStatus({target: actor, status: selectedStatus, length: Math.floor(hasStatus(actor, Replace)), noReact: true})
 				removeStatus(actor, Replace)
-		    }
                     if(extra) context.length += extra
                 }
             }    

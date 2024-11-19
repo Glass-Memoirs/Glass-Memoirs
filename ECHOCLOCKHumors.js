@@ -255,7 +255,7 @@ env.COMBAT_COMPONENTS.entropy = {
                maxhp: 4
           }
      },
-     combatModifiers: ["eternal_decay"]
+     combatModifiers: ["eternal_decay", "shattered_eyes"]
 }
 
 env.ACTOR_AUGMENTS.generic.third_law = {
@@ -296,6 +296,14 @@ env.MODIFIERS.eternal_decay = {
 	}
 }
 
+env.MODIFIERS.shattered_eyes = {
+	name: "Shattered Eyes",
+	getHelp: ()=> { return env.STATUS_EFFECTS.shattered_eyes.help },
+	alterations: {
+		all: [ ["SATUS", "shattered_eyes"] ]
+	}
+}
+
 env.STATUS_EFFECTS.eternal_decay = {
 	slug: "eternal_decay",
 	name: "Eternal Decay",
@@ -307,10 +315,11 @@ env.STATUS_EFFECTS.eternal_decay = {
         
         onTurn: function(context) {
 	    actor = this.status.affecting
-            if(actor.statusEffects.length) for (let i = 0; i <= ((actor.statusEffects.length)-1); i++) {
+	    let validEffects = actor.statusEffects.filter( StatusEffects => (!StatusEffects.passive) || (StatusEffects.passive != "modifer")
+            if(validEffects.length) for (let i = 0; i <= ((validEffects.length)-1); i++) {
                 let chance = 0.5
                 let extra = 0
-                let Replace = actor.statusEffects[i].slug
+                let Replace = ValidEffects[i]
 		console.log(Replace)
                 if(Math.random() < chance) {
 
@@ -321,7 +330,7 @@ env.STATUS_EFFECTS.eternal_decay = {
                         isGood: false
                     })
 
-                    let newStatus = env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)].slug
+                    let newStatus = env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)]
 		    console.log(newStatus)
                     if(typeof newStatus == "undefined") {
 		    	addStatus({target: actor, status: newStatus, length: Math.floor(hasStatus(actor, Replace)), noReact: true})

@@ -306,25 +306,29 @@ env.STATUS_EFFECTS.eternal_decay = {
 	impulse: {type: "common", component: "entropy"},
 	extraStatuses: ["puncture", "destabilized", "regen", "rot", "vulnerable", "focused", "empowered", "open_wound", "stun", "million_teeth", "evasion", "spikes", "repairs", "fear", "critical_flaw", "weakened"],
 	events: {
-            onBeforeAddStatus: function(context) {
+        
+        onTurn: function(context) {
+            if(actor.statusEffects.length) for (let i = 1; i <= actor.statusEffects.length; i++) {
                 let chance = 0.5
                 let extra = 0
-
+                let context.status = actor.statusEffects.i
                 if(Math.random() < chance) {
 
-                    sendFloater({
+                   sendFloater({
                         target: this.status.affecting,
                         type: "arbitrary",
                         arbitraryString: "DECAYED!",
                         isGood: false
                     })
 
-                    let newStatus = env.STATUS_EFFECTS[context.status]
-                    if (newStatus != context.status) context.status = newStatus
+                    let newStatus = env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)]
+                    if(newStatus.passive) context.status = newStatus
                     if(extra) context.length += extra
                 }
-            },
-	},
+            }    
+        }
+    }
+},
 
 help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
 },
@@ -804,7 +808,7 @@ env.ACTIONS.wild_frenzy = {
                               target,
                               hitSfx: { name: 'shot2' },
                               critSfx: { name: 'shot6' },
-			      critExec: ({target})=> {
+			                  critExec: ({target})=> {
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{
                                              useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})

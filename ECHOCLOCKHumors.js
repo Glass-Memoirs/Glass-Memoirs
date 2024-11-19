@@ -228,7 +228,7 @@ content.insertAdjacentHTML('beforeend', `<style>
 }
 </style>`);
 
-
+const StatEffects = ["puncture", "rot", "regen", "repairs", "million_teeth", "destabilize", "vulnerable", "critical_flaw", "focused", "weakened", "empowered", "carapace", "open_wound", "evasion", "stun", "fear", "spikes", "siphon"]
 env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",
      slug: "entropy",
@@ -311,7 +311,8 @@ env.STATUS_EFFECTS.eternal_decay = {
             if(actor.statusEffects.length) for (let i = 0; i <= ((actor.statusEffects.length)-1); i++) {
                 let chance = 0.5
                 let extra = 0
-                let Replace = new String(actor.statusEffects.i)
+                let Replace = actor.statusEffects[i]
+		console.log(Replace)
                 if(Math.random() < chance) {
 
                    sendFloater({
@@ -321,7 +322,7 @@ env.STATUS_EFFECTS.eternal_decay = {
                         isGood: false
                     })
 
-                    let newStatus = new String(env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)])
+                    let newStatus = new String(StatEffects[Math.floor(Math.random()*StatEffects.length))]
 		    console.log(newStatus)
                     if(typeof newStatus == "undefined") {
 		    	addStatus({target: actor, status: newStatus, length: Math.floor(hasStatus(actor, Replace)), noReact: true})

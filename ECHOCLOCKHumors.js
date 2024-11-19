@@ -311,7 +311,7 @@ env.STATUS_EFFECTS.eternal_decay = {
             if(actor.statusEffects.length) for (let i = 1; i <= actor.statusEffects.length; i++) {
                 let chance = 0.5
                 let extra = 0
-                let context.status = actor.statusEffects.i
+                context.status = actor.statusEffects.i
                 if(Math.random() < chance) {
 
                    sendFloater({
@@ -322,15 +322,15 @@ env.STATUS_EFFECTS.eternal_decay = {
                     })
 
                     let newStatus = env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)]
-                    if(typeof newStatus == "undefined") context.status = newStatus
+                    if(typeof newStatus.STATUS_EFFECTS == "undefined") context.status = newStatus
                     if(extra) context.length += extra
                 }
             }    
         }
-    }
-},
+    },
 
-help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
+
+     help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
 },
 
 

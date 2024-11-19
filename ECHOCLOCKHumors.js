@@ -360,10 +360,11 @@ env.STATUS_EFFECTS.eternal_decay = {
                         isGood: false
                     })
 		
-
+		    if (hasStatus(actor, Replace)) {
 		    	addStatus({target: actor, status: selectedStatus, length: Math.floor(hasStatus(actor, Replace)), noReact: true})
-				removeStatus(actor, Replace)
-                    if(extra) context.length += extra
+			removeStatus(actor, Replace)
+                    	if(extra) context.length += extra
+		    }
                 }
             }    
         }

@@ -331,6 +331,8 @@ env.STATUS_EFFECTS.eternal_decay = {
             	if(i == "imperfect_reset") {usable = false}
             	//redirection probably needs an origin, so exclude it
             	if(i == "redirection") {usable = false}
+
+		if(i == "eternal_decay") {usable = false}
           
             //console.log(i, usable)
             if(usable) statusPool.push(i)

@@ -331,9 +331,9 @@ env.STATUS_EFFECTS.eternal_decay = {
                         isGood: false
                     })
 
-                    let newStatus = env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)]
+                    let newStatus = new String(env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)])
 		    console.log(newStatus)
-                    if(typeof newStatus == "undefined") {
+                    if(newStatus != "undefined") {
 		    	addStatus({target: actor, status: newStatus, length: Math.floor(hasStatus(actor, Replace)), noReact: true})
 			removeStatus(actor, Replace)
 		    }

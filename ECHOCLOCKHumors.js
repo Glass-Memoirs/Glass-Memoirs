@@ -319,7 +319,7 @@ env.STATUS_EFFECTS.eternal_decay = {
             if(validEffects.length) for (let i = 0; i <= ((validEffects.length)-1); i++) {
                 let chance = 0.5
                 let extra = 0
-                let Replace = ValidEffects[i]
+                let Replace = validEffects[i]
 		console.log(Replace)
                 if(Math.random() < chance) {
 

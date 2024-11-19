@@ -315,7 +315,7 @@ env.STATUS_EFFECTS.eternal_decay = {
         
         onTurn: function(context) {
 	    actor = this.status.affecting
-	    let validEffects = actor.statusEffects.filter( StatusEffects => (!StatusEffects.passive) || (StatusEffects.passive != "modifer"))
+	    let validEffects = actor.statusEffects.filter( StatusEffects => (StatusEffects.slug != env.MODIFIERS.some()))
             if(validEffects.length) for (let i = 0; i <= ((validEffects.length)-1); i++) {
                 let chance = 0.5
                 let extra = 0

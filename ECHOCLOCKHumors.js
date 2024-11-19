@@ -323,7 +323,7 @@ env.STATUS_EFFECTS.eternal_decay = {
                     })
 
                     let newStatus = env.STATUS_EFFECTS[Math.floor(Math.random()*env.STATUS_EFFECTS.length)]
-                    if(typeof newStatus.STATUS_EFFECTS == "undefined") context.status = newStatus
+                    if(typeof newStatus == "undefined") context.status = newStatus
                     if(extra) context.length += extra
                 }
             }    

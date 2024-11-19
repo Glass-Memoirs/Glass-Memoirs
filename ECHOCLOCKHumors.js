@@ -304,7 +304,6 @@ env.STATUS_EFFECTS.eternal_decay = {
 	beneficial: false,
 	icon: "/img/sprites/combat/passives/light_glee.gif",
 	impulse: {type: "common", component: "entropy"},
-	extraStatuses: ["puncture", "destabilized", "regen", "rot", "vulnerable", "focused", "empowered", "open_wound", "stun", "million_teeth", "evasion", "spikes", "repairs", "fear", "critical_flaw", "weakened"],
 	events: {
         
         onTurn: function(context) {

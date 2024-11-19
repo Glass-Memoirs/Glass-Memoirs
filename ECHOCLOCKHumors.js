@@ -308,7 +308,7 @@ env.STATUS_EFFECTS.eternal_decay = {
         
         onTurn: function(context) {
 	    actor = this.status.affecting
-            if(actor.statusEffects.length) for (let i = 1; i <= actor.statusEffects.length; i++) {
+            if(actor.statusEffects.length) for (let i = 0; i <= actor.statusEffects.length; i++) {
                 let chance = 0.5
                 let extra = 0
                 context.status = actor.statusEffects.i

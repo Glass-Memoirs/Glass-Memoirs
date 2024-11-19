@@ -339,7 +339,7 @@ env.STATUS_EFFECTS.eternal_decay = {
 		for (let i in actor.statusEffects) {
 			let Deciding = actor.statusEffects[i]
 			for ( let j in statusPool) {
-				if (Deciding = statusPool[j]) validEffects.push[i]
+				if (Deciding = statusPool[j]) validEffects.push(i)
 			}
 		}
 	    console.log(validEffects)

@@ -512,9 +512,9 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
 		addStatus({target: target, status: 'stun', length: 1})
 		addStatus({target: target, status: 'vulnerable', length: 2})
           }
-          }
      }
 },
+
 
 env.ACTIONS.level_statuses ={
      slug: "level_statuses",

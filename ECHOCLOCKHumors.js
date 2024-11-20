@@ -472,6 +472,7 @@ env.ACTIONS.momentum = {
      amt: 2,
      exec: function(user, target) {
           let action = this
+          console.log(hasStatus(user, 'focus'))
           let Repeat = 1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))
           if(hasStatus(user, 'focused')) removeStatus(user, "focused")
           if(hasStatus(user, 'focused')) removeStatus(user, "regen")

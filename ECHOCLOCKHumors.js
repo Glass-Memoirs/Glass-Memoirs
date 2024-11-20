@@ -469,12 +469,21 @@ env.ACTIONS.momentum = {
      },
      accuracy: 1,
      crit: 0.3,
+     amt: 2,
      exec: function(user, target) {
-          let amt = 2 + (1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
-          removeStatus(user, "focused")
-          removeStatus(user, "regen")
-          critExec: {
-	  	addStatus({target: target, status: 'stun', length: 1})
+          let action = this
+          let Repeat = 1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))
+          if(hasStatus(user, 'focused')) removeStatus(user, "focused")
+          if(hasStatus(user, 'focused')) removeStatus(user, "regen")
+          for (let i = 0; i <= Repeat; i++) {
+               return env.GENERIC_ACTIONS.singleTarget({
+                    action,
+                    user,
+                    target,
+                    critExec: ({target}) => {
+	  	               addStatus({target: target, status: 'stun', length: 1})
+                    }
+               })
           }
      }
 },

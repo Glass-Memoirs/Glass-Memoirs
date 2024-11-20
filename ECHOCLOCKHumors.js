@@ -495,7 +495,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
      accuracy: 1,
      crit: 0.25,
      exec: function(user, target) {
-          let amt = this.amt + 2 *(Math.floor(hasStatus(user, 'focused')+1) + Math.floor(hasStatus(user, 'regen')+1) + Math.floor(hasStatus(user, 'evasion'))+1)
+          let amt = this.amt + 2 *(1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion')))
           if (hasStatus(user, 'focused')) {
                let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
                addStatus({target: user, status: "focused", length: half, noReact: true})

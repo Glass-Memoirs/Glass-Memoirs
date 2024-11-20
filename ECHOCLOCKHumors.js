@@ -317,9 +317,9 @@ env.STATUS_EFFECTS.entropy_eternal = {
 	    	target = this.status.affecting
 	    	let statusPool = []
 		for (let i in env.STATUS_EFFECTS) {
-        	let statusData = env.STATUS_EFFECTS[i]
-		let usable = true
-            	//prevent durationless statuses from appearing (and by extend, other passives)
+        	     let statusData = env.STATUS_EFFECTS[i]
+		     let usable = true
+               //prevent durationless statuses from appearing (and by extend, other passives)
             	if(statusData.infinite) {usable = false}
             	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
             	if(statusData.passive) {usable = false}
@@ -332,13 +332,13 @@ env.STATUS_EFFECTS.entropy_eternal = {
             	//redirection probably needs an origin, so exclude it
             	if(i == "redirection") {usable = false}
 
-		if(i == "entropy_eternal") {usable = false}
+		     if(i == "entropy_eternal") {usable = false}
           
-            //console.log(i, usable)
-            if(usable) statusPool.push(i)
-        }
-	let validEffects = []
-	target.statusEffects.forEach((status, i) => {
+               //console.log(i, usable)
+               if(usable) statusPool.push(i)
+          }
+	     let validEffects = []
+	     target.statusEffects.forEach((status, i) => {
                //console.log(status)
                if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
                     validEffects.push(status.slug)
@@ -553,112 +553,49 @@ env.ACTIONS.level_statuses ={
      exec: function(user, target) {
      
           genExec: {
+               let statusPool = []
+		     for (let i in env.STATUS_EFFECTS) {
+        	          let statusData = env.STATUS_EFFECTS[i]
+		          let usable = true
+                    //prevent durationless statuses from appearing (and by extend, other passives)
+            	     if(statusData.infinite) {usable = false}
+            	     //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
+            	     if(statusData.passive) {usable = false}
+            	     //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
+            	     if(i.includes("global_")) {usable = false}
+				//prevent misalign statuses from appearing, despite their duration existence
+            	     if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+            	     //and imperfect reset. i do not know how terrible that will end up.
+            	     if(i == "imperfect_reset") {usable = false}
+            	     //redirection probably needs an origin, so exclude it
+            	     if(i == "redirection") {usable = false}
+
+		          if(i == "entropy_eternal") {usable = false}
+          
+                    //console.log(i, usable)
+                    if(usable) statusPool.push(i)
+               }
+	          let targetEffects = []
+	          target.statusEffects.forEach((status, i) => {
+               //console.log(status)
+                    if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+                         targetEffects.push(status.slug)
+                    }
+               })
+               let userEffects = []
+	          user.statusEffects.forEach((status, i) => {
+               //console.log(status)
+                    if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+                         userEffects.push(status.slug)
+                    }
+               })
                env.setTimeout(()=>{
-                    if (hasStatus(target, 'puncture')) {
-                         removeStatus(target, 'puncture')
-                    }
-                    if (hasStatus(target, 'rot')) {
-                         removeStatus(target, 'rot')
-                    }
-                    if (hasStatus(target, 'regen')) {
-                         removeStatus(target, 'regen')
-                    }
-                    if (hasStatus(target, 'repairs')) {
-                         removeStatus(target, 'repairs')
-                    }
-                    if (hasStatus(target, 'million_teeth')) {
-                         removeStatus(target, 'million_teeth')
-                    }
-                    if (hasStatus(target, 'destabilized')) {
-                         removeStatus(target, 'destabilized')
-                    }
-                    if (hasStatus(target, 'vulnerable')) {
-                         removeStatus(target, 'vulnerable')
-                    }
-                    if (hasStatus(target, 'critical_flaw')) {
-                         removeStatus(target, 'critical_flaw')
-                    }
-                    if (hasStatus(target, 'focused')) {
-                         removeStatus(target, 'focused')
-                    }
-                    if (hasStatus(target, 'weakened')) {
-                         removeStatus(target, 'weakened')
-                    }
-                    if (hasStatus(target, 'empowered')) {
-                         removeStatus(target, 'empowered')
-                    }
-                    if (hasStatus(target, 'carapace')) {
-                         removeStatus(target, 'carapace')
-                    }
-                    if (hasStatus(target, 'evasion')) {
-                         removeStatus(target, 'evasion')
-                    }
-                    if (hasStatus(target, 'stun')) {
-                         removeStatus(target, 'stun')
-                    }
-                    if (hasStatus(target, 'windup')) {
-                         removeStatus(target, 'windup')
-                    }
-                    if (hasStatus(target, 'fear')) {
-                         removeStatus(target, 'fear')
-                    }
-                    if (hasStatus(target, 'spikes')) {
-                         removeStatus(target, 'spikes')
-                    }
-                    if (hasStatus(target, 'siphon')) {
-                         removeStatus(target, 'siphon')
-                    }
-                    if (hasStatus(user, 'puncture')) {
-                         removeStatus(user, 'puncture')
-                    }
-                    if (hasStatus(user, 'rot')) {
-                         removeStatus(user, 'rot')
-                    }
-                    if (hasStatus(user, 'regen')) {
-                         removeStatus(user, 'regen')
-                    }
-                    if (hasStatus(user, 'repairs')) {
-                         removeStatus(user, 'repairs')
-                    }
-                    if (hasStatus(user, 'million_teeth')) {
-                         removeStatus(user, 'million_teeth')
-                    }
-                    if (hasStatus(user, 'destabilized')) {
-                         removeStatus(user, 'destabilized')
-                    }
-                    if (hasStatus(user, 'vulnerable')) {
-                         removeStatus(user, 'vulnerable')
-                    }
-                    if (hasStatus(user, 'critical_flaw')) {
-                         removeStatus(user, 'critical_flaw')
-                    }
-                    if (hasStatus(user, 'focused')) {
-                         removeStatus(user, 'focused')
-                    }
-                    if (hasStatus(user, 'weakened')) {
-                         removeStatus(user, 'weakened')
-                    }
-                    if (hasStatus(user, 'empowered')) {
-                         removeStatus(user, 'empowered')
-                    }
-                    if (hasStatus(user, 'carapace')) {
-                         removeStatus(user, 'carapace')
-                    }
-                    if (hasStatus(user, 'evasion')) {
-                         removeStatus(user, 'evasion')
-                    }
-                    if (hasStatus(user, 'stun')) {
-                         removeStatus(user, 'stun')
-                    }
-                    if (hasStatus(user, 'fear')) {
-                         removeStatus(user, 'fear')
-                    }
-                    if (hasStatus(user, 'spikes')) {
-                         removeStatus(user, 'spikes')
-                    }
-                    if (hasStatus(user, 'siphon')) {
-                         removeStatus(user, 'siphon')
-                    }
+                    targetEffects.forEach((status) => {
+                         removeStatus(target, status)
+                    })
+                    userEffects.forEach((status) => {
+                         removeStatus(user, status)
+                    })
 
                }, 500)
           }
@@ -682,161 +619,58 @@ env.ACTIONS.player_rig = {
      crit: 0.1,
      amt: 2,
      exec: function(user,target) {
-          critExec: { //sorry lmao, its the tower of fuck
-               if (hasStatus(target, 'puncture')) {
-                    addStatus({target: target, status: 'puncture', length: (Math.floor(hasStatus(target, 'puncture'))), noReact: true})
-               }
-               if (hasStatus(target, 'rot')) {
-                    addStatus({target: target, status: 'rot', length: (Math.floor(hasStatus(target, 'rot'))), noReact: true})
-               }
-               if (hasStatus(target, 'regen')) {
-                    removeStatus(target, 'regen')
-               }
-               if (hasStatus(target, 'repairs')) {
-                    removeStatus(target, 'repairs')
-               }
-               if (hasStatus(target, 'million_teeth')) {
-                    addStatus({target: target, status: 'million_teeth', length: (Math.floor(hasStatus(target, 'million_teeth'))), noReact: true})
-               }
-               if (hasStatus(target, 'vulnerable')) {
-                    addStatus({target: target, status: 'vulnerable', length: (Math.floor(hasStatus(target, 'vulnerable'))), noReact: true})
-               }
-               if (hasStatus(target, 'critical_flaw')) {
-                    addStatus({target: target, status: 'critical_flaw', length: (Math.floor(hasStatus(target, 'critical_flaw'))), noReact: true})
-               }
-               if (hasStatus(target, 'focused')) {
-                    removeStatus(target, 'focused')
-               }
-               if (hasStatus(target, 'weakened')) {
-                    addStatus({target: target, status: 'weakened', length: (Math.floor(hasStatus(target, 'weakened'))), noReact: true})
-               }
-               if (hasStatus(target, 'empowered')) {
-                    removeStatus(target, 'empowered')
-               }
-               if (hasStatus(target, 'carapace')) {
-                    removeStatus(target, 'carapace')
-               }
-               if (hasStatus(target, 'evasion')) {
-                    removeStatus(target, 'evasion')
-               }
-               if (hasStatus(target, 'stun')) {
-                    addStatus({target: target, status: 'stun', length: (Math.floor(hasStatus(target, 'stun'))), noReact: true})
-               }
-               if (hasStatus(target, 'windup')) {
-                    removeStatus(target, 'windup')
-               }
-               if (hasStatus(target, 'fear')) {
-                    addStatus({target: target, status: 'fear', length: (Math.floor(hasStatus(target, 'fear'))), noReact: true})
-               }
-               if (hasStatus(target, 'spikes')) {
-                    removeStatus(target, 'spikes')
-               }
-               if (hasStatus(target, 'siphon')) {
-                    addStatus({target: target, status: 'siphon', length: (Math.floor(hasStatus(target, 'siphon'))), noReact: true})
-               }
-               if (hasStatus(user, 'puncture')) {
-                    removeStatus(user, 'puncture')
-               }
-               if (hasStatus(user, 'rot')) {
-                    removeStatus(user, 'rot')
-               }
-               if (hasStatus(user, 'regen')) {
-                    addStatus({target: user, status: 'regen', length: (Math.floor(hasStatus(target, 'regen'))), noReact: true})
-               }
-               if (hasStatus(user, 'repairs')) {
-                    addStatus({target: user, status: 'repairs', length: (Math.floor(hasStatus(target, 'repairs'))), noReact: true})
-               }
-               if (hasStatus(user, 'million_teeth')) {
-                    removeStatus(user, 'million_teeth')
-               }
-               if (hasStatus(user, 'vulnerable')) {
-                    removeStatus(user, 'vulnerable')
-               }
-               if (hasStatus(user, 'critical_flaw')) {
-                    removeStatus(user, 'critical_flaw')
-               }
-               if (hasStatus(user, 'focused')) {
-                    addStatus({target: user, status: 'focused', length: (Math.floor(hasStatus(target, 'focused'))), noReact: true})
-               }
-               if (hasStatus(user, 'weakened')) {
-                    removeStatus(user, 'weakened')
-               }
-               if (hasStatus(user, 'empowered')) {
-                    addStatus({target: user, status: 'regen', length: (Math.floor(hasStatus(target, 'empowered'))), noReact: true})
-               }
-               if (hasStatus(user, 'carapace')) {
-                    addStatus({target: user, status: 'carapace', length: (Math.floor(hasStatus(target, 'carapace'))), noReact: true})
-               }
-               if (hasStatus(user, 'evasion')) {
-                    addStatus({target: user, status: 'evasion', length: (Math.floor(hasStatus(target, 'evasion'))), noReact: true})
-               }
-               if (hasStatus(user, 'stun')) {
-                    removeStatus(user, 'stun')
-               }
-               if (hasStatus(user, 'fear')) {
-                    removeStatus(user, 'fear')
-               }
-               if (hasStatus(user, 'spikes')) {
-                    addStatus({target: user, status: 'spikes', length: (Math.floor(hasStatus(target, 'spikes'))), noReact: true})
-               }
-               if (hasStatus(user, 'siphon')) {
-                    removeStatus(user, 'siphon')
-               }
+          let statusPool = []
+          for (let i in env.STATUS_EFFECTS) {
+               let statusData = env.STATUS_EFFECTS[i]
+               let usable = true
+               //prevent durationless statuses from appearing (and by extend, other passives)
+               if(statusData.infinite) {usable = false}
+               //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
+               if(statusData.passive) {usable = false}
+               //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
+               if(i.includes("global_")) {usable = false}
+               //prevent misalign statuses from appearing, despite their duration existence
+               if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+               //and imperfect reset. i do not know how terrible that will end up.
+               if(i == "imperfect_reset") {usable = false}
+               //redirection probably needs an origin, so exclude it
+               if(i == "redirection") {usable = false}
 
-          }      
-          hitExec: {
-               if (hasStatus(target, 'regen')) {
-                    removeStatus(target, 'regen')
-               }
-               if (hasStatus(target, 'repairs')) {
-                    removeStatus(target, 'repairs')
-               }
-               if (hasStatus(target, 'focused')) {
-                    removeStatus(target, 'focused')
-               }
-               if (hasStatus(target, 'empowered')) {
-                    removeStatus(target, 'empowered')
-               }
-               if (hasStatus(target, 'carapace')) {
-                    removeStatus(target, 'carapace')
-               }
-               if (hasStatus(target, 'evasion')) {
-                    removeStatus(target, 'evasion')
-               }
-               if (hasStatus(target, 'windup')) {
-                    removeStatus(target, 'windup')
-               }
-               if (hasStatus(target, 'spikes')) {
-                    removeStatus(target, 'spikes')
-               }
-               if (hasStatus(user, 'puncture')) {
-                    removeStatus(user, 'puncture')
-               }
-               if (hasStatus(user, 'rot')) {
-                    removeStatus(user, 'rot')
-               }
-               if (hasStatus(user, 'million_teeth')) {
-                    removeStatus(user, 'million_teeth')
-               }
-               if (hasStatus(user, 'vulnerable')) {
-                    removeStatus(user, 'vulnerable')
-               }
-               if (hasStatus(user, 'critical_flaw')) {
-                    removeStatus(user, 'critical_flaw')
-               }
-               if (hasStatus(user, 'weakened')) {
-                    removeStatus(user, 'weakened')
-               }
-               if (hasStatus(user, 'stun')) {
-                    removeStatus(user, 'stun')
-               }
-               if (hasStatus(user, 'fear')) {
-                    removeStatus(user, 'fear')
-               }
-               if (hasStatus(user, 'siphon')) {
-                    removeStatus(user, 'siphon')
-               }
+               if(i == "entropy_eternal") {usable = false}
+          
+               //console.log(i, usable)
+               if(usable) statusPool.push(i)
           }
+          let targetEffects = []
+          target.statusEffects.forEach((status, i) => {
+               //console.log(status)
+               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+                    targetEffects.push(status)
+               }
+          })
+          let userEffects = []
+          user.statusEffects.forEach((status, i) => {
+               //console.log(status)
+               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+                    userEffects.push(status)
+               }
+          })
+          env.setTimeout(()=>{
+               targetEffects.forEach((status) => {
+                    if(status.beneficial) removeStatus(target, status.slug)
+               })
+               userEffects.forEach((status) => {
+                    if (!status.beneficial) removeStatus(user, status.slug)
+               })
+               critExec: {
+                    targetEffects.forEach((status) => {
+                         if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
+                    })
+                    userEffects.forEach((status) => {
+                         if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
+                    }) 
+               }
+          })
      }
 },
 

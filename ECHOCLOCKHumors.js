@@ -348,7 +348,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
             if(validEffects.length) validEffects.forEach((Replace) => {
                let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
                console.log(selectedStatus)
-                let chance = 0.5
+                let chance = 0.2
                 let extra = 0
 				console.log(Replace)
                if(Math.random() < chance) {
@@ -361,7 +361,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
                     })
 		
 		          if (hasStatus(target, Replace)) {
-		    	          addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace))+1 , noReact: true})
+		    	          addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace)), noReact: true})
 			          removeStatus(target, Replace)
                     if(extra) context.length += extra
 		         }     
@@ -371,7 +371,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
     },
 
 
-     help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
+     help: `most status effects have a 20% chance to become any other effects`
 },
 
 env.STATUS_EFFECTS.entropy_eyes = {
@@ -473,9 +473,8 @@ env.ACTIONS.momentum = {
           let amt = this.amt + 2 *(1 + Math.floor(hasStatus(target, 'focused')) + Math.floor(hasStatus(target, 'regen')))
           removeStatus(user, "focused")
           removeStatus(user, "regen")
-          critStatus: {
-               name: 'stun',
-               length; 1
+          critExec: {
+	  	addStatus({target: target, status: 'stun', length: 1})
           }
      }
 },
@@ -496,7 +495,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
      accuracy: 1,
      crit: 0.25,
      exec: function(user, target) {
-          let amt = this.amt*(Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion')))
+          let amt = this.amt*(Math.floor(hasStatus(user, 'focused')+1) + Math.floor(hasStatus(user, 'regen')+1) + Math.floor(hasStatus(user, 'evasion'))+1)
           if (hasStatus(user, 'focused')) {
                let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
                addStatus({target: user, status: "focused", length: half, noReact: true})
@@ -509,12 +508,11 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
 	       let half = 0 - Math.floor(hasStatus(user, 'evasion') / 2)
 	       addStatus({target: user, status: "evasion", length: half, noReact: true})
 	  }
-          critStatus: {
-               name: 'stun',
-               length; 2
+          critExec: {
+		addStatus({target: target, status: 'stun', length: 1})
           }
           genExec: {
-               addStatus({target: target, status: 'vulnerable', length: 2, noReact: true})
+               addStatus({target: target, status: 'vulnerable', length: 2})
           }
      }
 },

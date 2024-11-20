@@ -551,8 +551,6 @@ env.ACTIONS.level_statuses ={
      crit: 0.3,
      amt: 2,
      exec: function(user, target) {
-     
-          genExec: {
                let statusPool = []
 		     for (let i in env.STATUS_EFFECTS) {
         	          let statusData = env.STATUS_EFFECTS[i]
@@ -598,7 +596,6 @@ env.ACTIONS.level_statuses ={
                     })
 
                }, 500)
-          }
      }
 },
 
@@ -662,15 +659,16 @@ env.ACTIONS.player_rig = {
                userEffects.forEach((status) => {
                     if (!status.beneficial) removeStatus(user, status.slug)
                })
-               critExec: {
-                    targetEffects.forEach((status) => {
-                         if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
-                    })
-                    userEffects.forEach((status) => {
-                         if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
-                    }) 
-               }
+               
           })
+          critExec: {
+               targetEffects.forEach((status) => {
+                    if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
+               })
+               userEffects.forEach((status) => {
+                    if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
+               }) 
+          }
      }
 },
 

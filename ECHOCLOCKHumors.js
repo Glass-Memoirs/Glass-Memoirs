@@ -339,7 +339,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
         }
 	let validEffects = []
 	target.statusEffects.forEach((status, i) => {
-               console.log(status)
+               //console.log(status)
                if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
                     validEffects.push(status.slug)
                }
@@ -347,10 +347,10 @@ env.STATUS_EFFECTS.entropy_eternal = {
 	    console.log(validEffects)
             if(validEffects.length) validEffects.forEach((Replace) => {
                let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
-               console.log(selectedStatus)
+               //console.log(selectedStatus)
                 let chance = 0.2
                 let extra = 0
-				console.log(Replace)
+				//console.log(Replace)
                if(Math.random() < chance) {
 
                    sendFloater({
@@ -496,6 +496,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
      crit: 0.25,
      exec: function(user, target) {
           let amt = this.amt + 2 *(1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion')))
+	console.log(amt)
           if (hasStatus(user, 'focused')) {
                let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
                addStatus({target: user, status: "focused", length: half, noReact: true})

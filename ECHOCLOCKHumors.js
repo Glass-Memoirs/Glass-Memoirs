@@ -468,7 +468,7 @@ env.ACTIONS.momentum = {
           miss: "%TARGET SIDESTEPS"
      },
      accuracy: 1,
-     crit: 0.3,
+     crit: 0.1,
      amt: 2,
      exec: function(user, target) {
           let action = this
@@ -503,7 +503,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
           miss: "%TARGET SIDESTEPS"
      },
      accuracy: 1,
-     crit: 0.25,
+     crit: 0.15,
      amt: 2,
      exec: function(user, target) {
           let action = this

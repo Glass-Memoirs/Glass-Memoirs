@@ -588,7 +588,7 @@ env.ACTIONS.level_statuses ={
                }
           })
           targetEffects.forEach((status) => {
-               removeStatus(target, status)
+               if(status != "windup") removeStatus(target, status)
           })
           userEffects.forEach((status) => {
                removeStatus(user, status)
@@ -668,14 +668,11 @@ env.ACTIONS.player_rig = {
                     userEffects.push(status)
                }
           })
-          env.setTimeout(()=>{
-               targetEffects.forEach((status) => {
-                    if(status.beneficial) removeStatus(target, status.slug)
-               })
-               userEffects.forEach((status) => {
-                    if (!status.beneficial) removeStatus(user, status.slug)
-               })
-               
+          targetEffects.forEach((status) => {
+               if(status.beneficial) removeStatus(target, status.slug)
+          })
+          userEffects.forEach((status) => {
+               if (!status.beneficial) removeStatus(user, status.slug)
           })
           critExec: {
                targetEffects.forEach((status) => {

@@ -255,7 +255,7 @@ env.COMBAT_COMPONENTS.entropy = {
                maxhp: 4
           }
      },
-     combatModifiers: ["entropy_eternal", "entropic_eyes"]
+     combatModifiers: ["entropy_eternal", "entropy_eyes"]
 }
 
 env.ACTOR_AUGMENTS.generic.third_law = {
@@ -378,7 +378,11 @@ env.STATUS_EFFECTS.entropy_eyes = {
 	slug: "entropy_eyes",
 	name: "Shattered Eyes",
 	beneficial: false,
-	events: {},
+	events: {
+		onTurn: function(){
+			console.log("nothing here yet!")
+		}
+	},
 		
 	help: `Nothing here yet!`
 },

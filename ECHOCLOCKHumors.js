@@ -228,7 +228,6 @@ content.insertAdjacentHTML('beforeend', `<style>
 }
 </style>`);
 
-
 env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",
      slug: "entropy",
@@ -256,6 +255,7 @@ env.COMBAT_COMPONENTS.entropy = {
                maxhp: 4
           }
      },
+     combatModifiers: ["entropy_eternal", "entropic_eyes"]
 }
 
 env.ACTOR_AUGMENTS.generic.third_law = {
@@ -287,6 +287,102 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      component: ["utility", "entropy"],
      cost: 2
 }
+
+env.MODIFIERS.entropy_eternal = {
+	name: "Eternal Decay",
+	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eternal.help },
+	alterations: {
+		all: [ ["STATUS", "entropy_eternal"] ]
+	}
+}
+
+env.MODIFIERS.entropy_eyes = {
+	name: "Shattered Eyes",
+	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eyes.help },
+	alterations: {
+		all: [ ["SATUS", "entropy_eyes"] ]
+	}
+}
+
+env.STATUS_EFFECTS.entropy_eternal = {
+	slug: "entropy_eternal",
+	name: "Eternal Decay",
+	passive: "modifier",
+	beneficial: false,
+	icon: "/img/sprites/combat/passives/light_glee.gif",
+	impulse: {type: "common", component: "entropy"},
+	events: {
+        
+        onTurn: function(context) {
+	    	actor = this.status.affecting
+	    	let statusPool = []
+		for (let i in env.STATUS_EFFECTS) {
+        	let statusData = env.STATUS_EFFECTS[i]
+		let usable = true
+            	//prevent durationless statuses from appearing (and by extend, other passives)
+            	if(statusData.infinite) {usable = false}
+            	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
+            	if(statusData.passive) {usable = false}
+            	//APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
+            	if(i.includes("global_")) {usable = false}
+				//prevent misalign statuses from appearing, despite their duration existence
+            	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+            	//and imperfect reset. i do not know how terrible that will end up.
+            	if(i == "imperfect_reset") {usable = false}
+            	//redirection probably needs an origin, so exclude it
+            	if(i == "redirection") {usable = false}
+
+		if(i == "entropy_eternal") {usable = false}
+          
+            //console.log(i, usable)
+            if(usable) statusPool.push(i)
+        }
+	let validEffects = []
+	target.statusEffects.forEach((status, i) => {
+               console.log(status)
+               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+                    validEffects.push(status.slug)
+               }
+          })
+	    console.log(validEffects)
+            if(validEffects.length) validEffects.forEach((Replace) => {
+               let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
+               console.log(selectedStatus)
+                let chance = 0.5
+                let extra = 0
+				console.log(Replace)
+               if(Math.random() < chance) {
+
+                   sendFloater({
+                        target: this.status.affecting,
+                        type: "arbitrary",
+                        arbitraryString: "DECAYED!",
+                        isGood: false
+                    })
+		
+		          if (hasStatus(target, Replace)) {
+		    	          addStatus({target: target, status: selectedStatus, length: Math.floor(hasStatus(target, Replace))+1 , noReact: true})
+			          removeStatus(target, Replace)
+                    if(extra) context.length += extra
+		         }     
+               }
+            })
+        }
+    },
+
+
+     help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
+},
+
+env.STATUS_EFFECTS.entropy_eyes = {
+	slug: "entropy_eyes",
+	name: "Shattered Eyes",
+	beneficial: false,
+	events: {},
+		
+	help: `Nothing here yet!`
+},
+
 
 env.STATUS_EFFECTS.exp_over = {
      slug: "exp_over",
@@ -556,7 +652,7 @@ env.ACTIONS.player_rig = {
      type: "target",
      desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
      anim: "basic-attack",
-     help: "'FOES:: 100% -1HP, -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
+     help: "'FOES:: 100% -2HP, -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
      usage: {
           act: "%USER SHUFFLES THE POWER",
           crit: "%TARGET FEELS DREAD",
@@ -565,7 +661,7 @@ env.ACTIONS.player_rig = {
      },
      accuracy: 1,
      crit: 0.1,
-     amt: 1,
+     amt: 2,
      exec: function(user,target) {
           critExec: { //sorry lmao, its the tower of fuck
                if (hasStatus(target, 'puncture')) {
@@ -762,7 +858,7 @@ env.ACTIONS.wild_frenzy = {
                               target,
                               hitSfx: { name: 'shot2' },
                               critSfx: { name: 'shot6' },
-			      critExec: ({target})=> {
+			                  critExec: ({target})=> {
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{
                                              useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})

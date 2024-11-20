@@ -474,7 +474,7 @@ env.ACTIONS.momentum = {
           let action = this
           console.log(hasStatus(user, 'focused'))
 
-          for (let i = 0; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
+          for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
                env.GENERIC_ACTIONS.singleTarget({
                     action,
                     user,
@@ -506,8 +506,18 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
      crit: 0.25,
      amt: 2,
      exec: function(user, target) {
-	let outgoingMult = 1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion'))
-	  updateStats({actor: user})
+          let action = this
+          for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion'))); i++) {
+               env.GENERIC_ACTIONS.singleTarget({
+                    action: action, user,
+                    target: target,
+                    critExec: ({target}) => {
+                         addStatus({target: target, status: 'stun', length: 1})
+                         addStatus({target: target, status: 'vulnerable', length: 2})
+                    }
+               })
+               
+          }
           if (hasStatus(user, 'focused')) {
                let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
                addStatus({target: user, status: "focused", length: half, noReact: true})
@@ -516,14 +526,10 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
                let half = 0 - Math.floor(hasStatus(user, "regen") / 2)
                addStatus({target: user, status: "regen", length: half, noReact: true})
           }
-	  if (hasStatus(user, 'evasion')) {
+	     if (hasStatus(user, 'evasion')) {
 	       let half = 0 - Math.floor(hasStatus(user, 'evasion') / 2)
 	       addStatus({target: user, status: "evasion", length: half, noReact: true})
-	  }
-          critExec: {
-		addStatus({target: target, status: 'stun', length: 1})
-		addStatus({target: target, status: 'vulnerable', length: 2})
-          }
+	     }
      }
 },
 

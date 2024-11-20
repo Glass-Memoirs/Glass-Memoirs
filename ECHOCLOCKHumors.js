@@ -510,9 +510,8 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
 	  }
           critExec: {
 		addStatus({target: target, status: 'stun', length: 1})
+		addStatus({target: target, status: 'vulnerable', length: 2})
           }
-          genExec: {
-               addStatus({target: target, status: 'vulnerable', length: 2})
           }
      }
 },

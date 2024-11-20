@@ -255,7 +255,7 @@ env.COMBAT_COMPONENTS.entropy = {
                maxhp: 4
           }
      },
-     combatModifiers: ["eternal_decay", "shattered_eyes"]
+     combatModifiers: ["entropy_eternal", "entropic_eyes"]
 }
 
 env.ACTOR_AUGMENTS.generic.third_law = {
@@ -292,7 +292,7 @@ env.MODIFIERS.entropy_eternal = {
 	name: "Eternal Decay",
 	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eternal.help },
 	alterations: {
-		all: [ ["STATUS", "eternal_decay"] ]
+		all: [ ["STATUS", "entropy_eternal"] ]
 	}
 }
 

@@ -478,7 +478,7 @@ env.ACTIONS.momentum = {
                env.GENERIC_ACTIONS.singleTarget({
                     action,
                     user,
-                    target,
+                    target: target,
                     critExec: ({target}) => {
 	  	               addStatus({target: target, status: 'stun', length: 1})
                     }

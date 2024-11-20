@@ -361,7 +361,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
                     })
 		
 		          if (hasStatus(target, Replace)) {
-		    	          addStatus({target: target, status: selectedStatus, length: Math.floor(hasStatus(target, Replace))+1 , noReact: true})
+		    	          addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace))+1 , noReact: true})
 			          removeStatus(target, Replace)
                     if(extra) context.length += extra
 		         }     

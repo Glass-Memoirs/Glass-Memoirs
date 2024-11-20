@@ -469,10 +469,8 @@ env.ACTIONS.momentum = {
      },
      accuracy: 1,
      crit: 0.3,
-     amt: 2,
      exec: function(user, target) {
-          let outgoingMult = (1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
-	updateStats({actor: user})
+          let amt = this.amt + 2 + (1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))
           removeStatus(user, "focused")
           removeStatus(user, "regen")
           critExec: {

@@ -475,7 +475,7 @@ env.ACTIONS.momentum = {
           console.log(hasStatus(user, 'focused'))
 
           for (let i = 0; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
-               return env.GENERIC_ACTIONS.singleTarget({
+               env.GENERIC_ACTIONS.singleTarget({
                     action,
                     user,
                     target,

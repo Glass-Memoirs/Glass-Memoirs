@@ -288,24 +288,24 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      cost: 2
 }
 
-env.MODIFIERS.eternal_decay = {
+env.MODIFIERS.entropy_eternal = {
 	name: "Eternal Decay",
-	getHelp: ()=> { return env.STATUS_EFFECTS.eternal_decay.help },
+	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eternal.help },
 	alterations: {
 		all: [ ["STATUS", "eternal_decay"] ]
 	}
 }
 
-env.MODIFIERS.shattered_eyes = {
+env.MODIFIERS.entropy_eyes = {
 	name: "Shattered Eyes",
-	getHelp: ()=> { return env.STATUS_EFFECTS.shattered_eyes.help },
+	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eyes.help },
 	alterations: {
-		all: [ ["SATUS", "shattered_eyes"] ]
+		all: [ ["SATUS", "entropy_eyes"] ]
 	}
 }
 
-env.STATUS_EFFECTS.eternal_decay = {
-	slug: "eternal_decay",
+env.STATUS_EFFECTS.entropy_eternal = {
+	slug: "entropy_eternal",
 	name: "Eternal Decay",
 	passive: "modifier",
 	beneficial: false,
@@ -316,9 +316,9 @@ env.STATUS_EFFECTS.eternal_decay = {
         onTurn: function(context) {
 	    	actor = this.status.affecting
 	    	let statusPool = []
-			for (let i in env.STATUS_EFFECTS) {
-        		let statusData = env.STATUS_EFFECTS[i]
-        		let usable = true
+		for (let i in env.STATUS_EFFECTS) {
+        	let statusData = env.STATUS_EFFECTS[i]
+		let usable = true
             	//prevent durationless statuses from appearing (and by extend, other passives)
             	if(statusData.infinite) {usable = false}
             	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
@@ -332,26 +332,26 @@ env.STATUS_EFFECTS.eternal_decay = {
             	//redirection probably needs an origin, so exclude it
             	if(i == "redirection") {usable = false}
 
-		if(i == "eternal_decay") {usable = false}
+		if(i == "entropy_eternal") {usable = false}
           
             //console.log(i, usable)
             if(usable) statusPool.push(i)
         }
-		let validEffects = []
-		for (let i in actor.statusEffects) {
-			let Deciding = actor.statusEffects[i]
-			for ( let j in statusPool) {
-				if (Deciding = statusPool[j]) validEffects.push(i)
-			}
-		}
+	let validEffects = []
+	target.statusEffects.forEach((status, i) => {
+               console.log(status)
+               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+                    validEffects.push(status.slug)
+               }
+          })
 	    console.log(validEffects)
-            if(validEffects.length) for (let i = 0; i <= ((validEffects.length)-1); i++) {
-				let selectedStatus = statusPool.sample()
+            if(validEffects.length) validEffects.forEach((Replace) => {
+               let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
+               console.log(selectedStatus)
                 let chance = 0.5
                 let extra = 0
-                let Replace = validEffects[i]
 				console.log(Replace)
-                if(Math.random() < chance) {
+               if(Math.random() < chance) {
 
                    sendFloater({
                         target: this.status.affecting,
@@ -360,13 +360,13 @@ env.STATUS_EFFECTS.eternal_decay = {
                         isGood: false
                     })
 		
-		    if (hasStatus(actor, Replace)) {
-		    	addStatus({target: actor, status: selectedStatus, length: Math.floor(hasStatus(actor, Replace)), noReact: true})
-			removeStatus(actor, Replace)
-                    	if(extra) context.length += extra
-		    }
-                }
-            }    
+		          if (hasStatus(target, Replace)) {
+		    	          addStatus({target: target, status: selectedStatus, length: Math.floor(hasStatus(target, Replace))+1 , noReact: true})
+			          removeStatus(target, Replace)
+                    if(extra) context.length += extra
+		         }     
+               }
+            })
         }
     },
 
@@ -374,8 +374,8 @@ env.STATUS_EFFECTS.eternal_decay = {
      help: `incoming status effect application has a 50% chance to become opposite status\nmay be altered by other effects`
 },
 
-env.STATUS_EFFECTS.shattered_eyes = {
-	slug: "shattered_eyes",
+env.STATUS_EFFECTS.entropy_eyes = {
+	slug: "entropy_eyes",
 	name: "Shattered Eyes",
 	beneficial: false,
 	events: {},

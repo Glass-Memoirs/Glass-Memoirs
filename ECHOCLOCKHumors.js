@@ -540,7 +540,7 @@ env.ACTIONS.level_statuses ={
      type: 'target',
      desc: "'collapse beyond both yourself and the foe';'remove all statuses'",
      anim: "basic-attack",
-     help: "80% -2HP REMOVE ALL STATUS EFFECTS",
+     help: "80% REMOVE MOST STATUS EFFECTS, 15%C REMOVE WINDUP",
      usage: {
           act: "%USER REACHES OUT",
           crit: "%USER AND %TARGET FEEL SOMETHING GET TORN AWAY",
@@ -548,54 +548,70 @@ env.ACTIONS.level_statuses ={
           miss: "%TARGET SWATS %USER AWAY"
      },
      accuracy: 0.8,
-     crit: 0.3,
-     amt: 2,
+     crit: 0.15,
+     amt: 0,
      exec: function(user, target) {
-               let statusPool = []
-		     for (let i in env.STATUS_EFFECTS) {
-        	          let statusData = env.STATUS_EFFECTS[i]
-		          let usable = true
-                    //prevent durationless statuses from appearing (and by extend, other passives)
-            	     if(statusData.infinite) {usable = false}
-            	     //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
-            	     if(statusData.passive) {usable = false}
-            	     //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
-            	     if(i.includes("global_")) {usable = false}
-				//prevent misalign statuses from appearing, despite their duration existence
-            	     if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-            	     //and imperfect reset. i do not know how terrible that will end up.
-            	     if(i == "imperfect_reset") {usable = false}
-            	     //redirection probably needs an origin, so exclude it
-            	     if(i == "redirection") {usable = false}
+          let statusPool = []
+          for (let i in env.STATUS_EFFECTS) {
+               let statusData = env.STATUS_EFFECTS[i]
+               let usable = true
+               //prevent durationless statuses from appearing (and by extend, other passives)
+               if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
+               //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
+               if(statusData.passive) {usable = false}
+               //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
+               if(i.includes("global_")) {usable = false}
+               //prevent misalign statuses from appearing, despite their duration existence
+               if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+               //and imperfect reset. i do not know how terrible that will end up.
+               if(i == "imperfect_reset") {usable = false}
+               //redirection probably needs an origin, so exclude it
+               if(i == "redirection") {usable = false}
 
-		          if(i == "entropy_eternal") {usable = false}
-          
-                    //console.log(i, usable)
-                    if(usable) statusPool.push(i)
+               if(i == "entropy_eternal") {usable = false}
+
+               //console.log(i, usable)
+               if(usable) statusPool.push(i)
+          }
+          let targetEffects = []
+          target.statusEffects.forEach((status, i) => {
+               //console.log(status)
+               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+                    targetEffects.push(status.slug)
                }
-	          let targetEffects = []
-	          target.statusEffects.forEach((status, i) => {
-               //console.log(status)
-                    if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
-                         targetEffects.push(status.slug)
-                    }
-               })
-               let userEffects = []
-	          user.statusEffects.forEach((status, i) => {
-               //console.log(status)
-                    if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
-                         userEffects.push(status.slug)
-                    }
-               })
-               env.setTimeout(()=>{
-                    targetEffects.forEach((status) => {
-                         removeStatus(target, status)
-                    })
-                    userEffects.forEach((status) => {
-                         removeStatus(user, status)
+          })
+          let userEffects = []
+          user.statusEffects.forEach((status, i) => {
+              //console.log(status)
+               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
+                    userEffects.push(status.slug)
+               }
+          })
+          targetEffects.forEach((status) => {
+               removeStatus(target, status)
+          })
+          userEffects.forEach((status) => {
+               removeStatus(user, status)
+          })
+          critExec: {
+               if (targetEffects.includes("windup")) {
+                    sendFloater({
+                        target: user,
+                        type: "arbitrary",
+                        arbitraryString: "LMAO",
+                        size: 1.5,
                     })
 
-               }, 500)
+                    readoutAdd({
+                        message: `${target.name} forgot what it was doing.`, 
+                        name: "sourceless", 
+                        type: "sourceless combat minordetail", 
+                        show: false,
+                        sfx: false
+                    })
+                    removeStatus(target, "windup")
+               }
+          }
      }
 },
 
@@ -605,23 +621,23 @@ env.ACTIONS.player_rig = {
      type: "target",
      desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
      anim: "basic-attack",
-     help: "'FOES:: 100% -2HP, -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
+     help: "'FOES:: 80%  -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: 80% -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
      usage: {
           act: "%USER SHUFFLES THE POWER",
           crit: "%TARGET FEELS DREAD",
           hit: "%TARGET LOOSES THEIR ENERGY",
           miss: "%USER GOT DISTRACTED"
      },
-     accuracy: 1,
+     accuracy: 0.8,
      crit: 0.1,
-     amt: 2,
+     amt: 0,
      exec: function(user,target) {
           let statusPool = []
           for (let i in env.STATUS_EFFECTS) {
                let statusData = env.STATUS_EFFECTS[i]
                let usable = true
                //prevent durationless statuses from appearing (and by extend, other passives)
-               if(statusData.infinite) {usable = false}
+               if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
                //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
                if(statusData.passive) {usable = false}
                //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
@@ -648,7 +664,7 @@ env.ACTIONS.player_rig = {
           let userEffects = []
           user.statusEffects.forEach((status, i) => {
                //console.log(status)
-               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
                     userEffects.push(status)
                }
           })
@@ -664,6 +680,23 @@ env.ACTIONS.player_rig = {
           critExec: {
                targetEffects.forEach((status) => {
                     if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
+                    if(status == "windup") {
+                         sendFloater({
+                              target: user,
+                              type: "arbitrary",
+                              arbitraryString: "LMAO",
+                              size: 1.5,
+                         })
+
+                         readoutAdd({
+                              message: `${target.name} forgot what it was doing.`, 
+                              name: "sourceless", 
+                              type: "sourceless combat minordetail", 
+                              show: false,
+                              sfx: false
+                         })
+                         removeStatus(target, status)
+                    }
                })
                userEffects.forEach((status) => {
                     if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})

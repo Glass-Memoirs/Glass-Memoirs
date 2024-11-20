@@ -473,10 +473,8 @@ env.ACTIONS.momentum = {
      exec: function(user, target) {
           let action = this
           console.log(hasStatus(user, 'focused'))
-          let Repeat = 1 + Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))
-          if(hasStatus(user, 'focused')) removeStatus(user, "focused")
-          if(hasStatus(user, 'focused')) removeStatus(user, "regen")
-          for (let i = 0; i <= Repeat; i++) {
+
+          for (let i = 0; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
                return env.GENERIC_ACTIONS.singleTarget({
                     action,
                     user,
@@ -486,6 +484,8 @@ env.ACTIONS.momentum = {
                     }
                })
           }
+          if(hasStatus(user, 'focused')) removeStatus(user, "focused")
+          if(hasStatus(user, 'focused')) removeStatus(user, "regen")
      }
 },
 

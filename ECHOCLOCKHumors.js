@@ -294,7 +294,7 @@ env.MODIFIERS.entropy_eternal = {
 	alterations: {
 		all: [ ["STATUS", "entropy_eternal"] ]
 	}
-}
+},
 
 env.MODIFIERS.entropy_eyes = {
 	name: "Shattered Eyes",
@@ -344,16 +344,16 @@ env.STATUS_EFFECTS.entropy_eternal = {
                     validEffects.push(status.slug)
                }
           })
-	    console.log(validEffects)
-            if(validEffects.length) validEffects.forEach((Replace) => {
-               let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
-               //console.log(selectedStatus)
-                let chance = 0.2
-                let extra = 0
+	     console.log(validEffects)
+               if(validEffects.length) validEffects.forEach((Replace) => {
+                    let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
+                    //console.log(selectedStatus)
+                    let chance = 0.2
+                    let extra = 0
 				//console.log(Replace)
-               if(Math.random() < chance) {
+                    if(Math.random() < chance) {
 
-                   sendFloater({
+                    sendFloater({
                         target: this.status.affecting,
                         type: "arbitrary",
                         arbitraryString: "DECAYED!",
@@ -380,6 +380,7 @@ env.STATUS_EFFECTS.entropy_eyes = {
 	beneficial: false,
      icon: "/img/combat/passives/light_dark.gif",
 	events: {
+
 		onTurn: function(){
 			console.log("nothing here yet!")
                target = this.status.affecting
@@ -422,10 +423,18 @@ env.STATUS_EFFECTS.entropy_eyes = {
                          validEffects.push(Deciding)
                     }
                })
-               let TakingStat = TakableEffects.sample()
-               let SendingTo = AllTargets.sample({noRepeat: true})
-               removeStatus(target, TakingStat)
-               addStatus({target: AllTargets[SendingTo], status: TakingStat.slug, length: Math.floor(hasStatus(target, TakingStat))})
+               for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {
+                    sendFloater({
+                         target: this.status.affecting,
+                         type: "arbitrary",
+                         arbitraryString: "REFRACTED!",
+                         isGood: false
+                    })
+                    let TakingStat = TakableEffects.sample()
+                    let SendingTo = AllTargets.sample({noRepeat: true})
+                    addStatus({target: SendingTo, status: TakingStat.slug, length: Math.floor(hasStatus(target, TakingStat))})
+                    removeStatus(target, TakingStat)
+               }
 		}
 	},
 		

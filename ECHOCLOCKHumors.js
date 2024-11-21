@@ -420,10 +420,10 @@ env.STATUS_EFFECTS.entropy_eyes = {
                let TakableEffects = []
                target.statusEffects.forEach((Deciding) => {
                     if((!Deciding.infinite || !Deciding.passive) && (statusPool.includes(Deciding.slug))) {
-                         TakableEffects.push(Deciding)
+                         TakableEffects.push(Deciding.slug)
                     }
                })
-               for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {
+               if(TakableEffects.length) for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {
                     sendFloater({
                          target: this.status.affecting,
                          type: "arbitrary",

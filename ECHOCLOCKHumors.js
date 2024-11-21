@@ -424,17 +424,20 @@ env.STATUS_EFFECTS.entropy_eyes = {
                     }
                })
                if(TakableEffects.length) for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {
-                    sendFloater({
-                         target: this.status.affecting,
-                         type: "arbitrary",
-                         arbitraryString: "REFRACTED!",
-                         isGood: false
-                    })
-                    let TakingStat = TakableEffects.sample()
-                    let SendingTo = AllTargets.sample({noRepeat: true})
-                    if (hasStatus(target, TakingStat)) {
-                         addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
-                         removeStatus(target, TakingStat)
+                    let Chance = 0.4
+                    if (Math.random < Chance) {
+                         sendFloater({
+                              target: this.status.affecting,
+                              type: "arbitrary",
+                              arbitraryString: "REFRACTED!",
+                              isGood: false
+                         })
+                         let TakingStat = TakableEffects.sample()
+                         let SendingTo = AllTargets.sample({noRepeat: true})
+                         if (hasStatus(target, TakingStat)) {
+                              addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
+                              removeStatus(target, TakingStat)
+                         }
                     }
                }
 		}

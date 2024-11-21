@@ -313,7 +313,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
 	impulse: {type: "common", component: "entropy"},
 	events: {
         
-        onTurn: function(context) {
+        onTurn: function() {
 	    	target = this.status.affecting
 	    	let statusPool = []
 		for (let i in env.STATUS_EFFECTS) {
@@ -363,7 +363,6 @@ env.STATUS_EFFECTS.entropy_eternal = {
 		          if (hasStatus(target, Replace)) {
 		    	          addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace)), noReact: true})
 			          removeStatus(target, Replace)
-                    if(extra) context.length += extra
 		         }     
                }
             })
@@ -383,6 +382,7 @@ env.STATUS_EFFECTS.entropy_eyes = {
 	events: {
 		onTurn: function(){
 			console.log("nothing here yet!")
+               target = this.status.affecting
                let statusPool = []
 		     for (let i in env.STATUS_EFFECTS) {
         	          let statusData = env.STATUS_EFFECTS[i]
@@ -409,30 +409,23 @@ env.STATUS_EFFECTS.entropy_eyes = {
                env.rpg.enemyTeam.members.forEach((target) => {
                     if (target => target.state != "dead" && target.state != "lastStand") {
                          AllTargets.push(target)
-                         target.statusEffects.forEach((PossibleStat, j) => {
-                              if((!PossibleStat.infinite || !PossibleStat.passive || !j.includes("global_")) && (statusPool.includes(PossibleStat.slug))) {
-                                   AllTargets.target.push(PossibleStat.slug)
-                              }
-                         })
                     }
                })
                env.rpg.allyTeam.members.forEach((target)=> {
                     if (target => target.state != "dead" && target.state != "lastStand") {
                          AllTargets.push(target)
-                         target.statusEffects.forEach((PossibleStat, j) => {
-                              if((!PossibleStat.infinite || !PossibleStat.passive || !j.includes("global_")) && (statusPool.includes(PossibleStat.slug))) {
-                                   AllTargets.target.push(PossibleStat)
-                              }
-                         })
                     }
                })
-               let TakingFrom = AllTargets.sample({noRepeat: true})
-               if (AllTargets.TakingFrom.length) {
-                    TakingStat = AllTargets[TakingFrom].sample()
-               }
+               let TakableEffects = []
+               target.statusEffects.forEach((Deciding) => {
+                    if((!Deciding.infinite || !Deciding.passive) && (statusPool.includes(Deciding.slug))) {
+                         validEffects.push(Deciding)
+                    }
+               })
+               let TakingStat = TakableEffects.sample()
                let SendingTo = AllTargets.sample({noRepeat: true})
-               removeStatus(AllTargets[TakingFrom], AllTargets.TakingFrom[TakingStat])
-               addStatus({target: AllTargets[SendingTo], status: AllTargets.TakingFrom[TakingStat].slug, length: Math.floor(AllTargets.TakingFrom[TakingStat])})
+               removeStatus(target, TakingStat)
+               addStatus({target: AllTargets[SendingTo], status: TakingStat.slug, length: Math.floor(hasStatus(target, TakingStat))})
 		}
 	},
 		

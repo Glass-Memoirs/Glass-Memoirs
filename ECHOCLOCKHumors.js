@@ -340,7 +340,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
 	     let validEffects = []
 	     target.statusEffects.forEach((status, i) => {
                //console.log(status)
-               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+               if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) {
                     validEffects.push(status.slug)
                }
           })

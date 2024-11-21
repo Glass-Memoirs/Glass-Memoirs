@@ -294,13 +294,13 @@ env.MODIFIERS.entropy_eternal = {
 	alterations: {
 		all: [ ["STATUS", "entropy_eternal"] ]
 	}
-},
+}
 
 env.MODIFIERS.entropy_eyes = {
 	name: "Shattered Eyes",
 	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eyes.help },
 	alterations: {
-		all: [ ["SATUS", "entropy_eyes"] ]
+		all: [ ["STATUS", "entropy_eyes"] ]
 	}
 }
 

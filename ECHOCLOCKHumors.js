@@ -340,7 +340,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
 	     let validEffects = []
 	     target.statusEffects.forEach((status, i) => {
                //console.log(status)
-               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+               if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) {
                     validEffects.push(status.slug)
                }
           })
@@ -378,7 +378,7 @@ env.STATUS_EFFECTS.entropy_eyes = {
 	name: "Shattered Eyes",
      passive: "modifier",
 	beneficial: false,
-     icon: "/img/combat/passives/light_dark.gif",
+     icon: "/img/sprites/combat/passives/light_dark.gif",
 	events: {
 
 		onTurn: function(){
@@ -420,7 +420,7 @@ env.STATUS_EFFECTS.entropy_eyes = {
                let TakableEffects = []
                target.statusEffects.forEach((Deciding) => {
                     if((!Deciding.infinite || !Deciding.passive) && (statusPool.includes(Deciding.slug))) {
-                         validEffects.push(Deciding)
+                         TakableEffects.push(Deciding)
                     }
                })
                for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {

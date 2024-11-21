@@ -377,7 +377,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
 env.STATUS_EFFECTS.entropy_eyes = {
 	slug: "entropy_eyes",
 	name: "Shattered Eyes",
-     passive: "modifier"
+     passive: "modifier",
 	beneficial: false,
      icon: "/img/combat/passives/light_dark.gif",
 	events: {

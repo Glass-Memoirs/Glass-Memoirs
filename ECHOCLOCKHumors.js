@@ -300,7 +300,7 @@ env.MODIFIERS.entropy_eyes = {
 	name: "Shattered Eyes",
 	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eyes.help },
 	alterations: {
-		all: [ ["SATUS", "entropy_eyes"] ]
+		all: [ ["STATUS", "entropy_eyes"] ]
 	}
 }
 
@@ -313,7 +313,7 @@ env.STATUS_EFFECTS.entropy_eternal = {
 	impulse: {type: "common", component: "entropy"},
 	events: {
         
-        onTurn: function(context) {
+        onTurn: function() {
 	    	target = this.status.affecting
 	    	let statusPool = []
 		for (let i in env.STATUS_EFFECTS) {
@@ -344,16 +344,16 @@ env.STATUS_EFFECTS.entropy_eternal = {
                     validEffects.push(status.slug)
                }
           })
-	    console.log(validEffects)
-            if(validEffects.length) validEffects.forEach((Replace) => {
-               let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
-               //console.log(selectedStatus)
-                let chance = 0.2
-                let extra = 0
+	     console.log(validEffects)
+               if(validEffects.length) validEffects.forEach((Replace) => {
+                    let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
+                    //console.log(selectedStatus)
+                    let chance = 0.2
+                    let extra = 0
 				//console.log(Replace)
-               if(Math.random() < chance) {
+                    if(Math.random() < chance) {
 
-                   sendFloater({
+                    sendFloater({
                         target: this.status.affecting,
                         type: "arbitrary",
                         arbitraryString: "DECAYED!",
@@ -363,7 +363,6 @@ env.STATUS_EFFECTS.entropy_eternal = {
 		          if (hasStatus(target, Replace)) {
 		    	          addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace)), noReact: true})
 			          removeStatus(target, Replace)
-                    if(extra) context.length += extra
 		         }     
                }
             })
@@ -377,14 +376,74 @@ env.STATUS_EFFECTS.entropy_eternal = {
 env.STATUS_EFFECTS.entropy_eyes = {
 	slug: "entropy_eyes",
 	name: "Shattered Eyes",
+     passive: "modifier",
 	beneficial: false,
+     icon: "/img/sprites/combat/passives/light_dark.gif",
 	events: {
+
 		onTurn: function(){
 			console.log("nothing here yet!")
+               target = this.status.affecting
+               let statusPool = []
+		     for (let i in env.STATUS_EFFECTS) {
+        	          let statusData = env.STATUS_EFFECTS[i]
+		          let usable = true
+                    //prevent durationless statuses from appearing (and by extend, other passives)
+                 	if(statusData.infinite) {usable = false}
+                 	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
+                 	if(statusData.passive) {usable = false}
+            	     //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
+                 	if(i.includes("global_")) {usable = false}
+                    //prevent misalign statuses from appearing, despite their duration existence
+                	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+                 	//and imperfect reset. i do not know how terrible that will end up.
+            	     if(i == "imperfect_reset") {usable = false}
+                 	//redirection probably needs an origin, so exclude it
+                 	if(i == "redirection") {usable = false}
+
+		          if(i == "entropy_eternal") {usable = false}
+          
+                    //console.log(i, usable)
+                    if(usable) statusPool.push(i)
+               }
+               let AllTargets = []
+               env.rpg.enemyTeam.members.forEach((target) => {
+                    if (target => target.state != "dead" && target.state != "lastStand") {
+                         AllTargets.push(target)
+                    }
+               })
+               env.rpg.allyTeam.members.forEach((target)=> {
+                    if (target => target.state != "dead" && target.state != "lastStand") {
+                         AllTargets.push(target)
+                    }
+               })
+               let TakableEffects = []
+               target.statusEffects.forEach((Deciding) => {
+                    if((!Deciding.infinite || !Deciding.passive) && (statusPool.includes(Deciding.slug))) {
+                         TakableEffects.push(Deciding.slug)
+                    }
+               })
+               if(TakableEffects.length) for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {
+                    let Chance = 0.4
+                    if (Math.random() < Chance) {
+                         sendFloater({
+                              target: this.status.affecting,
+                              type: "arbitrary",
+                              arbitraryString: "REFRACTED!",
+                              isGood: false
+                         })
+                         let TakingStat = TakableEffects.sample()
+                         let SendingTo = AllTargets.sample({noRepeat: true})
+                         if (hasStatus(target, TakingStat)) {
+                              addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
+                              removeStatus(target, TakingStat)
+                         }
+                    }
+               }
 		}
 	},
 		
-	help: `Nothing here yet!`
+	help: `Effects have a 40% chance of being moved to another actor`
 },
 
 

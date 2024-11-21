@@ -432,8 +432,10 @@ env.STATUS_EFFECTS.entropy_eyes = {
                     })
                     let TakingStat = TakableEffects.sample()
                     let SendingTo = AllTargets.sample({noRepeat: true})
-                    addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
-                    removeStatus(target, TakingStat)
+                    if (hasStatus(target, TakingStat)) {
+                         addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
+                         removeStatus(target, TakingStat)
+                    }
                }
 		}
 	},

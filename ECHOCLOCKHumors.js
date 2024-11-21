@@ -1,3 +1,29 @@
+/*
+ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
+ Credits:
+ - EE for ideas, playtesting, and also making the undithered gif for entropy
+ - Lustre for making the dithered version of the fractal gif
+ - Sola for making the monochrome eye for Entropy's action
+ - Narri, Kuvi, and Adr for judging my code
+ - Adenator for the code for making the status pool because i was probably not gonna figure that out at all
+ SECTIONS:
+ 1. Dialogue changing
+ 2. CSS
+ 3. Humors
+ 4. Augments
+ 5. Combat Modifiers
+ 6. Status Effects
+ 7. Combat Actions
+ 8. Merchant Code
+
+ TO DO:
+ Make Entropy's action: ACTION::REACT
+ > On Applied Negative Status effect, Use Random Action
+ Make Entropy's Fated:
+ > yknow i dont know what to make this, definately something status related
+*/
+
+//Dialogue changing
 document.addEventListener("readystatechange", (event) => {
 	if(document.readyState == 'complete') {
 		env.dialogues["dreammod"] = generateDialogueObject(`
@@ -194,7 +220,7 @@ document.addEventListener("readystatechange", (event) => {
 		}
 	}
 });
-
+//CSS
 content.insertAdjacentHTML('beforeend', `<style>
 /* for making player cards not overflow offscreen */
 #ally-team .actor {
@@ -227,7 +253,7 @@ content.insertAdjacentHTML('beforeend', `<style>
     --font-color: var(--neutral-color);
 }
 </style>`);
-
+//Humors
 env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",
      slug: "entropy",
@@ -258,6 +284,7 @@ env.COMBAT_COMPONENTS.entropy = {
      combatModifiers: ["entropy_eternal", "entropy_eyes"]
 }
 
+//Augments
 env.ACTOR_AUGMENTS.generic.third_law = {
      slug: "third_law",
      name: "3rd Law",
@@ -288,6 +315,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      cost: 2
 }
 
+//Combat Modifiers
 env.MODIFIERS.entropy_eternal = {
 	name: "Eternal Decay",
 	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eternal.help },
@@ -304,6 +332,7 @@ env.MODIFIERS.entropy_eyes = {
 	}
 }
 
+//Status Effects
 env.STATUS_EFFECTS.entropy_eternal = {
 	slug: "entropy_eternal",
 	name: "Eternal Decay",
@@ -513,6 +542,7 @@ env.STATUS_EFFECTS.exp_over = {
         help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
 }
 
+//Combat actions
 env.ACTIONS.momentum = {
      slug: "momentum",
      name: "Momentum",
@@ -834,7 +864,8 @@ env.ACTIONS.player_overload = {
      },
      avoidChaining: true
 }
-     
+
+//Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it
      const component = env.COMBAT_COMPONENTS[componentName]
       let commerceObject = ({

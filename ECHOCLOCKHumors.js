@@ -443,7 +443,7 @@ env.STATUS_EFFECTS.entropy_eyes = {
 		}
 	},
 		
-	help: `Nothing here yet!`
+	help: `Effects have a 40% chance of being moved to another actor`
 },
 
 

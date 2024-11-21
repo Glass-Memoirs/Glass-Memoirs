@@ -430,7 +430,7 @@ env.STATUS_EFFECTS.entropy_eyes = {
                          arbitraryString: "REFRACTED!",
                          isGood: false
                     })
-                    let TakingStat = TakableEffects.sample().slug
+                    let TakingStat = TakableEffects.sample()
                     let SendingTo = AllTargets.sample({noRepeat: true})
                     addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
                     removeStatus(target, TakingStat)

@@ -377,10 +377,62 @@ env.STATUS_EFFECTS.entropy_eternal = {
 env.STATUS_EFFECTS.entropy_eyes = {
 	slug: "entropy_eyes",
 	name: "Shattered Eyes",
+     passive: "modifier"
 	beneficial: false,
+     icon: "/img/combat/passives/light_dark.gif",
 	events: {
 		onTurn: function(){
 			console.log("nothing here yet!")
+               let statusPool = []
+		     for (let i in env.STATUS_EFFECTS) {
+        	          let statusData = env.STATUS_EFFECTS[i]
+		          let usable = true
+                    //prevent durationless statuses from appearing (and by extend, other passives)
+                 	if(statusData.infinite) {usable = false}
+                 	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
+                 	if(statusData.passive) {usable = false}
+            	     //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
+                 	if(i.includes("global_")) {usable = false}
+                    //prevent misalign statuses from appearing, despite their duration existence
+                	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+                 	//and imperfect reset. i do not know how terrible that will end up.
+            	     if(i == "imperfect_reset") {usable = false}
+                 	//redirection probably needs an origin, so exclude it
+                 	if(i == "redirection") {usable = false}
+
+		          if(i == "entropy_eternal") {usable = false}
+          
+                    //console.log(i, usable)
+                    if(usable) statusPool.push(i)
+               }
+               let AllTargets = []
+               env.rpg.enemyTeam.members.forEach((target) => {
+                    if (target => target.state != "dead" && target.state != "lastStand") {
+                         AllTargets.push(target)
+                         target.statusEffects.forEach((PossibleStat, j) => {
+                              if((!PossibleStat.infinite || !PossibleStat.passive || !j.includes("global_")) && (statusPool.includes(PossibleStat.slug))) {
+                                   AllTargets.target.push(PossibleStat.slug)
+                              }
+                         })
+                    }
+               })
+               env.rpg.allyTeam.members.forEach((target)=> {
+                    if (target => target.state != "dead" && target.state != "lastStand") {
+                         AllTargets.push(target)
+                         target.statusEffects.forEach((PossibleStat, j) => {
+                              if((!PossibleStat.infinite || !PossibleStat.passive || !j.includes("global_")) && (statusPool.includes(PossibleStat.slug))) {
+                                   AllTargets.target.push(PossibleStat)
+                              }
+                         })
+                    }
+               })
+               let TakingFrom = AllTargets.sample({noRepeat: true})
+               if (AllTargets.TakingFrom.length) {
+                    TakingStat = AllTargets[TakingFrom].sample()
+               }
+               let SendingTo = AllTargets.sample({noRepeat: true})
+               removeStatus(AllTargets[TakingFrom], AllTargets.TakingFrom[TakingStat])
+               addStatus({target: AllTargets[SendingTo], status: AllTargets.TakingFrom[TakingStat].slug, length: Math.floor(AllTargets.TakingFrom[TakingStat])})
 		}
 	},
 		

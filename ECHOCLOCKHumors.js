@@ -480,7 +480,10 @@ env.STATUS_EFFECTS.entropy_reaction = {
      name: "ACTION:: REACT",
      passive: true,
      beneficial: true,
-     impulse: {type: action, component: entropy}
+     impulse: {type: action, component: entropy},
+     events: {
+     },
+     help: 'nothing here yet!!'
 }
 
 

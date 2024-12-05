@@ -220,6 +220,7 @@ document.addEventListener("readystatechange", (event) => {
 		}
 	}
 });
+
 //CSS
 content.insertAdjacentHTML('beforeend', `<style>
 /* for making player cards not overflow offscreen */
@@ -253,7 +254,7 @@ content.insertAdjacentHTML('beforeend', `<style>
     --font-color: var(--neutral-color);
 }
 </style>`);
-//Humors
+//HUMORS
 env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",
      slug: "entropy",
@@ -284,7 +285,7 @@ env.COMBAT_COMPONENTS.entropy = {
      combatModifiers: ["entropy_eternal", "entropy_eyes"]
 }
 
-//Augments
+//AUGMENTS
 env.ACTOR_AUGMENTS.generic.third_law = {
      slug: "third_law",
      name: "3rd Law",
@@ -315,7 +316,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      cost: 2
 }
 
-//Combat Modifiers
+//COMBAT MODIFIERS
 env.MODIFIERS.entropy_eternal = {
 	name: "Eternal Decay",
 	getHelp: ()=> { return env.STATUS_EFFECTS.entropy_eternal.help },
@@ -331,9 +332,8 @@ env.MODIFIERS.entropy_eyes = {
 		all: [ ["STATUS", "entropy_eyes"] ]
 	}
 }
-
-//Status Effects
-env.STATUS_EFFECTS.entropy_eternal = {
+//STATUS EFFECTS
+env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 	slug: "entropy_eternal",
 	name: "Eternal Decay",
 	passive: "modifier",
@@ -475,8 +475,16 @@ env.STATUS_EFFECTS.entropy_eyes = {
 	help: `Effects have a 40% chance of being moved to another actor`
 },
 
+env.STATUS_EFFECTS.entropy_reaction = {
+     slug: "entropy_reaction",
+     name: "ACTION:: REACT",
+     passive: true,
+     beneficial: true,
+     impulse: {type: action, component: entropy}
+}
 
-env.STATUS_EFFECTS.exp_over = {
+
+env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting
      slug: "exp_over",
      name: "Exponential Overload",
      beneficial: true,
@@ -542,8 +550,8 @@ env.STATUS_EFFECTS.exp_over = {
         help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
 }
 
-//Combat actions
-env.ACTIONS.momentum = {
+//COMBAT ACTIONS
+env.ACTIONS.momentum = { //couldnt figure out how to make this thing actually multiply damage by the amount of stat effects so i made it loop
      slug: "momentum",
      name: "Momentum",
      type: 'target',
@@ -561,8 +569,9 @@ env.ACTIONS.momentum = {
      amt: 2,
      exec: function(user, target) {
           let action = this
-          console.log(hasStatus(user, 'focused'))
+          //console.log(hasStatus(user, 'focused'))
 
+          //The looping part
           for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
                env.GENERIC_ACTIONS.singleTarget({
                     action,
@@ -578,13 +587,13 @@ env.ACTIONS.momentum = {
      }
 },
 
-env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your own in half
+env.ACTIONS.player_law = { //Funky little move, had to change it up just like momentum.
      slug: "player_law",
      name: "3rd Law",
      type: 'target',
      desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
      anim: "basic-attack",
-     help: "'100% -2HP * (XT:REGEN+FOCUS) 25%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
+     help: "'100% -2HP * (XT:REGEN+FOCUS) 15%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
      usage: {
           act: "%USER CHANNELS ENERGY INTO A SPRINT",
           crit: "%TARGET GETS KNOCKED OVER",
@@ -623,7 +632,7 @@ env.ACTIONS.player_law = { //have a chance to apply vulnerable, only cut your ow
 },
 
 
-env.ACTIONS.level_statuses ={
+env.ACTIONS.level_statuses ={ //this would not deal damage for me at all so i made it deal no damage, also turns out windup doesnt break anything if its removed!
      slug: "level_statuses",
      name: "Level",
      type: 'target',
@@ -682,7 +691,7 @@ env.ACTIONS.level_statuses ={
           userEffects.forEach((status) => {
                removeStatus(user, status)
           })
-          critExec: {
+          critExec: { //DOnt believe its lies this works jsut fine
                if (targetEffects.includes("windup")) {
                     sendFloater({
                         target: user,
@@ -763,35 +772,33 @@ env.ACTIONS.player_rig = {
           userEffects.forEach((status) => {
                if (!status.beneficial) removeStatus(user, status.slug)
           })
-          critExec: {
-               targetEffects.forEach((status) => {
-                    if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
-                    if(status == "windup") {
-                         sendFloater({
-                              target: user,
-                              type: "arbitrary",
-                              arbitraryString: "LMAO",
-                              size: 1.5,
-                         })
+          critExec: (status) => {
+               if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
+               if(status == "windup") {
+                    sendFloater({
+                         target: target,
+                         type: "arbitrary",
+                         arbitraryString: "LMAO",
+                         size: 1.5,
+                    })
 
-                         readoutAdd({
-                              message: `${target.name} forgot what it was doing.`, 
-                              name: "sourceless", 
-                              type: "sourceless combat minordetail", 
-                              show: false,
-                              sfx: false
-                         })
-                         removeStatus(target, status)
-                    }
-               })
-               userEffects.forEach((status) => {
-                    if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
-               }) 
+                    readoutAdd({
+                         message: `${target.name} forgot what it was doing.`, 
+                         name: "sourceless", 
+                         type: "sourceless combat minordetail", 
+                         show: false,
+                         sfx: false
+                    })
+                    removeStatus(target, status)
+               }
           }
+          userEffects.forEach((status) => {
+               if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
+          })
      }
-},
+}
 
-env.ACTIONS.wild_frenzy = {
+env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest thing to make
      slug: "wild_frenzy",
      name: "Frenzied Flail",
      type: 'target',
@@ -807,7 +814,7 @@ env.ACTIONS.wild_frenzy = {
      accuracy: 1,
      crit: 0.15,
      amt: 2,
-     exec: function(user, target, beingUsedAsync) { //stole a bit of frenzy's code,
+     exec: function(user, target) { //stole a bit of frenzy's code,
           let action = this
           
           let targetTeam
@@ -843,7 +850,7 @@ env.ACTIONS.wild_frenzy = {
      }
 },
 
-env.ACTIONS.player_overload = {
+env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :}
      slug: 'player_overload',
      name: 'Exponential Surge',
      type: 'self+autohit+support',
@@ -864,7 +871,6 @@ env.ACTIONS.player_overload = {
      },
      avoidChaining: true
 }
-
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it
      const component = env.COMBAT_COMPONENTS[componentName]

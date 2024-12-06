@@ -502,6 +502,12 @@ env.STATUS_EFFECTS.entropy_reaction = {
                if (targetModifiers.length) for(let i = 0; i<1; i++) {
                     let Chance = 0.2
                     if (Math.random() < Chance) {
+		        sendFloater({
+                            target: subject,
+                            type: "arbitrary",
+                            arbitraryString: "DRAINED!",
+                            isGood: false
+                        })
                          let KillModif = targetModifiers.sample()
                          removeStatus(subject, KillModif, {forceRemoveStatus: true})
                     }

@@ -417,21 +417,13 @@ env.STATUS_EFFECTS.entropy_eyes = {
 		     for (let i in env.STATUS_EFFECTS) {
         	          let statusData = env.STATUS_EFFECTS[i]
 		          let usable = true
-                    //prevent durationless statuses from appearing (and by extend, other passives)
                  	if(statusData.infinite) {usable = false}
-                 	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
                  	if(statusData.passive) {usable = false}
-            	     //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
                  	if(i.includes("global_")) {usable = false}
-                    //prevent misalign statuses from appearing, despite their duration existence
                 	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-                 	//and imperfect reset. i do not know how terrible that will end up.
             	     if(i == "imperfect_reset") {usable = false}
-                 	//redirection probably needs an origin, so exclude it
                  	if(i == "redirection") {usable = false}
-
 		          if(i == "entropy_eternal") {usable = false}
-          
                     //console.log(i, usable)
                     if(usable) statusPool.push(i)
                }
@@ -480,11 +472,45 @@ env.STATUS_EFFECTS.entropy_reaction = {
      name: "ACTION:: REACT",
      passive: true,
      beneficial: true,
+     icon: "https://glass-memoirs.github.io/Glass-Memoirs/eyew.gif",
      impulse: {type: "action", component: "entropy"},
      events: {
-     },
-     help: 'nothing here yet!!'
+          onCrit: function({subject, target}) {
+               let modifierPool = []
+		     for (let i in env.STATUS_EFFECTS) {
+        	          let statusData = env.STATUS_EFFECTS[i]
+		          let usable = false
+                    if(statusData.passive) {usable = true}
+                    if(statusData.infinite || (statusData.slug != "windup")) {usable = true}
+                 	if(i.includes("global_")||i.includes("malware_")||i.includes("fish_")) {usable = false}
+                	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+            	     if(i == "imperfect_reset") {usable = false}
+                 	if(i == "redirection" || i == "ethereal" || i == "immobile" || i == "conjoined" || i == "permanent_hp") {usable = false}
+                    console.log(i, usable)
+                    if(usable) modifierPool.push(i)
+               }
+               console.log(modifierPool)
+               let targetModifiers = []
+               for (let i in subject.statusEffects) {
+                    let status = subject.statusEffects[i]
+                    console.log(status)
+                    if((status.infinite || status.passive || !i.includes("global_")) && (modifierPool.includes(status.slug))) {
+                         targetModifiers.push(status.slug)
+                    }
+               }
+               console.log(targetModifiers)
+               if (targetModifiers.length) for(let i = 0; i<1; i++) {
+                    let Chance = 0.2
+                    if (Math.random() < Chance) {
+                         let KillModif = targetModifiers.sample()
+                         removeStatus(subject, KillModif, {forceRemoveStatus: true})
+                    }
+               }
+           }
+       },
+       help: '20% chance to remove random status or impulse'
 }
+
 
 
 env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting

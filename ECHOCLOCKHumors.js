@@ -282,7 +282,7 @@ env.COMBAT_COMPONENTS.entropy = {
                maxhp: 4
           }
      },
-     combatModifiers: ["entropy_eternal", "entropy_eyes"]
+     combatModifiers: ["entropy_eternal", "entropy_eyes", "entropy_clock", "entropy_heat"]
 }
 
 //AUGMENTS
@@ -331,6 +331,22 @@ env.MODIFIERS.entropy_eyes = {
 	alterations: {
 		all: [ ["STATUS", "entropy_eyes"] ]
 	}
+}
+
+env.MODIFIERS.entropy_clock = {
+     name: "Broken Clock",
+     getHelp: ()=> {return env.STATUS_EFFECTS.entropy_clock.help},
+     alterations: {
+          all: [["STATUS", "entropy_clock"]]
+     }
+}
+
+env.MODIFIERS.entropy_heat ={
+     name: "Heat Death",
+     getHelp: ()=> {return env.STATUS_EFFECTS.entropy_heat.help},
+     alterations: {
+          all: [["STATUS", "entropy_heat"]]
+     }
 }
 //STATUS EFFECTS
 env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
@@ -467,6 +483,51 @@ env.STATUS_EFFECTS.entropy_eyes = {
 	help: `Effects have a 40% chance of being moved to another actor`
 },
 
+env.STATUS_EFFECTS.entropy_clock = {
+     slug: "entropy_clock",
+     name: "Broken Clock",
+     passive: true,
+     beneficial: false,
+     icon: "/img/sprites/combat/passives/claws_infection.gif",
+     events: {
+          onTurn: function() {
+               reactDialogue(this.status.affecting, 'rot');
+               combatHit(this.status.affecting, {amt: 2, autohit: true, redirectable: false, runEvents: false});
+               play('status', 0.75, 0.5);
+           },
+     },
+     help: "Each turn loose 2hp"
+},
+
+env.STATUS_EFFECTS.entropy_heat = {
+     slug: "entropy_heat",
+     name: "Heat Death",
+     passive: true,
+     beneficial: true,
+     icon: "",
+     events: {
+          onBeforeAction: function(context) {
+               if(!context.settings.action.type.includes("target")) return;
+               let Chance = 0.23
+               // alter action maybe
+               if(Math.random() < Chance) {
+
+                   context.settings.action = env.ACTIONS["entropy_burnout"]
+                   let subject = context.settings.user
+
+                   sendFloater({
+                       target: subject,
+                       type: "arbitrary",
+                       arbitraryString: "SPARKING",
+                       isGood: false,
+                       size: 2,
+                   })
+               }
+           },
+     },
+     help: 'Attacks have a 23% chance to become Burnout'
+},
+
 env.STATUS_EFFECTS.entropy_reaction = {
      slug: "entropy_reaction",
      name: "ACTION:: REACT",
@@ -583,6 +644,50 @@ env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The in
             },
         },
         help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
+},
+
+env.STATUS_EFFECTS.burnout = {
+     slug: "burnout",
+     name: "Burnout",
+     beneficial: false,
+     events:{
+          onCrit: function({subject, attack, originalEventTarget}) {
+               removeStatus(this.status.affecting, 'burnout',{runEvents: false})
+
+               sendFloater({
+                    target: this.status.affecting,
+                    type: "arbitrary",
+                    arbitraryString: "DOUSED!",
+                    size: 1,
+               })
+
+               readoutAdd({
+                    message: `${this.status.affecting.name} puts out the flame on their enegrgy`, 
+                    name: "sourceless", 
+                    type: "sourceless combat minordetail",
+                    show: false,
+                    sfx: false
+               })               
+          },
+          onTurn: function({target}) {
+               if (Math.floor(hasStatus(this.status.affecting, "burnout")) <= 2){
+                    addStatus({target: this.status.affecting, status: "hotpocket", length: 2})
+               }
+          },
+       },
+     help: 'Once status runs out, Explode.'
+},
+
+env.STATUS_EFFECTS.hotpocket = {
+     slug: "hotpocket",
+     name: "Immanent Death",
+     beneficial: false,
+     events: {
+          onTurn: function() {
+               combatHit(this.status.affecting, {amt: 1000, autohit: true, redirectable: false})
+          }
+     },
+     help: "Explode! :}"
 }
 
 //COMBAT ACTIONS
@@ -906,6 +1011,38 @@ env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :}
      },
      avoidChaining: true
 }
+
+env.ACTIONS.entropy_burnout = {
+     slug: "entropy_burnout",
+     name: "Burnout",
+     type:'target',
+     desc: "'Set off their end'",
+     anim: "basic-attack",
+     help: "AUTOHIT, +5T BURNOUT ON TARGET",
+     autohit: true,
+     usage: {
+          act: "%USER IGNITES THE ENERGY OF %TARGET",
+          hit: "%TARGET STARTS TO BURN UP",
+     },
+     crit: 0,
+     amt: 2,
+     exec: function(user, target) {
+          return env.GENERIC_ACTIONS.singleTarget({
+               action: this, 
+               user, 
+               target,
+               hitSfx: {
+                    name: 'chomp',
+                    rate: 0.7
+               },
+
+               genExec: ()=> {
+                    addStatus({target, origin: user, status: "burnout", length:5});
+               }
+          })
+     }
+}
+
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it
      const component = env.COMBAT_COMPONENTS[componentName]

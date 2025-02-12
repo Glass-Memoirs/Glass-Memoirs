@@ -17,10 +17,7 @@
  8. Merchant Code
 
  TO DO:
- Make Entropy's action: ACTION::REACT
- > On Applied Negative Status effect, Use Random Action
- Make Entropy's Fated:
- > yknow i dont know what to make this, definately something status related
++Make Entropy's 2nd action
 */
 
 //Dialogue changing
@@ -115,6 +112,9 @@ humors
         entropy<+>loop
             EXEC::change("e3a2_newcomp", "entropy")
             HIDEREAD::
+        surging<+>loop
+            EXEC::change("e3a2_newcomp", "surging")
+            HIDEREAD::
 
 fish
     basterminal
@@ -156,6 +156,10 @@ sfer
         a lot (99)<+>loop
             EXEC::change("e3a2_sfer", 99)
             HIDEREAD::
+
+        mod tester's delight(999)<+>loop
+            EXEC::change("e3a2_sfer", 999)
+            HIDEREAD::
 `)
 	}
 } ) ;
@@ -171,6 +175,7 @@ document.addEventListener("readystatechange", (event) => {
 				bone: 30,
 				eyes: 30,
 				entropy: 30,
+                    surging: 30,
 			}
 			
 			page.party[0].components["primary"] = "claws"
@@ -194,6 +199,7 @@ document.addEventListener("readystatechange", (event) => {
 				bone: 3,
 				eyes: 3,
 				entropy: 3,
+                    surging: 3,
 			}
 			
 			page.party[0].components["primary"] = "claws"
@@ -217,6 +223,15 @@ document.addEventListener("readystatechange", (event) => {
 				member.components["secondary"] = "entropy"
 				member.components["utility"] = "entropy"
 			})
+
+          case "surge":
+               page.flags.components = { surging: 12}
+
+               page.party.forEach(member=>{
+                    member.components["primary"] = "surging"
+                    member.components["secondary"] = "surging"
+                    member.components["utility"] = "surging"
+               })
 		}
 	}
 });
@@ -253,13 +268,23 @@ content.insertAdjacentHTML('beforeend', `<style>
     --accent-color: var(--bright-color);
     --font-color: var(--neutral-color);
 }
+[component="surging"] {
+    --background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoristelf.png);
+    --organelle-background: url(/img/textures/yneural.gif);
+    --background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/surgingHumor.png);
+    --background-size: auto;
+    --background-position: center;
+    --background-color: var(--dark-color);
+    --accent-color: var(--friend-color);
+    --font-color: var(--fundfriend-color);
+}
 </style>`);
 //HUMORS
 env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",
      slug: "entropy",
      description: "'repetition and chaos'",
-     help: "'charge';'balance';'surges'",
+     help: "'move';'balance';'repeat'",
 
      primary: { //damage scales by positive effects on user
           alterations: [["primary", "momentum"]],     
@@ -285,7 +310,71 @@ env.COMBAT_COMPONENTS.entropy = {
      combatModifiers: ["entropy_eternal", "entropy_eyes", "entropy_clock", "entropy_heat"]
 }
 
+env.COMBAT_COMPONENTS.surging = {
+     name: "Surge",
+     slug: "surging",
+     description: "'rebalance and rush'",
+     help: "'charge';'awaken';'overcharge'",
+
+     primary: {
+          alterations: [["primary", "surging_charge"]],
+          stats: {
+               maxhp: 2
+          }
+     },
+     secondary: {
+          alterations: [["secondary", "surging_wake"]],
+          stats: {
+               maxhp: 2
+          }
+     },
+     utility: {
+          alterations: [["evade", "surging_surge"]], //surging surge lmao. like yeah thats what it does
+          stats: {
+               maxhp: 2
+          }
+     },
+     combatModifiers: []
+}
+
+/*
+env.COMBAT_COMPONENTS.meat = {
+     name: "Meat",
+     slug: "meat",
+     description: "shhhh",
+     help: "not here yet",
+
+     primary: {
+          alterations: [["primary"]],
+          stats: {
+               maxhp: 3
+          }
+     },
+     secondary: {
+          alterations: [["secondary"]],
+          stats: {
+               maxhp: 3
+          }
+     },
+     utility: {
+          alterations: [["evade"]],
+          stats: {
+               maxhp: 3
+          }
+     }
+}
+*/
+
+
 //AUGMENTS
+/*
++ Yknow, you dont really need to look at these, they all do the same layout and are generally hard to break.
++ that being said, mayber you might need to see these for move names?
+*/
+//ENTROPY
+/*
+[]^[]< my fucking god why did i not give them entropy_
+*/
 env.ACTOR_AUGMENTS.generic.third_law = {
      slug: "third_law",
      name: "3rd Law",
@@ -313,6 +402,33 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      description: "'focus movement into quick planned strikes';'improves striking'",
      alterations: [["wild_frenzy", "player_overload"]],
      component: ["utility", "entropy"],
+     cost: 2
+}
+//SURGING
+env.ACTOR_AUGMENTS.surging_powerhouse = {
+     slug: "surging_powerhouse",
+     name: "Powerhouse",
+     description: "'move nimbly, strike hard'",
+     alteration: [["surging_charge", "surging_powerhouse"]],
+     component: ["primary", "surging"],
+     cost: 2
+}
+
+env.ACTOR_AUGMENTS.surging_rise = {
+     slug: "surging_rise",
+     name: "Rise",
+     description: "'steady those affected by stun','cannot stop consequence of doing so'",
+     alteration: [["surging_wake", "surging_rise"]],
+     component: ["secondary", "surging"],
+     cost: 2
+}
+
+env.ACTOR_AUGMENTS.surging_feeding = {
+     slug: "surging_feeding",
+     name: "Feeding Frenzy",
+     description: "'break yourself to sustain others'",
+     alteration: [["surging_surge", "surging_feeding"]],
+     component: ["evade", "surging"],
      cost: 2
 }
 
@@ -348,7 +464,11 @@ env.MODIFIERS.entropy_heat ={
           all: [["STATUS", "entropy_heat"]]
      }
 }
+
 //STATUS EFFECTS
+/*
++ Yeah these needed doccumenting
+*/
 env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 	slug: "entropy_eternal",
 	name: "Eternal Decay",
@@ -358,63 +478,56 @@ env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 	impulse: {type: "common", component: "entropy"},
 	events: {
         
-        onTurn: function() {
-	    	target = this.status.affecting
-	    	let statusPool = []
-		for (let i in env.STATUS_EFFECTS) {
-        	     let statusData = env.STATUS_EFFECTS[i]
-		     let usable = true
-               //prevent durationless statuses from appearing (and by extend, other passives)
-            	if(statusData.infinite) {usable = false}
-            	//OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
-            	if(statusData.passive) {usable = false}
-            	//APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
-            	if(i.includes("global_")) {usable = false}
-				//prevent misalign statuses from appearing, despite their duration existence
-            	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-            	//and imperfect reset. i do not know how terrible that will end up.
-            	if(i == "imperfect_reset") {usable = false}
-            	//redirection probably needs an origin, so exclude it
-            	if(i == "redirection") {usable = false}
-
-		     if(i == "entropy_eternal") {usable = false}
-          
-               //console.log(i, usable)
-               if(usable) statusPool.push(i)
+          onTurn: function() {
+               /*
+               Thank you adenator for making this code way before me!
+               However, i think im gonna take a stab at making it doccumented.
+               */
+	    	     target = this.status.affecting
+	    	     let statusPool = [] //List of valid status effects
+		     for (let i in env.STATUS_EFFECTS) { //takes the entire list of status effects (including modded)
+        	          let statusData = env.STATUS_EFFECTS[i] //gives status to something comparable
+		          let usable = true //assuming that we can use it
+            	     if(statusData.infinite) {usable = false} //in this case, moving infinite things could break something (glaring at windup)
+            	     if(statusData.passive) {usable = false} //in this case, we dont really wanna shuffle passives.
+            	     if(i.includes("global_")) {usable = false} //Globals are escalation and some fish modifiers.
+            	     if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false} //AbsurdFrame specific statuses
+            	     if(i == "imperfect_reset") {usable = false} //Firmament looping status. you already know
+            	     if(i == "redirection") {usable = false} //honestly i dont know if im unable to move redirection around. it has an origin so just exclude it already
+		          if(i == "entropy_eternal") {usable = false} //yeah so, Passive: true and Passive: "modifier" dont equal the exact same thing
+//                  console.log(i, usable)
+                    if(usable) statusPool.push(i) //if that shit usable? add it to the list
+               }
+	          let validEffects = [] //list for who the modifier is affecting on the current turn
+	          target.statusEffects.forEach((status, i) => { //get their status list!
+//                  console.log(status)
+                    if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) { //ignore passive, infinite, or anything not in the pool
+                         validEffects.push(status.slug) //if upper part goes "yeah", put it in the list
+                    }
+               })
+//	          console.log(validEffects)
+               if(validEffects.length) validEffects.forEach((Replace) => { //if the list is not nothing, we run a little thing for each effect.
+                    let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)] //grab random status from the statusPool (we can set the max to be its length, and remove partial values)
+//                  console.log(selectedStatus)
+                    let chance = 0.2 //dont want it to be always
+//                  console.log(Replace)
+                    if(Math.random() < chance) { //if the random hits that 20%?
+                         sendFloater({ //let them know whats going on!
+                              target: this.status.affecting,
+                              type: "arbitrary",
+                              arbitraryString: "DECAYED!",
+                              isGood: false
+                         })
+		               if (hasStatus(target, Replace)) { //if the status didnt die or if it doesnt get rolled twice (i dunno if thats possible)
+                              //slap it onto another person
+		    	               addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace)), noReact: true})
+                              //and then remove it from you!
+			               removeStatus(target, Replace)
+		               }     
+                    }
+               })
           }
-	     let validEffects = []
-	     target.statusEffects.forEach((status, i) => {
-               //console.log(status)
-               if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) {
-                    validEffects.push(status.slug)
-               }
-          })
-	     console.log(validEffects)
-               if(validEffects.length) validEffects.forEach((Replace) => {
-                    let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)]
-                    //console.log(selectedStatus)
-                    let chance = 0.2
-                    let extra = 0
-				//console.log(Replace)
-                    if(Math.random() < chance) {
-
-                    sendFloater({
-                        target: this.status.affecting,
-                        type: "arbitrary",
-                        arbitraryString: "DECAYED!",
-                        isGood: false
-                    })
-		
-		          if (hasStatus(target, Replace)) {
-		    	          addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace)), noReact: true})
-			          removeStatus(target, Replace)
-		         }     
-               }
-            })
-        }
-    },
-
-
+     },
      help: `most status effects have a 20% chance to become any other effects`
 },
 
@@ -479,7 +592,6 @@ env.STATUS_EFFECTS.entropy_eyes = {
                }
 		}
 	},
-		
 	help: `Effects have a 40% chance of being moved to another actor`
 },
 
@@ -494,7 +606,7 @@ env.STATUS_EFFECTS.entropy_clock = {
                reactDialogue(this.status.affecting, 'rot');
                combatHit(this.status.affecting, {amt: 2, autohit: true, redirectable: false, runEvents: false});
                play('status', 0.75, 0.5);
-           },
+          },
      },
      help: "Each turn loose 2hp"
 },
@@ -504,7 +616,7 @@ env.STATUS_EFFECTS.entropy_heat = {
      name: "Heat Death",
      passive: true,
      beneficial: true,
-     icon: "",
+     icon: "/img/sprites/combat/augs/bazruka.gif",
      events: {
           onBeforeAction: function(context) {
                if(!context.settings.action.type.includes("target")) return;
@@ -512,18 +624,18 @@ env.STATUS_EFFECTS.entropy_heat = {
                // alter action maybe
                if(Math.random() < Chance) {
 
-                   context.settings.action = env.ACTIONS["entropy_burnout"]
-                   let subject = context.settings.user
+                    context.settings.action = env.ACTIONS["entropy_burnout"]
+                    let subject = context.settings.user
 
-                   sendFloater({
-                       target: subject,
-                       type: "arbitrary",
-                       arbitraryString: "SPARKING",
-                       isGood: false,
-                       size: 2,
-                   })
+                    sendFloater({
+                         target: subject,
+                         type: "arbitrary",
+                         arbitraryString: "SPARKING",
+                         isGood: false,
+                         size: 2,
+                    })
                }
-           },
+          },
      },
      help: 'Attacks have a 23% chance to become Burnout'
 },
@@ -563,22 +675,20 @@ env.STATUS_EFFECTS.entropy_reaction = {
                if (targetModifiers.length) for(let i = 0; i<1; i++) {
                     let Chance = 0.2
                     if (Math.random() < Chance) {
-		        sendFloater({
-                            target: subject,
-                            type: "arbitrary",
-                            arbitraryString: "DRAINED!",
-                            isGood: false
-                        })
+		               sendFloater({
+                              target: subject,
+                              type: "arbitrary",
+                              arbitraryString: "DRAINED!",
+                              isGood: false
+                         })
                          let KillModif = targetModifiers.sample()
                          removeStatus(subject, KillModif, {forceRemoveStatus: true})
                     }
                }
-           }
-       },
-       help: '20% chance to remove random status or impulse'
+          }
+     },
+     help: '20% chance to remove random status or impulse'
 }
-
-
 
 env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting
      slug: "exp_over",
@@ -587,63 +697,63 @@ env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The in
      infinite: true,
      events: {
           onTurn: function() { 
-                reactDialogue(this.status.affecting, 'surge') 
-                delete this.status.justGotSurge
-            },
+               reactDialogue(this.status.affecting, 'surge') 
+               delete this.status.justGotSurge
+          },
 
           onAction: function({user, action, target, beingUsedAsync}) {
                if(
-                   this.status.justGotSurge || 
-                   beingUsedAsync || 
-                   ["incoherent_", "steer", "floor", "windup", "intrusive"].some(slugpart => action.slug.includes(slugpart)) ||
-                   !action.type.includes("target") ||
-                   (!action.beneficial && target.team.name == "ally") ||
-                   (action.beneficial && target.team.name == "enemy")
+                    this.status.justGotSurge || 
+                    beingUsedAsync || 
+                    ["incoherent_", "steer", "floor", "windup", "intrusive"].some(slugpart => action.slug.includes(slugpart)) ||
+                    !action.type.includes("target") ||
+                    (!action.beneficial && target.team.name == "ally") ||
+                    (action.beneficial && target.team.name == "enemy")
                ) return;
 
 
                setTimeout(()=>{
                     sendFloater({
-                        target: user,
-                        type: "arbitrary",
-                        arbitraryString: "EXPONENTIAL SURGE!",
-                        size: 1.5,
+                         target: user,
+                         type: "arbitrary",
+                         arbitraryString: "EXPONENTIAL SURGE!",
+                         size: 1.5,
                     })
 
                     readoutAdd({
-                        message: `${user.name} enters a deeply focused flurry! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
-                        name: "sourceless", 
-                        type: "sourceless combat minordetail", 
-                        show: false,
-                        sfx: false
+                         message: `${user.name} enters a deeply focused flurry! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+                         name: "sourceless", 
+                         type: "sourceless combat minordetail", 
+                         show: false,
+                         sfx: false
                     })
 
                     env.GENERIC_ACTIONS.teamWave({
-                        team: target.team,
-                        exec: (actor, i) => {
-                            if(actor == target) return; // we skip the original target
-                            env.GENERIC_ACTIONS.teamWave({
-                                 team: target.team,
-                                 exec: (actor, i) => {
-                                     if(actor == target) return; // we skip the original target
-                                     useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "wild surge"})
-                                 }
-                            })
-                        }
+                         team: target.team,
+                         exec: (actor, i) => {
+                              if(actor == target) return; // we skip the original target
+                                   env.GENERIC_ACTIONS.teamWave({
+                                   team: target.team,
+                                   exec: (actor, i) => {
+                                        if(actor == target) return; // we skip the original target
+                                             useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
+                                   }
+                              })
+                         }
                     })
 
-                }, 500)
+               }, 500)
 
-                removeStatus(this.status.affecting, "exp_over")
-		addStatus({target:user, status: 'stun', length: 2, noReact: true})
-		addStatus({target:user, status: 'vulnerable', length: 3, noReact: true})
-            },
+               removeStatus(this.status.affecting, "exp_over")
+		     addStatus({target:user, status: 'stun', length: 2, noReact: true})
+		     addStatus({target:user, status: 'vulnerable', length: 3, noReact: true})
+          },
 
-                onCreated: function({statusObj}) {
-                if(statusObj.slug == this.status.slug) this.status.justGotSurge = true
-            },
-        },
-        help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
+          onCreated: function({statusObj}) {
+               if(statusObj.slug == this.status.slug) this.status.justGotSurge = true
+          },
+     },
+     help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
 },
 
 env.STATUS_EFFECTS.burnout = {
@@ -691,6 +801,7 @@ env.STATUS_EFFECTS.hotpocket = {
 }
 
 //COMBAT ACTIONS
+//ENTROPY
 env.ACTIONS.momentum = { //couldnt figure out how to make this thing actually multiply damage by the amount of stat effects so i made it loop
      slug: "momentum",
      name: "Momentum",
@@ -710,7 +821,6 @@ env.ACTIONS.momentum = { //couldnt figure out how to make this thing actually mu
      exec: function(user, target) {
           let action = this
           //console.log(hasStatus(user, 'focused'))
-
           //The looping part
           for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
                env.GENERIC_ACTIONS.singleTarget({
@@ -765,12 +875,11 @@ env.ACTIONS.player_law = { //Funky little move, had to change it up just like mo
                addStatus({target: user, status: "regen", length: half, noReact: true})
           }
 	     if (hasStatus(user, 'evasion')) {
-	       let half = 0 - Math.floor(hasStatus(user, 'evasion') / 2)
-	       addStatus({target: user, status: "evasion", length: half, noReact: true})
+	          let half = 0 - Math.floor(hasStatus(user, 'evasion') / 2)
+	          addStatus({target: user, status: "evasion", length: half, noReact: true})
 	     }
      }
 },
-
 
 env.ACTIONS.level_statuses ={ //this would not deal damage for me at all so i made it deal no damage, also turns out windup doesnt break anything if its removed!
      slug: "level_statuses",
@@ -793,21 +902,13 @@ env.ACTIONS.level_statuses ={ //this would not deal damage for me at all so i ma
           for (let i in env.STATUS_EFFECTS) {
                let statusData = env.STATUS_EFFECTS[i]
                let usable = true
-               //prevent durationless statuses from appearing (and by extend, other passives)
                if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
-               //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
                if(statusData.passive) {usable = false}
-               //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
                if(i.includes("global_")) {usable = false}
-               //prevent misalign statuses from appearing, despite their duration existence
                if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-               //and imperfect reset. i do not know how terrible that will end up.
                if(i == "imperfect_reset") {usable = false}
-               //redirection probably needs an origin, so exclude it
                if(i == "redirection") {usable = false}
-
                if(i == "entropy_eternal") {usable = false}
-
                //console.log(i, usable)
                if(usable) statusPool.push(i)
           }
@@ -834,18 +935,17 @@ env.ACTIONS.level_statuses ={ //this would not deal damage for me at all so i ma
           critExec: { //DOnt believe its lies this works jsut fine
                if (targetEffects.includes("windup")) {
                     sendFloater({
-                        target: user,
-                        type: "arbitrary",
-                        arbitraryString: "LMAO",
-                        size: 1.5,
+                         target: user,
+                         type: "arbitrary",
+                         arbitraryString: "LMAO",
+                         size: 1.5,
                     })
-
                     readoutAdd({
-                        message: `${target.name} forgot what it was doing.`, 
-                        name: "sourceless", 
-                        type: "sourceless combat minordetail", 
-                        show: false,
-                        sfx: false
+                         message: `${target.name} forgot what it was doing.`, 
+                         name: "sourceless", 
+                         type: "sourceless combat minordetail", 
+                         show: false,
+                         sfx: false
                     })
                     removeStatus(target, "windup")
                }
@@ -874,21 +974,13 @@ env.ACTIONS.player_rig = {
           for (let i in env.STATUS_EFFECTS) {
                let statusData = env.STATUS_EFFECTS[i]
                let usable = true
-               //prevent durationless statuses from appearing (and by extend, other passives)
                if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
-               //OKAY NEVERMIND SOME PASSES DON'T HAVE INFINITE
                if(statusData.passive) {usable = false}
-               //APPARENTLY IT'S POSSIBLE TO GIVE GLOBAL MODIFIERS?????
                if(i.includes("global_")) {usable = false}
-               //prevent misalign statuses from appearing, despite their duration existence
                if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-               //and imperfect reset. i do not know how terrible that will end up.
                if(i == "imperfect_reset") {usable = false}
-               //redirection probably needs an origin, so exclude it
                if(i == "redirection") {usable = false}
-
                if(i == "entropy_eternal") {usable = false}
-          
                //console.log(i, usable)
                if(usable) statusPool.push(i)
           }
@@ -936,7 +1028,7 @@ env.ACTIONS.player_rig = {
                if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
           })
      }
-}
+},
 
 env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest thing to make
      slug: "wild_frenzy",
@@ -958,13 +1050,11 @@ env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest
           let action = this
           
           let targetTeam
-                 switch(user.team.name) {
-                     case "ally": targetTeam = env.rpg.enemyTeam; break;
-                     case "enemy": targetTeam = env.rpg.allyTeam; break;
-                 }
-          
+               switch(user.team.name) {
+                    case "ally": targetTeam = env.rpg.enemyTeam; break;
+                    case "enemy": targetTeam = env.rpg.allyTeam; break;
+               }
           let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
-          
           if(validTargets.length) for (let i = 0; i < 1; i++) {
                if (validTargets) {
                     let target = validTargets.sample()
@@ -979,14 +1069,13 @@ env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest
                                    if(target.hp > 0 && target.state != "lastStand") {
                                         env.setTimeout(()=>{
                                              useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})
-                	                }, 400)
-        	                   }
+                	                    }, 400)
+        	                         }
                               }
                          })
                     }, 500)
                }
-     	  }
-	     
+     	}
      }
 },
 
@@ -1010,12 +1099,12 @@ env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :}
           return 'nothing'
      },
      avoidChaining: true
-}
+},
 
 env.ACTIONS.entropy_burnout = {
      slug: "entropy_burnout",
      name: "Burnout",
-     type:'target',
+     type: 'target',
      desc: "'Set off their end'",
      anim: "basic-attack",
      help: "AUTOHIT, +5T BURNOUT ON TARGET",
@@ -1041,33 +1130,242 @@ env.ACTIONS.entropy_burnout = {
                }
           })
      }
+},
+//SURGING
+env.ACTIONS.surging_charging = {
+     slug: "surging_charging",
+     name: "Charging Smash",
+     type: 'target',
+     desc: "'hit foe with a charged smash';'use rebound to ready up another go'",
+     anim: "basic-attack",
+     help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
+     usage: {
+          act: "%USER READIES A SWING",
+          hit: "%TARGET IS STRUCK",
+          crit: "%TARGET IS STUNNED",
+     },
+     crit: 0.2,
+     amt: 3,
+     exec: function(user, target) {
+          let includeFocus = false
+          env.GENERIC_ACTIONS.singleTarget({
+               critExec: ({target}) =>{
+                    addStatus({target: target, status: "stun", length: 2})
+                    includeFocus = true
+               },
+               genExec: ()=> {
+                    if (Math.random() < 0.25) {
+                         addStatus(user, "surge")
+                         addStatus({target: target, status: "stun"})
+                         if (includeFocus) {addStatus(user, "focus")}
+                    }
+               }
+          })
+     }
+},
+
+env.ACTIONS.surging_wake = {
+     slug: "surging_wake",
+     name: "Wake",
+     type: 'target',
+     desc: "'snap friend out of stun at a small price';'reorienting sucks'",
+     help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
+     beneficial: true,
+     exec: function(user, target) {
+          let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
+          let pickedConsequence = consequenceChoices.sample()
+          if (hasStatus(target, "stun")) {
+               critExec: ({target}) =>{
+                    if (pickedConsequence == "rot") {
+                         consequenceLength = 1
+                    } else {
+                         consequenceLength = 2
+                    }
+                    combatHit(target, {amt: 1, autohit: true, redirectable: false})
+                    addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+               }
+               hitExec: ({target}) =>{
+                    if (pickedConsequence == "rot") {
+                         consequenceLength = 2
+                    } else {
+                         consequenceLength = 3
+                    }
+                    combatHit(target, {amt: 2, autohit: true, redirectable: false})
+                    addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+               }
+               genExec: ({target}) => {
+                    removeStatus(target, "stun")
+               }
+          } else {
+               critExec: ({target}) => {
+                    addStatus({target: target,status: "evasion",legnth: 3})
+               }
+               hitExec: ({target})=>{
+                    addStatus(target, "evasion")
+               }
+          }
+     }
+},
+
+env.ACTIONS.surging_surge = {
+     slug: "surging_surge",
+     name: "Surge Capacitors",
+     type: 'support+target+self+autohit',
+     desc: "'energize a friend';'preparedness helps'",
+     help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
+     exec: function(user,target) {
+          if (hasStatus(target, "surge")) {
+               removeStatus(target, "surge")
+               addStatus(target,"wild_surge")
+               if (target == user) {
+                    addStatus(user, "vulnerable")
+               }
+          }
+     }
+},
+
+env.ACTIONS.surging_powerhouse = {
+     slug: "surging_powerhouse",
+     name: "Powerhouse",
+     type: 'target',
+     desc: "",
+     help: "",
+     usage: {
+
+     },
+     crit: 0.2,
+     amt: 2,
+     exec: function(user, target) {
+          hitExec: ({user,target}) =>{
+               let action = this
+          
+               let targetTeam
+                    switch(user.team.name) {
+                         case "ally": targetTeam = env.rpg.enemyTeam; break;
+                         case "enemy": targetTeam = env.rpg.allyTeam; break;
+                    }
+               let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
+               if(validTargets.length) for (let i = 1; i <=3; i++) {
+                    if (validTargets) {
+                         let target = validTargets.sample()
+                         setTimeout(()=>{
+                              env.GENERIC_ACTIONS.singleTarget({
+                                   action,
+                                   user,
+                                   target,
+                                   hitSfx: { name: 'shot2' },
+                                   critSfx: { name: 'shot6' },
+                              })
+                         }, 500)
+                    }
+     	     }
+          }
+          critExec: ({target}) => {
+               env.GENERIC_ACTIONS.teamWave({
+                    team: target.team,
+                    exec: (actor, i) => {
+                         if(actor == target) return; // we skip the original target
+                         useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
+                    }
+               })
+          }
+     }
+},
+
+env.ACTIONS.surging_rise = {
+     slug: "surging_rise",
+     name: "Rise",
+     type: 'autohit',
+     desc: "",
+     help: "",
+     exec: function(user,target) {
+          let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
+          let pickedConsequence = consequenceChoices.sample()
+          if (hasStatus(target, "stun")) {
+               critExec: ({target}) =>{
+                    if (pickedConsequence == "rot") {
+                         consequenceLength = 1
+                    } else {
+                         consequenceLength = 2
+                    }
+                    combatHit(target, {amt: 1, autohit: true, redirectable: false})
+                    addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+               }
+               hitExec: ({target}) =>{
+                    if (pickedConsequence == "rot") {
+                         consequenceLength = 2
+                    } else {
+                         consequenceLength = 3
+                    }
+                    combatHit(target, {amt: 2, autohit: true, redirectable: false})
+                    addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+               }
+               genExec: ({target}) => {
+                    removeStatus(target, "stun")
+               }
+          } else {
+               critExec: ({target}) => {
+                    addStatus({target: target,status: "evasion",legnth: 3})
+               }
+               hitExec: ({target})=>{
+                    addStatus(target, "evasion")
+               }
+          }
+     }
 }
 
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it
      const component = env.COMBAT_COMPONENTS[componentName]
-      let commerceObject = ({
-         type: "humor",
-         name: `${component.name.replace("Humor of ", "")}`,
-         subject: component,
-         value: 1,
+     let commerceObject = ({
+          type: "humor",
+          name: `${component.name.replace("Humor of ", "")}`,
+          subject: component,
+          value: 1,
  
-         showSellIf: ()=> env.e3a2.mTotals[componentName].available > 0,
-         sellExec: ()=>{
-             addItem("sfer_cube")
-             page.flags.components[componentName]--
-             env.e3a2.mTotals = CrittaMenu.getTotals()
-             env.commerceNotice = `exchanged ${component.name} for 1 ${env.ITEM_LIST['sfer_cube'].name}`
-         },
+          showSellIf: ()=> env.e3a2.mTotals[componentName].available > 0,
+          sellExec: ()=>{
+               addItem("sfer_cube")
+               page.flags.components[componentName]--
+               env.e3a2.mTotals = CrittaMenu.getTotals()
+               env.commerceNotice = `exchanged ${component.name} for 1 ${env.ITEM_LIST['sfer_cube'].name}`
+          },
      })
-           env.e3a2.merchant.sellResponses.replies.push({
-           name: `${commerceObject.name}::${commerceObject.value}S`,
-           destination: "sell",
-           hideRead: true,
-           showIf: commerceObject.showSellIf,
-           class: `commerce-${commerceObject.type}`,
-           definition: `NOTE::'exchange for ${commerceObject.value} ${env.ITEM_LIST['sfer_cube'].name}'`,
-           exec: ()=> {commerceObject.sellExec(); env.e3a2.mTotals = CrittaMenu.getTotals(); env.e3a2.updateExchangeScreen()}
-      })
+     env.e3a2.merchant.sellResponses.replies.push({
+          name: `${commerceObject.name}::${commerceObject.value}S`,
+          destination: "sell",
+          hideRead: true,
+          showIf: commerceObject.showSellIf,
+          class: `commerce-${commerceObject.type}`,
+          definition: `NOTE::'exchange for ${commerceObject.value} ${env.ITEM_LIST['sfer_cube'].name}'`,
+          exec: ()=> {commerceObject.sellExec(); env.e3a2.mTotals = CrittaMenu.getTotals(); env.e3a2.updateExchangeScreen()}
+     })
      env.e3a2.merchant.commerce.push(commerceObject)
- }
+}
+for (const componentName of ["surging"]) {
+     const component = env.COMBAT_COMPONENTS[componentName]
+     let commerceObject = ({
+          type: "humor",
+          name: `${component.name.replace("Humor of ", "")}`,
+          subject: component,
+          value: 1,
+ 
+          showSellIf: ()=> env.e3a2.mTotals[componentName].available > 0,
+          sellExec: ()=>{
+               addItem("sfer_cube")
+               page.flags.components[componentName]--
+               env.e3a2.mTotals = CrittaMenu.getTotals()
+               env.commerceNotice = `exchanged ${component.name} for 1 ${env.ITEM_LIST['sfer_cube'].name}`
+          },
+     })
+     env.e3a2.merchant.sellResponses.replies.push({
+          name: `${commerceObject.name}::${commerceObject.value}S`,
+          destination: "sell",
+          hideRead: true,
+          showIf: commerceObject.showSellIf,
+          class: `commerce-${commerceObject.type}`,
+          definition: `NOTE::'exchange for ${commerceObject.value} ${env.ITEM_LIST['sfer_cube'].name}'`,
+          exec: ()=> {commerceObject.sellExec(); env.e3a2.mTotals = CrittaMenu.getTotals(); env.e3a2.updateExchangeScreen()}
+     })
+     env.e3a2.merchant.commerce.push(commerceObject)
+}

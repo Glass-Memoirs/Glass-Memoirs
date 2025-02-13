@@ -18,7 +18,11 @@
  8. Merchant Code
 
  TO DO:
-+Make Entropy's 2nd action
++ Make Entropy's 2nd action
++ make the augments for surging if not done already
++ Change their descriptions
++ rename the base moves
++ Make the modifiers
 */
 
 //Dialogue changing
@@ -408,7 +412,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
 //SURGING
 env.ACTOR_AUGMENTS.surging_powerhouse = {
      slug: "surging_powerhouse",
-     name: "Powerhouse",
+     name: "Proving Wrong",
      description: "'move nimbly, strike hard'",
      alteration: [["surging_charge", "surging_powerhouse"]],
      component: ["primary", "surging"],
@@ -417,7 +421,7 @@ env.ACTOR_AUGMENTS.surging_powerhouse = {
 
 env.ACTOR_AUGMENTS.surging_rise = {
      slug: "surging_rise",
-     name: "Rise",
+     name: "Method Acting",
      description: "'steady those affected by stun','cannot stop consequence of doing so'",
      alteration: [["surging_wake", "surging_rise"]],
      component: ["secondary", "surging"],
@@ -426,7 +430,7 @@ env.ACTOR_AUGMENTS.surging_rise = {
 
 env.ACTOR_AUGMENTS.surging_feeding = {
      slug: "surging_feeding",
-     name: "Feeding Frenzy",
+     name: "Sacrifical Act",
      description: "'break yourself to sustain others'",
      alteration: [["surging_surge", "surging_feeding"]],
      component: ["evade", "surging"],

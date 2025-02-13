@@ -483,55 +483,55 @@ env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 	impulse: {type: "common", component: "entropy"},
 	events: {
         
-          onTurn: function() {
+		onTurn: function() {
                /*
                Thank you adenator for making this code way before me!
                However, i think im gonna take a stab at making it doccumented.
                */
-	    	     target = this.status.affecting
-	    	     let statusPool = [] //List of valid status effects
-		     for (let i in env.STATUS_EFFECTS) { //takes the entire list of status effects (including modded)
-        	          let statusData = env.STATUS_EFFECTS[i] //gives status to something comparable
-		          let usable = true //assuming that we can use it
-            	     if(statusData.infinite) {usable = false} //in this case, moving infinite things could break something (glaring at windup)
-            	     if(statusData.passive) {usable = false} //in this case, we dont really wanna shuffle passives.
-            	     if(i.includes("global_")) {usable = false} //Globals are escalation and some fish modifiers.
-            	     if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false} //AbsurdFrame specific statuses
-            	     if(i == "imperfect_reset") {usable = false} //Firmament looping status. you already know
-            	     if(i == "redirection") {usable = false} //honestly i dont know if im unable to move redirection around. it has an origin so just exclude it already
-		          if(i == "entropy_eternal") {usable = false} //yeah so, Passive: true and Passive: "modifier" dont equal the exact same thing
+			target = this.status.affecting
+			let statusPool = [] //List of valid status effects
+			for (let i in env.STATUS_EFFECTS) { //takes the entire list of status effects (including modded)
+				let statusData = env.STATUS_EFFECTS[i] //gives status to something comparable
+				let usable = true //assuming that we can use it
+				if(statusData.infinite) {usable = false} //in this case, moving infinite things could break something (glaring at windup)
+				if(statusData.passive) {usable = false} //in this case, we dont really wanna shuffle passives.
+				if(i.includes("global_")) {usable = false} //Globals are escalation and some fish modifiers.
+				if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false} //AbsurdFrame specific statuses
+				if(i == "imperfect_reset") {usable = false} //Firmament looping status. you already know
+				if(i == "redirection") {usable = false} //honestly i dont know if im unable to move redirection around. it has an origin so just exclude it already
+				if(i == "entropy_eternal") {usable = false} //yeah so, Passive: true and Passive: "modifier" dont equal the exact same thing
 //                  console.log(i, usable)
-                    if(usable) statusPool.push(i) //if that shit usable? add it to the list
-               }
-	          let validEffects = [] //list for who the modifier is affecting on the current turn
-	          target.statusEffects.forEach((status, i) => { //get their status list!
+				if(usable) statusPool.push(i) //if that shit usable? add it to the list
+			}
+	        let validEffects = [] //list for who the modifier is affecting on the current turn
+	        target.statusEffects.forEach((status, i) => { //get their status list!
 //                  console.log(status)
-                    if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) { //ignore passive, infinite, or anything not in the pool
-                         validEffects.push(status.slug) //if upper part goes "yeah", put it in the list
-                    }
-               })
+				if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) { //ignore passive, infinite, or anything not in the pool
+                	validEffects.push(status.slug) //if upper part goes "yeah", put it in the list
+                }
+            })
 //	          console.log(validEffects)
-               if(validEffects.length) validEffects.forEach((Replace) => { //if the list is not nothing, we run a little thing for each effect.
-                    let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)] //grab random status from the statusPool (we can set the max to be its length, and remove partial values)
-//                  console.log(selectedStatus)
-                    let chance = 0.2 //dont want it to be always
+            if(validEffects.length) validEffects.forEach((Replace) => { //if the list is not nothing, we run a little thing for each effect.
+                let selectedStatus = statusPool[Math.floor(Math.random()*statusPool.length)] //grab random status from the statusPool (we can set the max to be its length, and remove partial values)
+//              console.log(selectedStatus)
+                let chance = 0.2 //dont want it to be always
 //                  console.log(Replace)
-                    if(Math.random() < chance) { //if the random hits that 20%?
-                         sendFloater({ //let them know whats going on!
-                              target: this.status.affecting,
-                              type: "arbitrary",
-                              arbitraryString: "DECAYED!",
-                              isGood: false
-                         })
-		               if (hasStatus(target, Replace)) { //if the status didnt die or if it doesnt get rolled twice (i dunno if thats possible)
-                              //slap it onto another person
-		    	               addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace)), noReact: true})
-                              //and then remove it from you!
-			               removeStatus(target, Replace)
-		               }     
-                    }
-               })
-          }
+                if(Math.random() < chance) { //if the random hits that 20%?
+                	sendFloater({ //let them know whats going on!
+                        target: this.status.affecting,
+                        type: "arbitrary",
+                        arbitraryString: "DECAYED!",
+                        isGood: false
+                    })
+		            if (hasStatus(target, Replace)) { //if the status didnt die or if it doesnt get rolled twice (i dunno if thats possible)
+                    //slap it onto another person
+		    	    	addStatus({target: target, origin: false, status: selectedStatus, length: Math.floor(hasStatus(target, Replace)), noReact: true})
+                    //and then remove it from you!
+			            removeStatus(target, Replace)
+		            }     
+                }
+            })
+        }
      },
      help: `most status effects have a 20% chance to become any other effects`
 },

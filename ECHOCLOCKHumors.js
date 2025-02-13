@@ -1121,11 +1121,11 @@ env.ACTIONS.entropy_burnout = {
      }
 },
 //SURGING
-env.ACTIONS.surging_charging = {
-     slug: "surging_charging",
-     name: "Charging Smash",
+env.ACTIONS.tormenting_delight = {
+     slug: "tormenting_delight",
+     name: "Tormenting delight",
      type: 'target',
-     desc: "'hit foe with a charged smash';'use rebound to ready up another go'",
+     desc: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
      anim: "basic-attack",
      help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
      usage: {
@@ -1153,11 +1153,11 @@ env.ACTIONS.surging_charging = {
      }
 },
 
-env.ACTIONS.surging_wake = {
-     slug: "surging_wake",
-     name: "Wake",
+env.ACTIONS.back_to_stage = {
+     slug: "back_to_stage",
+     name: "Back to stage",
      type: 'target',
-     desc: "'snap friend out of stun at a small price';'reorienting sucks'",
+     desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
      help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
      beneficial: true,
      exec: function(user, target) {
@@ -1196,11 +1196,11 @@ env.ACTIONS.surging_wake = {
      }
 },
 
-env.ACTIONS.surging_surge = {
-     slug: "surging_surge",
-     name: "Surge Capacitors",
+env.ACTIONS.velnits_lament = {
+     slug: "velnits_lament",
+     name: "velnit's lament",
      type: 'support+target+self+autohit',
-     desc: "'energize a friend';'preparedness helps'",
+     desc: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
      help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
      exec: function(user,target) {
           if (hasStatus(target, "surge")) {
@@ -1213,11 +1213,11 @@ env.ACTIONS.surging_surge = {
      }
 },
 
-env.ACTIONS.surging_powerhouse = {
-     slug: "surging_powerhouse",
-     name: "Powerhouse",
+env.ACTIONS.showmanship = {
+     slug: "showmanship",
+     name: "SHOWMANSHIP",
      type: 'target',
-     desc: "",
+     desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
      help: "",
      usage: {
 
@@ -1261,11 +1261,11 @@ env.ACTIONS.surging_powerhouse = {
      }
 },
 
-env.ACTIONS.surging_rise = {
-     slug: "surging_rise",
-     name: "Rise",
+env.ACTIONS.method_acting = {
+     slug: "method_acting",
+     name: "BREAKS END",
      type: 'autohit',
-     desc: "",
+     desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
      help: "",
      exec: function(user,target) {
           let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
@@ -1302,6 +1302,7 @@ env.ACTIONS.surging_rise = {
           }
      }
 }
+
 
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it

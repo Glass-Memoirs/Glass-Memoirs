@@ -381,23 +381,23 @@ env.COMBAT_COMPONENTS.meat = {
 []^[]< my fucking god why did i not give them entropy_
 */
 env.ACTOR_AUGMENTS.generic.third_law = {
-     slug: "third_law",
-     name: "3rd Law",
-     image: "/img/sprites/combat/augs/cripple.gif",
-     description: "'barrel into foes with great energy';'half beneficial effects for power'",
-     alterations: [["momentum", "player_law"]],
-     component: ["primary", "entropy"],
-     cost: 2
+	slug: "third_law",
+	name: "3rd Law",
+	image: "/img/sprites/combat/augs/cripple.gif",
+	description: "'barrel into foes with great energy';'half beneficial effects for power'",
+	alterations: [["momentum", "player_law"]],
+	component: ["primary", "entropy"],
+	cost: 2
 }
 
 env.ACTOR_AUGMENTS.generic.rig_field = {
-     slug: "rig_field",
-     name: "Rig Field",
-     image: "/img/sprites/combat/augs/barrier.gif",
-     description: "'rig the fight in your favour';'steal beneficial statuses from the foe'",
-     alterations: [["level_statuses", "player_rig"]],
-     component: ["secondary", "entropy"],
-     cost: 2
+	slug: "rig_field",
+	name: "Rig Field",
+	image: "/img/sprites/combat/augs/barrier.gif",
+	description: "'rig the fight in your favour';'steal beneficial statuses from the foe'",
+	alterations: [["level_statuses", "player_rig"]],
+	component: ["secondary", "entropy"],
+	cost: 2
 }
 
 env.ACTOR_AUGMENTS.generic.exp_overload = {
@@ -411,30 +411,30 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
 }
 //SURGING
 env.ACTOR_AUGMENTS.showmanship = {
-     slug: "showmanship",
-     name: "SHOWMANSHIP",
-     description: "'SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
-     alteration: [["tormenting_delight", "showmanship"]],
-     component: ["primary", "surging"],
-     cost: 2
+	slug: "showmanship",
+	name: "SHOWMANSHIP",
+	description: "'SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
+	alteration: [["tormenting_delight", "showmanship"]],
+	component: ["primary", "surging"],
+	cost: 2
 }
 
 env.ACTOR_AUGMENTS.method_acting = {
-     slug: "method_acting",
-     name: "Method Acting",
-     description: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-     alteration: [["back_to_stage", "method_acting"]],
-     component: ["secondary", "surging"],
-     cost: 2
+	slug: "method_acting",
+	name: "Method Acting",
+	description: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
+	alteration: [["back_to_stage", "method_acting"]],
+	component: ["secondary", "surging"],
+	cost: 2
 }
 
 env.ACTOR_AUGMENTS.sacrificial_act = {
-     slug: "sacrificial_act",
-     name: "Sacrifical Act",
-     description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
-     alteration: [["velnits_lament", "sacrificial_act"]],
-     component: ["evade", "surging"],
-     cost: 2
+	slug: "sacrificial_act",
+	name: "Sacrifical Act",
+	description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
+	alteration: [["velnits_lament", "sacrificial_act"]],
+	component: ["evade", "surging"],
+	cost: 2
 }
 
 //COMBAT MODIFIERS
@@ -455,19 +455,19 @@ env.MODIFIERS.entropy_eyes = {
 }
 
 env.MODIFIERS.entropy_clock = {
-     name: "Broken Clock",
-     getHelp: ()=> {return env.STATUS_EFFECTS.entropy_clock.help},
-     alterations: {
-          all: [["STATUS", "entropy_clock"]]
-     }
+	name: "Broken Clock",
+	getHelp: ()=> {return env.STATUS_EFFECTS.entropy_clock.help},
+	alterations: {
+		all: [["STATUS", "entropy_clock"]]
+	}
 }
 
 env.MODIFIERS.entropy_heat ={
-     name: "Heat Death",
-     getHelp: ()=> {return env.STATUS_EFFECTS.entropy_heat.help},
-     alterations: {
-          all: [["STATUS", "entropy_heat"]]
-     }
+	name: "Heat Death",
+	getHelp: ()=> {return env.STATUS_EFFECTS.entropy_heat.help},
+	alterations: {
+		all: [["STATUS", "entropy_heat"]]
+	}
 }
 
 //STATUS EFFECTS
@@ -539,265 +539,249 @@ env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 env.STATUS_EFFECTS.entropy_eyes = {
 	slug: "entropy_eyes",
 	name: "Shattered Eyes",
-    passive: "modifier",
+	passive: "modifier",
 	beneficial: false,
 	icon: "/img/sprites/combat/passives/light_dark.gif",
 	events: {
 
 		onTurn: function(){
 			console.log("nothing here yet!")
-               target = this.status.affecting
-               let statusPool = []
-		     	for (let i in env.STATUS_EFFECTS) {
-        	        let statusData = env.STATUS_EFFECTS[i]
-		          	let usable = true
-                 	if(statusData.infinite) {usable = false}
-                 	if(statusData.passive) {usable = false}
-                 	if(i.includes("global_")) {usable = false}
-                	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-            	    if(i == "imperfect_reset") {usable = false}
-                 	if(i == "redirection") {usable = false}
-		    		if(i == "entropy_eternal") {usable = false}
-                    //console.log(i, usable)
-                    if(usable) statusPool.push(i)
-               }
-               let AllTargets = []
-               env.rpg.enemyTeam.members.forEach((target) => {
-                    if (target => target.state != "dead" && target.state != "lastStand") {
-                         AllTargets.push(target)
-                    }
-               })
-               env.rpg.allyTeam.members.forEach((target)=> {
-                    if (target => target.state != "dead" && target.state != "lastStand") {
-                         AllTargets.push(target)
-                    }
-               })
-               let TakableEffects = []
-               target.statusEffects.forEach((Deciding) => {
-                    if((!Deciding.infinite || !Deciding.passive) && (statusPool.includes(Deciding.slug))) {
-                         TakableEffects.push(Deciding.slug)
-                    }
-               })
-               if(TakableEffects.length) for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {
-                    let Chance = 0.4
-                    if (Math.random() < Chance) {
-                         sendFloater({
-                              target: this.status.affecting,
-                              type: "arbitrary",
-                              arbitraryString: "REFRACTED!",
-                              isGood: false
-                         })
-                         let TakingStat = TakableEffects.sample()
-                         let SendingTo = AllTargets.sample({noRepeat: true})
-                         if (hasStatus(target, TakingStat)) {
-                              addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
-                              removeStatus(target, TakingStat)
-                         }
-                    }
-               }
+			target = this.status.affecting
+			let statusPool = []
+			for (let i in env.STATUS_EFFECTS) {
+				let statusData = env.STATUS_EFFECTS[i]
+				let usable = true
+				if(statusData.infinite) {usable = false}
+				if(statusData.passive) {usable = false}
+				if(i.includes("global_")) {usable = false}
+				if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+				if(i == "imperfect_reset") {usable = false}
+				if(i == "redirection") {usable = false}
+				if(i == "entropy_eternal") {usable = false}
+				//console.log(i, usable)
+				if(usable) statusPool.push(i)
+			}
+			let AllTargets = []
+			env.rpg.enemyTeam.members.forEach((target) => {
+				if (target => target.state != "dead" && target.state != "lastStand") {
+					AllTargets.push(target)
+				}
+			})
+			env.rpg.allyTeam.members.forEach((target)=> {
+				if (target => target.state != "dead" && target.state != "lastStand") {
+					AllTargets.push(target)
+				}
+			})
+			let TakableEffects = []
+			target.statusEffects.forEach((Deciding) => {
+				if((!Deciding.infinite || !Deciding.passive) && (statusPool.includes(Deciding.slug))) {
+					TakableEffects.push(Deciding.slug)
+				}
+			})
+			if(TakableEffects.length) for (let i = 0; i <= Math.floor(Math.random()*TakableEffects.length); i++) {
+				let Chance = 0.4
+				if (Math.random() < Chance) {
+					sendFloater({
+						target: this.status.affecting,
+						type: "arbitrary",
+						arbitraryString: "REFRACTED!",
+						isGood: false
+					})
+					let TakingStat = TakableEffects.sample()
+					let SendingTo = AllTargets.sample({noRepeat: true})
+					if (hasStatus(target, TakingStat)) {
+						addStatus({target: SendingTo, status: TakingStat, length: Math.floor(hasStatus(target, TakingStat))})
+						removeStatus(target, TakingStat)
+					}
+				}
+			}
 		}
 	},
 	help: `Effects have a 40% chance of being moved to another actor`
 },
 
 env.STATUS_EFFECTS.entropy_clock = {
-     slug: "entropy_clock",
-     name: "Broken Clock",
-     passive: true,
-     beneficial: false,
-     icon: "/img/sprites/combat/passives/claws_infection.gif",
-     events: {
-          onTurn: function() {
-               reactDialogue(this.status.affecting, 'rot');
-               combatHit(this.status.affecting, {amt: 2, autohit: true, redirectable: false, runEvents: false});
-               play('status', 0.75, 0.5);
-          },
-     },
-     help: "Each turn loose 2hp"
+	slug: "entropy_clock",
+	name: "Broken Clock",
+	passive: true,
+	beneficial: false,
+	icon: "/img/sprites/combat/passives/claws_infection.gif",
+	events: {
+		onTurn: function() {
+			reactDialogue(this.status.affecting, 'rot');
+			combatHit(this.status.affecting, {amt: 2, autohit: true, redirectable: false, runEvents: false});
+			play('status', 0.75, 0.5);
+		},
+	},
+	help: "Each turn loose 2hp"
 },
 
 env.STATUS_EFFECTS.entropy_heat = {
-     slug: "entropy_heat",
-     name: "Heat Death",
-     passive: true,
-     beneficial: true,
-     icon: "/img/sprites/combat/augs/bazruka.gif",
-     events: {
-          onBeforeAction: function(context) {
-               if(!context.settings.action.type.includes("target")) return;
-               let Chance = 0.23
-               // alter action maybe
-               if(Math.random() < Chance) {
-
-                    context.settings.action = env.ACTIONS["entropy_burnout"]
-                    let subject = context.settings.user
-
-                    sendFloater({
-                         target: subject,
-                         type: "arbitrary",
-                         arbitraryString: "SPARKING",
-                         isGood: false,
-                         size: 2,
-                    })
-               }
-          },
-     },
-     help: 'Attacks have a 23% chance to become Burnout'
+	slug: "entropy_heat",
+	name: "Heat Death",
+	passive: true,
+	beneficial: true,
+	icon: "/img/sprites/combat/augs/bazruka.gif",
+	events: {
+		onBeforeAction: function(context) {
+			if(!context.settings.action.type.includes("target")) return;
+			let Chance = 0.23
+			// alter action maybe
+			if(Math.random() < Chance) {
+				context.settings.action = env.ACTIONS["entropy_burnout"]
+				let subject = context.settings.user
+				sendFloater({
+					target: subject,
+					type: "arbitrary",
+					arbitraryString: "SPARKING",
+					isGood: false,
+					size: 2,
+				})
+			}
+		},
+	},
+	help: 'Attacks have a 23% chance to become Burnout'
 },
 
 env.STATUS_EFFECTS.entropy_reaction = {
-     slug: "entropy_reaction",
-     name: "ACTION:: REACT",
-     passive: true,
-     beneficial: true,
-     icon: "https://glass-memoirs.github.io/Glass-Memoirs/eyew.gif",
-     impulse: {type: "action", component: "entropy"},
-     events: {
-          onCrit: function({subject, target}) {
-               let modifierPool = []
-		     	for (let i in env.STATUS_EFFECTS) {
-        	        let statusData = env.STATUS_EFFECTS[i]
-		          	let usable = false
-                    if(statusData.passive) {usable = true}
-                    if(statusData.infinite || (statusData.slug != "windup")) {usable = true}
-                 	if(i.includes("global_")||i.includes("malware_")||i.includes("fish_")) {usable = false}
-                	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-            	    if(i == "imperfect_reset") {usable = false}
-                 	if(i == "redirection" || i == "ethereal" || i == "immobile" || i == "conjoined" || i == "permanent_hp") {usable = false}
-                    console.log(i, usable)
-                    if(usable) modifierPool.push(i)
-               }
-               console.log(modifierPool)
-               let targetModifiers = []
-               for (let i in subject.statusEffects) {
-                    let status = subject.statusEffects[i]
-                    console.log(status)
-                    if((status.infinite || status.passive || !i.includes("global_")) && (modifierPool.includes(status.slug))) {
-                         targetModifiers.push(status.slug)
-                    }
-               }
-               console.log(targetModifiers)
-               if (targetModifiers.length) for(let i = 0; i<1; i++) {
-                    let Chance = 0.2
-                    if (Math.random() < Chance) {
-		               sendFloater({
-                              target: subject,
-                              type: "arbitrary",
-                              arbitraryString: "DRAINED!",
-                              isGood: false
-                         })
-                         let KillModif = targetModifiers.sample()
-                         removeStatus(subject, KillModif, {forceRemoveStatus: true})
-                    }
-               }
-          }
-     },
-     help: '20% chance to remove random status or impulse'
+	slug: "entropy_reaction",
+	name: "ACTION:: REACT",
+	passive: true,
+	beneficial: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/eyew.gif",
+	impulse: {type: "action", component: "entropy"},
+	events: {
+		onCrit: function({subject, target}) {
+			let modifierPool = []
+			for (let i in env.STATUS_EFFECTS) {
+				let statusData = env.STATUS_EFFECTS[i]
+				let usable = false
+				if(statusData.passive) {usable = true}
+				if(statusData.infinite || (statusData.slug != "windup")) {usable = true}
+				if(i.includes("global_")||i.includes("malware_")||i.includes("fish_")) {usable = false}
+				if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+				if(i == "imperfect_reset") {usable = false}
+				if(i == "redirection" || i == "ethereal" || i == "immobile" || i == "conjoined" || i == "permanent_hp") {usable = false}
+				console.log(i, usable)
+				if(usable) modifierPool.push(i)
+			}
+			console.log(modifierPool)
+			let targetModifiers = []
+			for (let i in subject.statusEffects) {
+				let status = subject.statusEffects[i]
+				console.log(status)
+				if((status.infinite || status.passive || !i.includes("global_")) && (modifierPool.includes(status.slug))) {
+					targetModifiers.push(status.slug)
+				}
+			}
+			console.log(targetModifiers)
+			if (targetModifiers.length) for(let i = 0; i<1; i++) {
+				let Chance = 0.2
+				if (Math.random() < Chance) {
+					sendFloater({
+						target: subject,
+						type: "arbitrary",
+						arbitraryString: "DRAINED!",
+						isGood: false
+					})
+					let KillModif = targetModifiers.sample()
+					removeStatus(subject, KillModif, {forceRemoveStatus: true})
+				}
+			}
+		}
+	},
+	help: '20% chance to remove random status or impulse'
 }
 
 env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting
-     slug: "exp_over",
-     name: "Exponential Overload",
-     beneficial: true,
-     infinite: true,
-     events: {
-          onTurn: function() { 
-               reactDialogue(this.status.affecting, 'surge') 
-               delete this.status.justGotSurge
-          },
-
-          onAction: function({user, action, target, beingUsedAsync}) {
-               if(
-                    this.status.justGotSurge || 
-                    beingUsedAsync || 
-                    ["incoherent_", "steer", "floor", "windup", "intrusive"].some(slugpart => action.slug.includes(slugpart)) ||
-                    !action.type.includes("target") ||
-                    (!action.beneficial && target.team.name == "ally") ||
-                    (action.beneficial && target.team.name == "enemy")
-               ) return;
-
-
-               setTimeout(()=>{
-                    sendFloater({
-                         target: user,
-                         type: "arbitrary",
-                         arbitraryString: "EXPONENTIAL SURGE!",
-                         size: 1.5,
-                    })
-
-                    readoutAdd({
-                         message: `${user.name} enters a deeply focused flurry! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
-                         name: "sourceless", 
-                         type: "sourceless combat minordetail", 
-                         show: false,
-                         sfx: false
-                    })
-
-                    env.GENERIC_ACTIONS.teamWave({
-                         team: target.team,
-                         exec: (actor, i) => {
-                              if(actor == target) return; // we skip the original target
-                                   env.GENERIC_ACTIONS.teamWave({
-                                   team: target.team,
-                                   exec: (actor, i) => {
-                                        if(actor == target) return; // we skip the original target
-                                            useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
-                                   }
-                              })
-                         }
-                    })
-
-               }, 500)
-
-            removeStatus(this.status.affecting, "exp_over")
-		    addStatus({target:user, status: 'stun', length: 2, noReact: true})
-		    addStatus({target:user, status: 'vulnerable', length: 3, noReact: true})
-          },
-
-          onCreated: function({statusObj}) {
-               if(statusObj.slug == this.status.slug) this.status.justGotSurge = true
-          },
-     },
-     help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
+	slug: "exp_over",
+	name: "Exponential Overload",
+	beneficial: true,
+	infinite: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/Overclocked.png",
+	events: {
+		onTurn: function() { 
+			reactDialogue(this.status.affecting, 'surge') 
+			delete this.status.justGotSurge
+		},
+		onAction: function({user, action, target, beingUsedAsync}) {
+			if(this.status.justGotSurge || beingUsedAsync || ["incoherent_", "steer", "floor", "windup", "intrusive"].some(slugpart => action.slug.includes(slugpart)) ||
+				 !action.type.includes("target") ||(!action.beneficial && target.team.name == "ally") ||(action.beneficial && target.team.name == "enemy")) return;
+			setTimeout(()=>{
+				sendFloater({
+					target: user,
+					type: "arbitrary",
+					arbitraryString: "EXPONENTIAL SURGE!",
+					size: 1.5,
+				})
+				readoutAdd({
+					message: `${user.name} enters a deeply focused flurry! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+					name: "sourceless", 
+					type: "sourceless combat minordetail", 
+					show: false,
+					sfx: false
+				})
+				env.GENERIC_ACTIONS.teamWave({
+					team: target.team,
+					exec: (actor, i) => {
+						if(actor == target) return; // we skip the original target
+						env.GENERIC_ACTIONS.teamWave({
+							team: target.team,
+							exec: (actor, i) => {
+								if(actor == target) return; // we skip the original target
+								useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
+							}
+						})
+					}
+				})
+			}, 500)
+			removeStatus(this.status.affecting, "exp_over")
+			addStatus({target:user, status: 'stun', length: 2, noReact: true})
+			addStatus({target:user, status: 'vulnerable', length: 3, noReact: true})
+		},
+		onCreated: function({statusObj}) {
+			if(statusObj.slug == this.status.slug) this.status.justGotSurge = true
+		},
+	},
+	help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
 },
 
 env.STATUS_EFFECTS.burnout = {
-     slug: "burnout",
-     name: "Burnout",
-     beneficial: false,
-     events:{
-          onCrit: function({subject, attack, originalEventTarget}) {
-               removeStatus(this.status.affecting, 'burnout',{runEvents: false})
-
-               sendFloater({
-                    target: this.status.affecting,
-                    type: "arbitrary",
-                    arbitraryString: "DOUSED!",
-                    size: 1,
-               })
-
-               readoutAdd({
-                    message: `${this.status.affecting.name} puts out the flame on their enegrgy`, 
-                    name: "sourceless", 
-                    type: "sourceless combat minordetail",
-                    show: false,
-                    sfx: false
-               })               
-          },
-          onTurn: function({target}) {
-               if (Math.floor(hasStatus(this.status.affecting, "burnout")) <= 2){
-                    addStatus({target: this.status.affecting, status: "hotpocket", length: 2})
-               }
-          },
-       },
-     help: 'Once status runs out, Explode.'
+	slug: "burnout",
+	name: "Burnout",
+	beneficial: false,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/Hhhot p oc k e t.gif",
+	events:{
+		onCrit: function({subject, attack, originalEventTarget}) {
+			removeStatus(this.status.affecting, 'burnout',{runEvents: false})
+			sendFloater({
+				target: this.status.affecting,
+				type: "arbitrary",
+				arbitraryString: "DOUSED!",
+				size: 1,
+			})
+			readoutAdd({
+				message: `${this.status.affecting.name} puts out the flame on their enegrgy`, 
+				name: "sourceless", 
+				type: "sourceless combat minordetail",
+				show: false,
+				sfx: false
+			})
+		},
+		onTurn: function({target}) {
+			if (Math.floor(hasStatus(this.status.affecting, "burnout")) <= 2){
+				addStatus({target: this.status.affecting, status: "hotpocket", length: 2})
+			}
+		},
+	},
+	help: 'Once status runs out, Explode.'
 },
 
 env.STATUS_EFFECTS.hotpocket = {
-     slug: "hotpocket",
-     name: "Immanent Death",
-     beneficial: false,
-     events: {
+	slug: "hotpocket",
+	name: "Immanent Death",
+	beneficial: false,
+	events: {
           onTurn: function() {
                combatHit(this.status.affecting, {amt: 1000, autohit: true, redirectable: false})
           }

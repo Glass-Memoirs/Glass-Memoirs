@@ -781,526 +781,520 @@ env.STATUS_EFFECTS.hotpocket = {
 	slug: "hotpocket",
 	name: "Immanent Death",
 	beneficial: false,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/BSTRDIZEDHOTPOCKET.gif",
 	events: {
-          onTurn: function() {
-               combatHit(this.status.affecting, {amt: 1000, autohit: true, redirectable: false})
-          }
-     },
-     help: "Explode! :}"
+		onTurn: function() {
+			combatHit(this.status.affecting, {amt: 1000, autohit: true, redirectable: false})
+		}
+	},
+	help: "Explode! :}"
 }
 
 //COMBAT ACTIONS
 //ENTROPY
 env.ACTIONS.momentum = { //couldnt figure out how to make this thing actually multiply damage by the amount of stat effects so i made it loop
-     slug: "momentum",
-     name: "Momentum",
-     type: 'target',
-     desc: "'redirect beneficial effects into power';'removes them once the hit connects'",
-     anim: "basic-attack",
-     help: "'100% -2HP + (XT:REGEN/FOCUS)\nSELF::-REGEN/FOCUS'",
-     usage: {
-          act: "%USER CHANNELS ENERGY INTO A SPRINT",
-          crit: "%TARGET GETS KNOCKED OVER",
-          hit: "%TARGET GETS SLAMMED INTO",
-          miss: "%TARGET SIDESTEPS"
-     },
-     accuracy: 1,
-     crit: 0.1,
-     amt: 2,
-     exec: function(user, target) {
-          let action = this
-          //console.log(hasStatus(user, 'focused'))
-          //The looping part
-          for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
-               env.GENERIC_ACTIONS.singleTarget({
-                    action,
-                    user,
-                    target: target,
-                    critExec: ({target}) => {
-	  	               addStatus({target: target, status: 'stun', length: 1})
-                    }
-               })
-          }
-          if(hasStatus(user, 'focused')) removeStatus(user, "focused")
-          if(hasStatus(user, 'focused')) removeStatus(user, "regen")
-     }
+	slug: "momentum",
+	name: "Momentum",
+	type: 'target',
+	desc: "'redirect beneficial effects into power';'removes them once the hit connects'",
+	anim: "basic-attack",
+	help: "'100% -2HP + (XT:REGEN/FOCUS)\nSELF::-REGEN/FOCUS'",
+	usage: {
+		act: "%USER CHANNELS ENERGY INTO A SPRINT",
+		crit: "%TARGET GETS KNOCKED OVER",
+		hit: "%TARGET GETS SLAMMED INTO",
+		miss: "%TARGET SIDESTEPS"
+	},
+	accuracy: 1,
+	crit: 0.1,
+	amt: 2,
+	exec: function(user, target) {
+		let action = this
+		//console.log(hasStatus(user, 'focused'))
+		//The looping part
+		for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
+			env.GENERIC_ACTIONS.singleTarget({
+				action,
+				user,
+				target: target,
+				critExec: ({target}) => {
+					addStatus({target: target, status: 'stun', length: 1})
+				}
+			})
+		}
+		if(hasStatus(user, 'focused')) removeStatus(user, "focused")
+		if(hasStatus(user, 'focused')) removeStatus(user, "regen")
+	}
 },
 
 env.ACTIONS.player_law = { //Funky little move, had to change it up just like momentum.
-     slug: "player_law",
-     name: "3rd Law",
-     type: 'target',
-     desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
-     anim: "basic-attack",
-     help: "'100% -2HP * (XT:REGEN+FOCUS) 15%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
-     usage: {
-          act: "%USER CHANNELS ENERGY INTO A SPRINT",
-          crit: "%TARGET GETS KNOCKED OVER",
-          hit: "%TARGET GETS SLAMMED INTO",
-          miss: "%TARGET SIDESTEPS"
-     },
-     accuracy: 1,
-     crit: 0.15,
-     amt: 2,
-     exec: function(user, target) {
-          let action = this
-          for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion'))); i++) {
-               env.GENERIC_ACTIONS.singleTarget({
-                    action: action, user,
-                    target: target,
-                    critExec: ({target}) => {
-                         addStatus({target: target, status: 'stun', length: 1})
-                         addStatus({target: target, status: 'vulnerable', length: 2})
-                    }
-               })
-               
-          }
-          if (hasStatus(user, 'focused')) {
-               let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
-               addStatus({target: user, status: "focused", length: half, noReact: true})
-          }
-          if (hasStatus(user, 'regen')) {          
-               let half = 0 - Math.floor(hasStatus(user, "regen") / 2)
-               addStatus({target: user, status: "regen", length: half, noReact: true})
-          }
-	     if (hasStatus(user, 'evasion')) {
-	          let half = 0 - Math.floor(hasStatus(user, 'evasion') / 2)
-	          addStatus({target: user, status: "evasion", length: half, noReact: true})
-	     }
-     }
+	slug: "player_law",
+	name: "3rd Law",
+	type: 'target',
+	desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
+	anim: "basic-attack",
+	help: "'100% -2HP * (XT:REGEN+FOCUS) 15%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
+	usage: {
+		act: "%USER CHANNELS ENERGY INTO A SPRINT",
+		crit: "%TARGET GETS KNOCKED OVER",
+		hit: "%TARGET GETS SLAMMED INTO",
+		miss: "%TARGET SIDESTEPS"
+	},
+	accuracy: 1,
+	crit: 0.15,
+	amt: 2,
+	exec: function(user, target) {
+		let action = this
+		for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion'))); i++) {
+			env.GENERIC_ACTIONS.singleTarget({
+				action: action, user,
+				target: target,
+				critExec: ({target}) => {
+					addStatus({target: target, status: 'stun', length: 1})
+					addStatus({target: target, status: 'vulnerable', length: 2})
+				}
+			})
+		}
+		if (hasStatus(user, 'focused')) {
+			let half = 0 - Math.floor(hasStatus(user, 'focused') / 2)
+			addStatus({target: user, status: "focused", length: half, noReact: true})
+		}
+		if (hasStatus(user, 'regen')) {
+			let half = 0 - Math.floor(hasStatus(user, "regen") / 2)
+			addStatus({target: user, status: "regen", length: half, noReact: true})
+		}
+		if (hasStatus(user, 'evasion')) {
+			let half = 0 - Math.floor(hasStatus(user, 'evasion') / 2)
+			addStatus({target: user, status: "evasion", length: half, noReact: true})
+		}
+	}
 },
 
 env.ACTIONS.level_statuses ={ //this would not deal damage for me at all so i made it deal no damage, also turns out windup doesnt break anything if its removed!
-     slug: "level_statuses",
-     name: "Level",
-     type: 'target',
-     desc: "'collapse beyond both yourself and the foe';'remove all statuses'",
-     anim: "basic-attack",
-     help: "80% REMOVE MOST STATUS EFFECTS, 15%C REMOVE WINDUP",
-     usage: {
-          act: "%USER REACHES OUT",
-          crit: "%USER AND %TARGET FEEL SOMETHING GET TORN AWAY",
-          hit: "%TARGET GETS CLAWED",
-          miss: "%TARGET SWATS %USER AWAY"
-     },
-     accuracy: 0.8,
-     crit: 0.15,
-     amt: 0,
-     exec: function(user, target) {
-          let statusPool = []
-          for (let i in env.STATUS_EFFECTS) {
-               let statusData = env.STATUS_EFFECTS[i]
-               let usable = true
-               if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
-               if(statusData.passive) {usable = false}
-               if(i.includes("global_")) {usable = false}
-               if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-               if(i == "imperfect_reset") {usable = false}
-               if(i == "redirection") {usable = false}
-               if(i == "entropy_eternal") {usable = false}
-               //console.log(i, usable)
-               if(usable) statusPool.push(i)
-          }
-          let targetEffects = []
-          target.statusEffects.forEach((status, i) => {
-               //console.log(status)
-               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
-                    targetEffects.push(status.slug)
-               }
-          })
-          let userEffects = []
-          user.statusEffects.forEach((status, i) => {
-              //console.log(status)
-               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
-                    userEffects.push(status.slug)
-               }
-          })
-          targetEffects.forEach((status) => {
-               if(status != "windup") removeStatus(target, status)
-          })
-          userEffects.forEach((status) => {
-               removeStatus(user, status)
-          })
-          critExec: { //DOnt believe its lies this works jsut fine
-               if (targetEffects.includes("windup")) {
-                    sendFloater({
-                         target: user,
-                         type: "arbitrary",
-                         arbitraryString: "LMAO",
-                         size: 1.5,
-                    })
-                    readoutAdd({
-                         message: `${target.name} forgot what it was doing.`, 
-                         name: "sourceless", 
-                         type: "sourceless combat minordetail", 
-                         show: false,
-                         sfx: false
-                    })
-                    removeStatus(target, "windup")
-               }
-          }
-     }
+	slug: "level_statuses",
+	name: "Level",
+	type: 'target',
+	desc: "'collapse beyond both yourself and the foe';'remove all statuses'",
+	anim: "basic-attack",
+	help: "80% REMOVE MOST STATUS EFFECTS, 15%C REMOVE WINDUP",
+	usage: {
+		act: "%USER REACHES OUT",
+		crit: "%USER AND %TARGET FEEL SOMETHING GET TORN AWAY",
+		hit: "%TARGET GETS CLAWED",
+		miss: "%TARGET SWATS %USER AWAY"
+	},
+	accuracy: 0.8,
+	crit: 0.15,
+	amt: 0,
+	exec: function(user, target) {
+		let statusPool = []
+		for (let i in env.STATUS_EFFECTS) {
+			let statusData = env.STATUS_EFFECTS[i]
+			let usable = true
+			if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
+			if(statusData.passive) {usable = false}
+			if(i.includes("global_")) {usable = false}
+			if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+			if(i == "imperfect_reset") {usable = false}
+			if(i == "redirection") {usable = false}
+			if(i == "entropy_eternal") {usable = false}
+			//console.log(i, usable)
+			if(usable) statusPool.push(i)
+		}
+		let targetEffects = []
+		target.statusEffects.forEach((status, i) => {
+			//console.log(status)
+			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+				targetEffects.push(status.slug)
+			}
+		})
+		let userEffects = []
+		user.statusEffects.forEach((status, i) => {
+			//console.log(status)
+			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
+				userEffects.push(status.slug)
+			}
+		})
+		targetEffects.forEach((status) => {
+			if(status != "windup") removeStatus(target, status)
+		})
+		userEffects.forEach((status) => {
+			removeStatus(user, status)
+		})
+		critExec: { //DOnt believe its lies this works jsut fine
+			if (targetEffects.includes("windup")) {
+				sendFloater({
+					target: user,
+					type: "arbitrary",
+					arbitraryString: "LMAO",
+					size: 1.5,
+				})
+				readoutAdd({
+					message: `${target.name} forgot what it was doing.`, 
+					name: "sourceless", 
+					type: "sourceless combat minordetail", 
+					show: false,
+					sfx: false
+				})
+				removeStatus(target, "windup")
+			}
+		}
+	}
 },
 
 env.ACTIONS.player_rig = {
-     slug: "player_rig",
-     name: "Rig Field",
-     type: "target",
-     desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
-     anim: "basic-attack",
-     help: "'FOES:: 80%  -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: 80% -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
-     usage: {
-          act: "%USER SHUFFLES THE POWER",
-          crit: "%TARGET FEELS DREAD",
-          hit: "%TARGET LOOSES THEIR ENERGY",
-          miss: "%USER GOT DISTRACTED"
-     },
-     accuracy: 0.8,
-     crit: 0.1,
-     amt: 0,
-     exec: function(user,target) {
-          let statusPool = []
-          for (let i in env.STATUS_EFFECTS) {
-               let statusData = env.STATUS_EFFECTS[i]
-               let usable = true
-               if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
-               if(statusData.passive) {usable = false}
-               if(i.includes("global_")) {usable = false}
-               if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-               if(i == "imperfect_reset") {usable = false}
-               if(i == "redirection") {usable = false}
-               if(i == "entropy_eternal") {usable = false}
-               //console.log(i, usable)
-               if(usable) statusPool.push(i)
-          }
-          let targetEffects = []
-          target.statusEffects.forEach((status, i) => {
-               //console.log(status)
-               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
-                    targetEffects.push(status)
-               }
-          })
-          let userEffects = []
-          user.statusEffects.forEach((status, i) => {
-               //console.log(status)
-               if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
-                    userEffects.push(status)
-               }
-          })
-          targetEffects.forEach((status) => {
-               if(status.beneficial) removeStatus(target, status.slug)
-          })
-          userEffects.forEach((status) => {
-               if (!status.beneficial) removeStatus(user, status.slug)
-          })
-          critExec: (status) => {
-               if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
-               if(status == "windup") {
-                    sendFloater({
-                         target: target,
-                         type: "arbitrary",
-                         arbitraryString: "LMAO",
-                         size: 1.5,
-                    })
-
-                    readoutAdd({
-                         message: `${target.name} forgot what it was doing.`, 
-                         name: "sourceless", 
-                         type: "sourceless combat minordetail", 
-                         show: false,
-                         sfx: false
-                    })
-                    removeStatus(target, status)
-               }
-          }
-          userEffects.forEach((status) => {
-               if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
-          })
-     }
+	slug: "player_rig",
+	name: "Rig Field",
+	type: "target",
+	desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
+	anim: "basic-attack",
+	help: "'FOES:: 80%  -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: 80% -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
+	usage: {
+		act: "%USER SHUFFLES THE POWER",
+		crit: "%TARGET FEELS DREAD",
+		hit: "%TARGET LOOSES THEIR ENERGY",
+		miss: "%USER GOT DISTRACTED"
+	},
+	accuracy: 0.8,
+	crit: 0.1,
+	amt: 0,
+	exec: function(user,target) {
+		let statusPool = []
+		for (let i in env.STATUS_EFFECTS) {
+			let statusData = env.STATUS_EFFECTS[i]
+			let usable = true
+			if(statusData.infinite && (statusData.slug != "windup")) {usable = false}
+			if(statusData.passive) {usable = false}
+			if(i.includes("global_")) {usable = false}
+			if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
+			if(i == "imperfect_reset") {usable = false}
+			if(i == "redirection") {usable = false}
+			if(i == "entropy_eternal") {usable = false}
+			//console.log(i, usable)
+			if(usable) statusPool.push(i)
+		}
+		let targetEffects = []
+		target.statusEffects.forEach((status, i) => {
+			//console.log(status)
+			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+				targetEffects.push(status)
+			}
+		})
+		let userEffects = []
+		user.statusEffects.forEach((status, i) => {
+			//console.log(status)
+			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
+				userEffects.push(status)
+			}
+		})
+		targetEffects.forEach((status) => {
+			if(status.beneficial) removeStatus(target, status.slug)
+		})
+		userEffects.forEach((status) => {
+			if (!status.beneficial) removeStatus(user, status.slug)
+		})
+		critExec: (status) => {
+			if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
+			if(status == "windup") {
+				sendFloater({
+					target: target,
+					type: "arbitrary",
+					arbitraryString: "LMAO",
+					size: 1.5,
+				})
+				readoutAdd({
+					message: `${target.name} forgot what it was doing.`, 
+					name: "sourceless", 
+					type: "sourceless combat minordetail", 
+					show: false,
+					sfx: false
+				})
+				removeStatus(target, status)
+			}
+		}
+		userEffects.forEach((status) => {
+			if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
+		})
+	}
 },
 
 env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest thing to make
-     slug: "wild_frenzy",
-     name: "Frenzied Flail",
-     type: 'target',
-     desc: "'flail around';'a chance to keep hitting'",
-     anim: "basic-attack",
-     help: "100% -2HP, 15%C USE THIS ACTION AGAIN ON RANDOM TARGET",
-     usage: {
-          act: "%USER BEGINS TO FLAIL",
-          crit: "%USER KEEPS FLAILING",
-          hit: "%TARGET GETS WHACKED",
-          miss: "%TARGET EVADES"
-     },
-     accuracy: 1,
-     crit: 0.15,
-     amt: 2,
-     exec: function(user, target) { //stole a bit of frenzy's code,
-          let action = this
-          
-          let targetTeam
-               switch(user.team.name) {
-                    case "ally": targetTeam = env.rpg.enemyTeam; break;
-                    case "enemy": targetTeam = env.rpg.allyTeam; break;
-               }
-          let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
-          if(validTargets.length) for (let i = 0; i < 1; i++) {
-               if (validTargets) {
-                    let target = validTargets.sample()
-                    setTimeout(()=>{
-                         env.GENERIC_ACTIONS.singleTarget({
-                              action,
-                              user,
-                              target,
-                              hitSfx: { name: 'shot2' },
-                              critSfx: { name: 'shot6' },
-			                  critExec: ({target})=> {
-                                   if(target.hp > 0 && target.state != "lastStand") {
-                                        env.setTimeout(()=>{
-                                             useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})
-                	                    }, 400)
-        	                         }
-                              }
-                         })
-                    }, 500)
-               }
-     	}
-     }
+	slug: "wild_frenzy",
+	name: "Frenzied Flail",
+	type: 'target',
+	desc: "'flail around';'a chance to keep hitting'",
+	anim: "basic-attack",
+	help: "100% -2HP, 15%C USE THIS ACTION AGAIN ON RANDOM TARGET",
+	usage: {
+		act: "%USER BEGINS TO FLAIL",
+		crit: "%USER KEEPS FLAILING",
+		hit: "%TARGET GETS WHACKED",
+		miss: "%TARGET EVADES"
+	},
+	accuracy: 1,
+	crit: 0.15,
+	amt: 2,
+	exec: function(user, target) { //stole a bit of frenzy's code,
+		let action = this
+		let targetTeam
+		switch(user.team.name) {
+			case "ally": targetTeam = env.rpg.enemyTeam; break;
+			case "enemy": targetTeam = env.rpg.allyTeam; break;
+		}
+		let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
+		if(validTargets.length) for (let i = 0; i < 1; i++) {
+			if (validTargets) {
+				let target = validTargets.sample()
+					setTimeout(()=>{
+						env.GENERIC_ACTIONS.singleTarget({
+							action,
+							user,
+							target,
+							hitSfx: { name: 'shot2' },
+							critSfx: { name: 'shot6' },
+							critExec: ({target})=> {
+								if(target.hp > 0 && target.state != "lastStand") {
+									env.setTimeout(()=>{
+										useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})
+									}, 400)
+								}
+							}
+						})
+					}, 500)
+			}
+		}
+	}
 },
 
 env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :]
-     slug: 'player_overload',
-     name: 'Exponential Surge',
-     type: 'self+autohit+support',
-     desc: "'focus flailing into a long barrage';'next attack is used across entire team';'long period of focus tires shell out and stuns'",
-     anim: "",
-     help: "+1T:FOCUSED +EXPONENTIAL SURGE",
-     usage: {
-          act: "%USER HONES IN"
-     },
-     beneficial: true,
-     
-     disableIf: (actor)=>{ if(hasStatus(actor, "fear")) return "PROHIBITED BY FEAR" },
-     exec: function(user, target) {
-          play("talkchoir7", 1.5)
-          addStatus({target: user, status: "exp_over", length: 1, noReact:true})
-          addStatus({target: user, status: "focused", length: 1, noReact:true});
-          return 'nothing'
-     },
-     avoidChaining: true
+	slug: 'player_overload',
+	name: 'Exponential Surge',
+	type: 'self+autohit+support',
+	desc: "'focus flailing into a long barrage';'next attack is used across entire team';'long period of focus tires shell out and stuns'",
+	anim: "",
+	help: "+1T:FOCUSED +EXPONENTIAL SURGE",
+	usage: {
+		act: "%USER HONES IN"
+	},
+	beneficial: true,
+	disableIf: (actor)=>{ if(hasStatus(actor, "fear")) return "PROHIBITED BY FEAR" },
+	exec: function(user, target) {
+		play("talkchoir7", 1.5)
+		addStatus({target: user, status: "exp_over", length: 1, noReact:true})
+		addStatus({target: user, status: "focused", length: 1, noReact:true});
+		return 'nothing'
+	},
+	avoidChaining: true
 },
 
 env.ACTIONS.entropy_burnout = {
-     slug: "entropy_burnout",
-     name: "Burnout",
-     type: 'target',
-     desc: "'Set off their end'",
-     anim: "basic-attack",
-     help: "AUTOHIT, +5T BURNOUT ON TARGET",
-     autohit: true,
-     usage: {
-          act: "%USER IGNITES THE ENERGY OF %TARGET",
-          hit: "%TARGET STARTS TO BURN UP",
-     },
-     crit: 0,
-     amt: 2,
-     exec: function(user, target) {
-          return env.GENERIC_ACTIONS.singleTarget({
-               action: this, 
-               user, 
-               target,
-               hitSfx: {
-                    name: 'chomp',
-                    rate: 0.7
-               },
-
-               genExec: ()=> {
-                    addStatus({target, origin: user, status: "burnout", length:5});
-               }
-          })
-     }
+	slug: "entropy_burnout",
+	name: "Burnout",
+	type: 'target',
+	desc: "'Set off their end'",
+	anim: "basic-attack",
+	help: "AUTOHIT, +5T BURNOUT ON TARGET",
+	autohit: true,
+	usage: {
+		act: "%USER IGNITES THE ENERGY OF %TARGET",
+		hit: "%TARGET STARTS TO BURN UP",
+	},
+	crit: 0,
+	amt: 2,
+	exec: function(user, target) {
+		return env.GENERIC_ACTIONS.singleTarget({
+			action: this, 
+			user, 
+			target,
+			hitSfx: {
+				name: 'chomp',
+				rate: 0.7
+			},
+			genExec: ()=> {
+				addStatus({target, origin: user, status: "burnout", length:5});
+			}
+		})
+	}
 },
 //SURGING
 env.ACTIONS.tormenting_delight = {
-     slug: "tormenting_delight",
-     name: "Tormenting delight",
-     type: 'target',
-     desc: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
-     anim: "basic-attack",
-     help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
-     usage: {
-          act: "%USER READIES A SWING",
-          hit: "%TARGET IS STRUCK",
-          crit: "%TARGET IS STUNNED",
-     },
-     crit: 0.2,
-     amt: 3,
-     exec: function(user, target) {
-          let includeFocus = false
-          env.GENERIC_ACTIONS.singleTarget({
-               critExec: ({target}) =>{
-                    addStatus({target: target, status: "stun", length: 2})
-                    includeFocus = true
-               },
-               genExec: ()=> {
-                    if (Math.random() < 0.25) {
-                         addStatus(user, "surge")
-                         addStatus({target: target, status: "stun"})
-                         if (includeFocus) {addStatus(user, "focus")}
-                    }
-               }
-          })
-     }
+	slug: "tormenting_delight",
+	name: "Tormenting delight",
+	type: 'target',
+	desc: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
+	anim: "basic-attack",
+	help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
+	usage: {
+		act: "%USER READIES A SWING",
+		hit: "%TARGET IS STRUCK",
+		crit: "%TARGET IS STUNNED",
+	},
+	crit: 0.2,
+	amt: 3,
+	exec: function(user, target) {
+		let includeFocus = false
+		env.GENERIC_ACTIONS.singleTarget({
+			critExec: ({target}) =>{
+				addStatus({target: target, status: "stun", length: 2})
+				includeFocus = true
+			},
+			genExec: ()=> {
+				if (Math.random() < 0.25) {
+					addStatus(user, "surge")
+					addStatus({target: target, status: "stun"})
+					if (includeFocus) {addStatus(user, "focus")}
+				}
+			}
+		})
+	}
 },
 
 env.ACTIONS.back_to_stage = {
-     slug: "back_to_stage",
-     name: "Back to stage",
-     type: 'target',
-     desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
-     help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
-     beneficial: true,
-     exec: function(user, target) {
-          let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
-          let pickedConsequence = consequenceChoices.sample()
-          if (hasStatus(target, "stun")) {
-               critExec: ({target}) =>{
-                    if (pickedConsequence == "rot") {
-                         consequenceLength = 1
-                    } else {
-                         consequenceLength = 2
-                    }
-                    combatHit(target, {amt: 1, autohit: true, redirectable: false})
-                    addStatus({target:target, status: pickedConsequence, length: consequenceLength})
-               }
-               hitExec: ({target}) =>{
-                    if (pickedConsequence == "rot") {
-                         consequenceLength = 2
-                    } else {
-                         consequenceLength = 3
-                    }
-                    combatHit(target, {amt: 2, autohit: true, redirectable: false})
-                    addStatus({target: target, status: pickedConsequence, length: consequenceLength})
-               }
-               genExec: ({target}) => {
-                    removeStatus(target, "stun")
-               }
-          } else {
-               critExec: ({target}) => {
-                    addStatus({target: target,status: "evasion",legnth: 3})
-               }
-               hitExec: ({target})=>{
-                    addStatus(target, "evasion")
-               }
-          }
-     }
+	slug: "back_to_stage",
+	name: "Back to stage",
+	type: 'target',
+	desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
+	help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
+	beneficial: true,
+	exec: function(user, target) {
+		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
+		let pickedConsequence = consequenceChoices.sample()
+		if (hasStatus(target, "stun")) {
+			critExec: ({target}) =>{
+				if (pickedConsequence == "rot") {
+					consequenceLength = 1
+				} else {
+					consequenceLength = 2
+				}
+				combatHit(target, {amt: 1, autohit: true, redirectable: false})
+				addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+			}
+			hitExec: ({target}) =>{
+				if (pickedConsequence == "rot") {
+					consequenceLength = 2
+				} else {
+					consequenceLength = 3
+				}
+				combatHit(target, {amt: 2, autohit: true, redirectable: false})
+				addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+			}
+      genExec: ({target}) => {
+				removeStatus(target, "stun")
+			}
+		} else {
+			critExec: ({target}) => {
+				addStatus({target: target,status: "evasion",legnth: 3})
+			}
+			hitExec: ({target})=>{
+				addStatus(target, "evasion")
+			}
+		}
+	}
 },
 
 env.ACTIONS.velnits_lament = {
-     slug: "velnits_lament",
-     name: "velnit's lament",
-     type: 'support+target+self+autohit',
-     desc: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
-     help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
-     exec: function(user,target) {
-          if (hasStatus(target, "surge")) {
-               removeStatus(target, "surge")
-               addStatus(target,"wild_surge")
-               if (target == user) {
-                    addStatus(user, "vulnerable")
-               }
-          }
-     }
+	slug: "velnits_lament",
+	name: "velnit's lament",
+	type: 'support+target+self+autohit',
+	desc: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
+	help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
+	exec: function(user,target) {
+		if (hasStatus(target, "surge")) {
+			removeStatus(target, "surge")
+			addStatus(target,"wild_surge")
+			if (target == user) {
+				addStatus(user, "vulnerable")
+			}
+		}
+	}
 },
 
 env.ACTIONS.showmanship = {
-     slug: "showmanship",
-     name: "SHOWMANSHIP",
-     type: 'target',
-     desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
-     help: "",
-     usage: {
-
-     },
-     crit: 0.2,
-     amt: 2,
-     exec: function(user, target) {
-          hitExec: ({user,target}) =>{
-               let action = this
-          
-               let targetTeam
-                    switch(user.team.name) {
-                         case "ally": targetTeam = env.rpg.enemyTeam; break;
-                         case "enemy": targetTeam = env.rpg.allyTeam; break;
-                    }
-               let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
-               if(validTargets.length) for (let i = 1; i <=3; i++) {
-                    if (validTargets) {
-                         let target = validTargets.sample()
-                         setTimeout(()=>{
-                              env.GENERIC_ACTIONS.singleTarget({
-                                   action,
-                                   user,
-                                   target,
-                                   hitSfx: { name: 'shot2' },
-                                   critSfx: { name: 'shot6' },
-                              })
-                         }, 500)
-                    }
-     	     }
-          }
-          critExec: ({target}) => {
-               env.GENERIC_ACTIONS.teamWave({
-                    team: target.team,
-                    exec: (actor, i) => {
-                         if(actor == target) return; // we skip the original target
-                         useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
-                    }
-               })
-          }
-     }
+	slug: "showmanship",
+	name: "SHOWMANSHIP",
+	type: 'target',
+	desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
+	help: "",
+	usage: {
+	},
+	crit: 0.2,
+	amt: 2,
+	exec: function(user, target) {
+		hitExec: ({user,target}) =>{
+			let action = this
+			let targetTeam
+			switch(user.team.name) {
+				case "ally": targetTeam = env.rpg.enemyTeam; break;
+				case "enemy": targetTeam = env.rpg.allyTeam; break;
+			}
+			let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
+			if(validTargets.length) for (let i = 1; i <=3; i++) {
+				if (validTargets) {
+					let target = validTargets.sample()
+					setTimeout(()=>{
+						env.GENERIC_ACTIONS.singleTarget({
+							action,
+							user,
+							target,
+							hitSfx: { name: 'shot2' },
+							critSfx: { name: 'shot6' },
+						})
+					}, 500)
+				}
+			}
+		}
+		critExec: ({target}) => {
+			env.GENERIC_ACTIONS.teamWave({
+				team: target.team,
+				exec: (actor, i) => {
+					if(actor == target) return; // we skip the original target
+					useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
+				}
+			})
+		}
+	}
 },
 
 env.ACTIONS.method_acting = {
-     slug: "method_acting",
-     name: "BREAKS END",
-     type: 'autohit',
-     desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-     help: "",
-     exec: function(user,target) {
-          let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
-          let pickedConsequence = consequenceChoices.sample()
-          if (hasStatus(target, "stun")) {
-               critExec: ({target}) =>{
-                    if (pickedConsequence == "rot") {
-                         consequenceLength = 1
-                    } else {
-                         consequenceLength = 2
-                    }
-                    combatHit(target, {amt: 1, autohit: true, redirectable: false})
-                    addStatus({target:target, status: pickedConsequence, length: consequenceLength})
-               }
-               hitExec: ({target}) =>{
-                    if (pickedConsequence == "rot") {
-                         consequenceLength = 2
-                    } else {
-                         consequenceLength = 3
-                    }
-                    combatHit(target, {amt: 2, autohit: true, redirectable: false})
-                    addStatus({target: target, status: pickedConsequence, length: consequenceLength})
-               }
-               genExec: ({target}) => {
-                    removeStatus(target, "stun")
-               }
-          } else {
-               critExec: ({target}) => {
-                    addStatus({target: target,status: "evasion",legnth: 3})
-               }
-               hitExec: ({target})=>{
-                    addStatus(target, "evasion")
-               }
-          }
-     }
+	slug: "method_acting",
+	name: "BREAKS END",
+	type: 'autohit',
+	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
+	help: "",
+	exec: function(user,target) {
+		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
+		let pickedConsequence = consequenceChoices.sample()
+		if (hasStatus(target, "stun")) {
+			critExec: ({target}) =>{
+				if (pickedConsequence == "rot") {
+					consequenceLength = 1
+				} else {
+					consequenceLength = 2
+				}
+				combatHit(target, {amt: 1, autohit: true, redirectable: false})
+				addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+			}
+			hitExec: ({target}) =>{
+				if (pickedConsequence == "rot") {
+					consequenceLength = 2
+				} else {
+					consequenceLength = 3
+				}
+				combatHit(target, {amt: 2, autohit: true, redirectable: false})
+				addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+			}
+			genExec: ({target}) => {
+				removeStatus(target, "stun")
+			}
+		} else {
+			critExec: ({target}) => {
+				addStatus({target: target,status: "evasion",legnth: 3})
+			}
+			hitExec: ({target})=>{
+				addStatus(target, "evasion")
+			}
+		}
+	}
 }
 
 

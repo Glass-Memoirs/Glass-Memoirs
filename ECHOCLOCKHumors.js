@@ -322,19 +322,19 @@ env.COMBAT_COMPONENTS.surging = {
      help: "'charge';'awaken';'overcharge'",
 
      primary: {
-          alterations: [["primary", "Tormenting delight"]],
+          alterations: [["primary", "tormenting_delight"]],
           stats: {
                maxhp: 2
           }
      },
      secondary: {
-          alterations: [["secondary", "Back to stage"]],
+          alterations: [["secondary", "back_to_stage"]],
           stats: {
                maxhp: 2
           }
      },
      utility: {
-          alterations: [["evade", "Velnit's lament"]], //surging surge lmao. like yeah thats what it does
+          alterations: [["evade", "velnits_lament"]], //surging surge lmao. like yeah thats what it does - note::velnits lamet use to be called surging surge
           stats: {
                maxhp: 2
           }
@@ -414,7 +414,7 @@ env.ACTOR_AUGMENTS.showmanship = {
      slug: "showmanship",
      name: "SHOWMANSHIP",
      description: "SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
-     alteration: [["Tormenting delight", "SHOWMANSHIP"]],
+     alteration: [["tormenting_delight", "showmanship"]],
      component: ["primary", "surging"],
      cost: 2
 }
@@ -423,16 +423,16 @@ env.ACTOR_AUGMENTS.method_acting = {
      slug: "method_acting",
      name: "Method Acting",
      description: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-     alteration: [["Back to stage", "Method acting"]],
+     alteration: [["back_to_stage", "method_acting"]],
      component: ["secondary", "surging"],
      cost: 2
 }
 
-env.ACTOR_AUGMENTS.surging_feeding = {
+env.ACTOR_AUGMENTS.sacrificial_act = {
      slug: "sacrificial_act",
      name: "Sacrifical Act",
      description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
-     alteration: [["surging_surge", "surging_feeding"]],
+     alteration: [["velnits_lament", "sacrificial_act"]],
      component: ["evade", "surging"],
      cost: 2
 }

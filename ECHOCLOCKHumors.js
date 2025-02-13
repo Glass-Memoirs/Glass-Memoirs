@@ -318,23 +318,23 @@ env.COMBAT_COMPONENTS.entropy = {
 env.COMBAT_COMPONENTS.surging = {
      name: "Surge",
      slug: "surging",
-     description: "'rebalance and rush'",
+     description: "'a show of maddening speeds','frenzied by velzie's eye','pick up the pace','let us finish the play!'",
      help: "'charge';'awaken';'overcharge'",
 
      primary: {
-          alterations: [["primary", "surging_charge"]],
+          alterations: [["primary", "Tormenting delight"]],
           stats: {
                maxhp: 2
           }
      },
      secondary: {
-          alterations: [["secondary", "surging_wake"]],
+          alterations: [["secondary", "Back to stage"]],
           stats: {
                maxhp: 2
           }
      },
      utility: {
-          alterations: [["evade", "surging_surge"]], //surging surge lmao. like yeah thats what it does
+          alterations: [["evade", "Velnit's lament"]], //surging surge lmao. like yeah thats what it does
           stats: {
                maxhp: 2
           }
@@ -410,28 +410,28 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      cost: 2
 }
 //SURGING
-env.ACTOR_AUGMENTS.surging_powerhouse = {
-     slug: "surging_powerhouse",
-     name: "Proving Wrong",
-     description: "'move nimbly, strike hard'",
-     alteration: [["surging_charge", "surging_powerhouse"]],
+env.ACTOR_AUGMENTS.showmanship = {
+     slug: "showmanship",
+     name: "SHOWMANSHIP",
+     description: "SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
+     alteration: [["Tormenting delight", "SHOWMANSHIP"]],
      component: ["primary", "surging"],
      cost: 2
 }
 
-env.ACTOR_AUGMENTS.surging_rise = {
-     slug: "surging_rise",
+env.ACTOR_AUGMENTS.method_acting = {
+     slug: "method_acting",
      name: "Method Acting",
-     description: "'steady those affected by stun','cannot stop consequence of doing so'",
-     alteration: [["surging_wake", "surging_rise"]],
+     description: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
+     alteration: [["Back to stage", "Method acting"]],
      component: ["secondary", "surging"],
      cost: 2
 }
 
 env.ACTOR_AUGMENTS.surging_feeding = {
-     slug: "surging_feeding",
+     slug: "sacrificial_act",
      name: "Sacrifical Act",
-     description: "'break yourself to sustain others'",
+     description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
      alteration: [["surging_surge", "surging_feeding"]],
      component: ["evade", "surging"],
      cost: 2

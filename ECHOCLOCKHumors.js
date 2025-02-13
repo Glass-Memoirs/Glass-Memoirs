@@ -535,25 +535,25 @@ env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 env.STATUS_EFFECTS.entropy_eyes = {
 	slug: "entropy_eyes",
 	name: "Shattered Eyes",
-     passive: "modifier",
+    passive: "modifier",
 	beneficial: false,
-     icon: "/img/sprites/combat/passives/light_dark.gif",
+	icon: "/img/sprites/combat/passives/light_dark.gif",
 	events: {
 
 		onTurn: function(){
 			console.log("nothing here yet!")
                target = this.status.affecting
                let statusPool = []
-		     for (let i in env.STATUS_EFFECTS) {
-        	          let statusData = env.STATUS_EFFECTS[i]
-		          let usable = true
+		     	for (let i in env.STATUS_EFFECTS) {
+        	        let statusData = env.STATUS_EFFECTS[i]
+		          	let usable = true
                  	if(statusData.infinite) {usable = false}
                  	if(statusData.passive) {usable = false}
                  	if(i.includes("global_")) {usable = false}
                 	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-            	     if(i == "imperfect_reset") {usable = false}
+            	    if(i == "imperfect_reset") {usable = false}
                  	if(i == "redirection") {usable = false}
-		          if(i == "entropy_eternal") {usable = false}
+		    		if(i == "entropy_eternal") {usable = false}
                     //console.log(i, usable)
                     if(usable) statusPool.push(i)
                }
@@ -651,14 +651,14 @@ env.STATUS_EFFECTS.entropy_reaction = {
      events: {
           onCrit: function({subject, target}) {
                let modifierPool = []
-		     for (let i in env.STATUS_EFFECTS) {
-        	          let statusData = env.STATUS_EFFECTS[i]
-		          let usable = false
+		     	for (let i in env.STATUS_EFFECTS) {
+        	        let statusData = env.STATUS_EFFECTS[i]
+		          	let usable = false
                     if(statusData.passive) {usable = true}
                     if(statusData.infinite || (statusData.slug != "windup")) {usable = true}
                  	if(i.includes("global_")||i.includes("malware_")||i.includes("fish_")) {usable = false}
                 	if(i == "misalign_weaken" || i == "misalign_stun" || i == "realign" || i == "realign_stun") {usable = false}
-            	     if(i == "imperfect_reset") {usable = false}
+            	    if(i == "imperfect_reset") {usable = false}
                  	if(i == "redirection" || i == "ethereal" || i == "immobile" || i == "conjoined" || i == "permanent_hp") {usable = false}
                     console.log(i, usable)
                     if(usable) modifierPool.push(i)
@@ -737,7 +737,7 @@ env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The in
                                    team: target.team,
                                    exec: (actor, i) => {
                                         if(actor == target) return; // we skip the original target
-                                             useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
+                                            useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
                                    }
                               })
                          }
@@ -745,9 +745,9 @@ env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The in
 
                }, 500)
 
-               removeStatus(this.status.affecting, "exp_over")
-		     addStatus({target:user, status: 'stun', length: 2, noReact: true})
-		     addStatus({target:user, status: 'vulnerable', length: 3, noReact: true})
+            removeStatus(this.status.affecting, "exp_over")
+		    addStatus({target:user, status: 'stun', length: 2, noReact: true})
+		    addStatus({target:user, status: 'vulnerable', length: 3, noReact: true})
           },
 
           onCreated: function({statusObj}) {

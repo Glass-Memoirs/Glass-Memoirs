@@ -413,7 +413,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
 env.ACTOR_AUGMENTS.showmanship = {
      slug: "showmanship",
      name: "SHOWMANSHIP",
-     description: "SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
+     description: "'SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
      alteration: [["tormenting_delight", "showmanship"]],
      component: ["primary", "surging"],
      cost: 2
@@ -1084,7 +1084,7 @@ env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest
      }
 },
 
-env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :}
+env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :]
      slug: 'player_overload',
      name: 'Exponential Surge',
      type: 'self+autohit+support',

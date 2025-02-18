@@ -1295,9 +1295,9 @@ env.ACTIONS.method_acting = {
 			}
 		}
 	}
-}
+},
 
-
+env.ACTIONS
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it
      const component = env.COMBAT_COMPONENTS[componentName]

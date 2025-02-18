@@ -1297,7 +1297,37 @@ env.ACTIONS.method_acting = {
 	}
 },
 
-env.ACTIONS
+env.ACTIONS.sacrificial_act = {
+	slug: "sacrifical_act",
+	name: "Sacrifical Act",
+	type: 'autohit+target',
+	desc: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
+	help: "IF TARGET HAS SURGE, -SURGE +WILDSURGE +1T EMPOWERED +2T FOCUSED/nIF ON SELF:-4HP,+2T FEAR, +1T STUN, +1T VULNERABLE +1T WILD",
+	exec: function(user,target){
+		if (target == user) {
+			genExec: ({user}) => {
+				combatHit(user, {amt:4, autohit: true, redirectable:false})
+				if (hasStatus(user,"surge")) {
+					removeStatus(user,"surge")
+				}
+				addStatus(user,"wild_surge")
+				addStatus({target: user, status:"fear", length:2})
+				addStatus(user, "stun")
+				addStatus(user, "vulnerable")
+			}
+		} else {
+			genExec: ({target}) => {
+				combatHit(user, {amt:4, autohit:true, redirectable:false})
+				if (hasStatus(target,"surge")) {
+					removeStatus(target,"surge")
+					addStatus(target,"wild_surge")
+				}
+				addStatus({target: target, status: "empowered", length: 2})
+				addStatus({target: target, status: "focused", length: 3})
+			}
+		}
+	}
+}
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it
      const component = env.COMBAT_COMPONENTS[componentName]

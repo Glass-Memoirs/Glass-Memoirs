@@ -1082,11 +1082,11 @@ env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest
 								if(target.hp > 0 && target.state != "lastStand") {
 									env.setTimeout(()=>{
 										useAction(user, this, target, {beingUsedAsync: true, reason: "wild_frenzy"})
-									}, 400)
+									}, 200)
 								}
 							}
 						})
-					}, 500)
+					}, 200)
 			}
 		}
 	}

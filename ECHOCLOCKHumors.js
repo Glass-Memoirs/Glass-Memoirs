@@ -1317,34 +1317,52 @@ env.ACTIONS.method_acting = {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()
 		if (hasStatus(target, "stun")) {
-			critExec: ({target}) =>{
-				if (pickedConsequence == "rot") {
-					consequenceLength = 1
-				} else {
-					consequenceLength = 2
+			env.GENERIC_ACTIONS.singleTarget({
+				action,
+				user,
+				target,
+				hitSfx: {
+					name: 'chomp',
+					rate: 0.7
+				},
+				critExec: ({target}) =>{
+					if (pickedConsequence == "rot") {
+						consequenceLength = 1
+					} else {
+						consequenceLength = 2
+					}
+					combatHit(target, {amt: 1, autohit: true, redirectable: false})
+					addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+				},
+				hitExec: ({target}) =>{
+					if (pickedConsequence == "rot") {
+						consequenceLength = 2
+					} else {
+						consequenceLength = 3
+					}
+					combatHit(target, {amt: 2, autohit: true, redirectable: false})
+					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+				},
+				genExec: ({target}) => {
+					removeStatus(target, "stun")
 				}
-				combatHit(target, {amt: 1, autohit: true, redirectable: false})
-				addStatus({target:target, status: pickedConsequence, length: consequenceLength})
-			}
-			hitExec: ({target}) =>{
-				if (pickedConsequence == "rot") {
-					consequenceLength = 2
-				} else {
-					consequenceLength = 3
+			})
+			} else {
+				env.GENERIC_ACTIONS.singleTarget({
+					action,
+					user,
+					target,
+					hitSfx: {
+						name: 'chomp',
+						rate: 0.7
+					},
+					critExec: ({target}) => {
+						addStatus({target: target,status: "evasion",legnth: 3})
+					},
+				hitExec: ({target})=>{
+					addStatus(target, "evasion")
 				}
-				combatHit(target, {amt: 2, autohit: true, redirectable: false})
-				addStatus({target: target, status: pickedConsequence, length: consequenceLength})
-			}
-			genExec: ({target}) => {
-				removeStatus(target, "stun")
-			}
-		} else {
-			critExec: ({target}) => {
-				addStatus({target: target,status: "evasion",legnth: 3})
-			}
-			hitExec: ({target})=>{
-				addStatus(target, "evasion")
-			}
+			})
 		}
 	}
 },
@@ -1357,29 +1375,48 @@ env.ACTIONS.sacrificial_act = {
 	help: "IF TARGET HAS SURGE, -SURGE +WILDSURGE +1T EMPOWERED +2T FOCUSED/nIF ON SELF:-4HP,+2T FEAR, +1T STUN, +1T VULNERABLE +1T WILD",
 	exec: function(user,target){
 		if (target == user) {
-			genExec: ({user}) => {
-				combatHit(user, {amt:4, autohit: true, redirectable:false})
-				if (hasStatus(user,"surge")) {
-					removeStatus(user,"surge")
+			env.GENERIC_ACTIONS.singleTarget({
+				action,
+				user,
+				target,
+				hitSfx: {
+					name: 'chomp',
+					rate: 3
+				},
+				genExec: ({user}) => {
+					combatHit(user, {amt:4, autohit: true, redirectable:false})
+					if (hasStatus(user,"surge")) {
+						removeStatus(user,"surge")
+					}
+					addStatus(user,"wild_surge")
+					addStatus({target: user, status:"fear", length:2})
+					addStatus(user, "stun")
+					addStatus(user, "vulnerable")
 				}
-				addStatus(user,"wild_surge")
-				addStatus({target: user, status:"fear", length:2})
-				addStatus(user, "stun")
-				addStatus(user, "vulnerable")
-			}
+			})
 		} else {
-			genExec: ({target}) => {
-				combatHit(user, {amt:4, autohit:true, redirectable:false})
-				if (hasStatus(target,"surge")) {
-					removeStatus(target,"surge")
-					addStatus(target,"wild_surge")
+			env.GENERIC_ACTIONS.singleTarget({
+				action,
+				user,
+				target,
+				hitSfx: {
+					name: 'chomp',
+					rate: 0.7
+				},
+				genExec: ({target}) => {
+					combatHit(user, {amt:4, autohit:true, redirectable:false})
+					if (hasStatus(target,"surge")) {
+						removeStatus(target,"surge")
+						addStatus(target,"wild_surge")
+					}
+					addStatus({target: target, status: "empowered", length: 2})
+					addStatus({target: target, status: "focused", length: 3})
 				}
-				addStatus({target: target, status: "empowered", length: 2})
-				addStatus({target: target, status: "focused", length: 3})
-			}
+			})
 		}
 	}
 }
+
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it
      const component = env.COMBAT_COMPONENTS[componentName]

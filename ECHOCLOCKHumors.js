@@ -337,7 +337,7 @@ env.COMBAT_COMPONENTS.surging = {
                maxhp: 2
           }
      },
-     combatModifiers: []
+     combatModifiers: ["surging_two"]
 }
 
 /*
@@ -467,11 +467,20 @@ env.MODIFIERS.entropy_heat ={
 		all: [["STATUS", "entropy_heat"]]
 	}
 }
+//surging
+env.MODIFIERS.surging_two = {
+	name: "Two Time",
+	getHelp: ()=> {return env.STATUS_EFFECTS.surging_two},
+	alterations:{
+		all: [["STATUS", "surging_two"]]
+	}
+}
 
 //STATUS EFFECTS
 /*
 + Yeah these needed doccumenting
 */
+//entropy
 env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 	slug: "entropy_eternal",
 	name: "Eternal Decay",
@@ -498,6 +507,7 @@ env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 				if(i == "imperfect_reset") {usable = false} //Firmament looping status. you already know
 				if(i == "redirection") {usable = false} //honestly i dont know if im unable to move redirection around. it has an origin so just exclude it already
 				if(i == "entropy_eternal") {usable = false} //yeah so, Passive: true and Passive: "modifier" dont equal the exact same thing
+				if(i == "unnatural_carapace") {usable = false}
 //                  console.log(i, usable)
 				if(usable) statusPool.push(i) //if that shit usable? add it to the list
 			}
@@ -786,6 +796,24 @@ env.STATUS_EFFECTS.hotpocket = {
 		}
 	},
 	help: "Explode! :}"
+},
+
+//surging
+env.STATUS_EFFECTS.surging_two = {
+	slug: "surging_two",
+	name: "Two Time",
+	beneficial: true,
+	passive: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
+	impulse: {type: "common",component: "surging"},
+	events: {
+		onCreated: function({statusObj}) {
+			if(statusObj.slug == this.status.slug) {
+				addStatus(this.status.affecting, "surge")
+			}
+		}
+	},
+	help: "gives surge on fight start."
 }
 
 //COMBAT ACTIONS

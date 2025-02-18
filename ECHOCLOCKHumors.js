@@ -1160,11 +1160,18 @@ env.ACTIONS.tormenting_delight = {
 	exec: function(user, target) {
 		let includeFocus = false
 		env.GENERIC_ACTIONS.singleTarget({
+			action,
+			user,
+			target,
+			hitSfx: {
+				name: 'chomp',
+				rate: 0.7
+			},
 			critExec: ({target}) =>{
 				addStatus({target: target, status: "stun", length: 2})
 				includeFocus = true
 			},
-			genExec: ()=> {
+			genExec: ({user,target})=> {
 				if (Math.random() < 0.25) {
 					addStatus(user, "surge")
 					addStatus({target: target, status: "stun"})
@@ -1185,36 +1192,55 @@ env.ACTIONS.back_to_stage = {
 	exec: function(user, target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()
+
 		if (hasStatus(target, "stun")) {
-			critExec: ({target}) =>{
-				if (pickedConsequence == "rot") {
-					consequenceLength = 1
-				} else {
-					consequenceLength = 2
+			env.GENERIC_ACTIONS.singleTarget({
+				action,
+				user,
+				target,
+				hitSfx: {
+					name: 'chomp',
+					rate: 0.7
+				},
+				critExec: ({target}) =>{
+					if (pickedConsequence == "rot") {
+						consequenceLength = 1
+					} else {
+						consequenceLength = 2
+					}
+					combatHit(target, {amt: 1, autohit: true, redirectable: false})
+					addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+				},
+				hitExec: ({target}) =>{
+					if (pickedConsequence == "rot") {
+						consequenceLength = 2
+					} else {
+						consequenceLength = 3
+					}
+					combatHit(target, {amt: 2, autohit: true, redirectable: false})
+					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+				},
+      			genExec: ({target}) => {
+					removeStatus(target, "stun")
 				}
-				combatHit(target, {amt: 1, autohit: true, redirectable: false})
-				addStatus({target:target, status: pickedConsequence, length: consequenceLength})
-			}
-			hitExec: ({target}) =>{
-				if (pickedConsequence == "rot") {
-					consequenceLength = 2
-				} else {
-					consequenceLength = 3
-				}
-				combatHit(target, {amt: 2, autohit: true, redirectable: false})
-				addStatus({target: target, status: pickedConsequence, length: consequenceLength})
-			}
-      genExec: ({target}) => {
-				removeStatus(target, "stun")
-			}
+			})
 		} else {
-			critExec: ({target}) => {
-				addStatus({target: target,status: "evasion",legnth: 3})
-			}
-			hitExec: ({target})=>{
-				addStatus(target, "evasion")
-			}
-		}
+			env.GENERIC_ACTIONS.singleTarget({
+				action,
+				user,
+				target,
+				hitSfx: {
+					name: 'chomp',
+					rate: 0.7
+				},
+				critExec: ({target}) => {
+					addStatus({target: target,status: "evasion",legnth: 3})
+				},
+				hitExec: ({target})=>{
+					addStatus(target, "evasion")
+				}
+			})
+		}   		
 	}
 },
 

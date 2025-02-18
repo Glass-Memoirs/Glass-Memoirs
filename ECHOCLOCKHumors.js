@@ -19,10 +19,8 @@
 
  TO DO:
 + Make Entropy's 2nd action
-+ make the augments for surging if not done already
-+ Change their descriptions
-+ rename the base moves
-+ Make the modifiers
++ Make the modifiers for surging
++ work on meat, stupidhorrible, and SiIva
 */
 
 //Dialogue changing

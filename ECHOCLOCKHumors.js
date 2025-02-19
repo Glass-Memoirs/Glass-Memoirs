@@ -1234,11 +1234,49 @@ env.ACTIONS.back_to_stage = {
 	desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
 	help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
 	beneficial: true,
+	crit: 0.3,
+	amt: 1,
 	exec: function(user, target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()
 
-		if (hasStatus(target, "stun")) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action,
+			user,
+			target,
+			hitSfx: {
+				name: 'chomp',
+				rate: 0.7
+			},
+			critExec: ({target}) =>{
+				if (hasStatus(target, "stun")) {
+					if (pickedConsequence == "rot") {
+						consequenceLength = 1
+					} else {
+						consequenceLength = 2
+					}
+					addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+					removeStatus(target, "stun")
+				} else {
+					addStatus({target: target,status: "evasion",legnth: 3})
+				}
+			},
+			hitExec: ({target}) =>{
+				if (hasStatus(target, "stun")) {
+					if (pickedConsequence == "rot") {
+						consequenceLength = 2
+					} else {
+						consequenceLength = 3
+					}
+					combatHit(target, {amt: 2, autohit: true, redirectable: false})
+					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+					removeStatus(target, "stun")
+				} else {
+					addStatus(target, "evasion")
+				}
+			}
+		})
+		/*if (hasStatus(target, "stun")) {
 			env.GENERIC_ACTIONS.singleTarget({
 				action,
 				user,
@@ -1285,7 +1323,7 @@ env.ACTIONS.back_to_stage = {
 					addStatus(target, "evasion")
 				}
 			})
-		}   		
+		} */		
 	}
 },
 

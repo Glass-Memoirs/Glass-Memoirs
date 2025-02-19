@@ -337,7 +337,7 @@ env.COMBAT_COMPONENTS.surging = {
                maxhp: 2
           }
      },
-     combatModifiers: ["surging_two"]
+     combatModifiers: ["surging_two", "surging_set","surging_pace"]
 }
 
 /*
@@ -476,6 +476,22 @@ env.MODIFIERS.surging_two = {
 	}
 }
 
+env.MODIFIERS.surging_story = {
+	name: "Temporary Setback",
+	getHelp: ()=> {return env.STATUS_EFFECTS.surging_set},
+	alterations:{
+		all:[["STATUS", "surging_set"]]
+	}
+}
+
+env.MODIFIERS.surging_pace = {
+	name: "Double The Pace",
+	getHelp: ()=> {return env.STATUS_EFFECTS.surging_pace},
+	alterations:{
+		all:[["STATUS","surging_pace"]]
+	}
+}
+
 //STATUS EFFECTS
 /*
 + Yeah these needed doccumenting
@@ -508,6 +524,7 @@ env.STATUS_EFFECTS.entropy_eternal = {//THIS WAS THE HARDEST
 				if(i == "redirection") {usable = false} //honestly i dont know if im unable to move redirection around. it has an origin so just exclude it already
 				if(i == "entropy_eternal") {usable = false} //yeah so, Passive: true and Passive: "modifier" dont equal the exact same thing
 				if(i == "unnatural_carapace") {usable = false}
+				if(i == "channeling_flat"|| i == "coiling_flat"|| i == "rocket_bearer") {usable = false}
 //                  console.log(i, usable)
 				if(usable) statusPool.push(i) //if that shit usable? add it to the list
 			}
@@ -566,6 +583,7 @@ env.STATUS_EFFECTS.entropy_eyes = {
 				if(i == "imperfect_reset") {usable = false}
 				if(i == "redirection") {usable = false}
 				if(i == "entropy_eternal") {usable = false}
+				if(i == "channeling_flat"|| i == "coiling_flat"|| i == "rocket_bearer") {usable=false}
 				//console.log(i, usable)
 				if(usable) statusPool.push(i)
 			}
@@ -787,7 +805,7 @@ env.STATUS_EFFECTS.burnout = {
 
 env.STATUS_EFFECTS.hotpocket = {
 	slug: "hotpocket",
-	name: "Immanent Death",
+	name: "Imminent Death",
 	beneficial: false,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/BSTRDIZEDHOTPOCKET.gif",
 	events: {
@@ -807,13 +825,40 @@ env.STATUS_EFFECTS.surging_two = {
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	impulse: {type: "common",component: "surging"},
 	events: {
-		onCreated: function({statusObj}) {
-			if(statusObj.slug == this.status.slug) {
-				addStatus(this.status.affecting, "surge")
-			}
+		onCreated: function() {
+			addStatus(this.status.affecting,"surge")
 		}
 	},
 	help: "gives surge on fight start."
+}
+
+env.STATUS_EFFECTS.surging_set = {
+	slug: "surging_set",
+	name: "Temporary Setback",
+	passive: "modifier",
+	beneficial: false,
+	icon: "https://glass-memoirs.githuonb.io/Glass-Memoirs/twotime.png",
+	events:{
+		onRemoveStatus: function({target, removingStatusName}) {
+			if(removingStatusName == "regen") {
+				addStatus({target: target, origin: false, status: "stun", length: 2})
+			}
+		},
+	},
+	help: "gain 2T:STUN when REGEN is removed"
+}
+
+env.STATUS_EFFECTS.surging_pace = {
+	slug: "surging_pace",
+	name: "Double The Pace",
+	passive: true,
+	beneficial: false,
+	icon: "https://glass-memoirs.githuonb.io/Glass-Memoirs/twotime.png",
+	events: {
+		onTurn: function() {
+			addStatus(this.status.affecting, "surge")
+		}
+	}
 }
 
 //COMBAT ACTIONS

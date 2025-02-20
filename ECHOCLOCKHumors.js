@@ -494,7 +494,7 @@ env.MODIFIERS.surging_pace = {
 	name: "Double The Pace",
 	getHelp: ()=> {return env.STATUS_EFFECTS.surging_pace},
 	alterations:{
-		all:[["STATUS","surging_pace"]]
+		all:[["STATUS", "surging_pace"]]
 	}
 }
 
@@ -723,7 +723,7 @@ env.STATUS_EFFECTS.entropy_reaction = {
 		}
 	},
 	help: '20% chance to remove random status or impulse'
-}
+},
 
 env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting
 	slug: "exp_over",
@@ -827,7 +827,7 @@ env.STATUS_EFFECTS.surging_two = {
 	slug: "surging_two",
 	name: "Two Time",
 	beneficial: true,
-	passive: "modifier",
+	passive: true,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	impulse: {type: "common",component: "surging"},
 	events: {
@@ -857,7 +857,7 @@ env.STATUS_EFFECTS.surging_set = {
 env.STATUS_EFFECTS.surging_pace = {
 	slug: "surging_pace",
 	name: "Double The Pace",
-	passive: "modifier",
+	passive: true,
 	beneficial: false,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	events: {

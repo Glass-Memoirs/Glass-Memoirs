@@ -279,7 +279,7 @@ if (page.path == '/local/beneath/embassy/') {
     	--font-color: var(--neutral-color);
 	}
 	[component="surging"] {
-    	--background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoristelf.gif);
+    	--background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoritself.gif);
     	--organelle-background: url(/img/textures/yneural.gif);
     	--background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/surgingHumor.png);
     	--background-size: auto;

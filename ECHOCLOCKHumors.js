@@ -1319,7 +1319,7 @@ env.ACTIONS.back_to_stage = {
 	name: "Back to stage",
 	type: 'target',
 	desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
-	verb: "Return",
+	verb: "Call back",
 	help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
 	beneficial: true,
 	crit: 0.3,
@@ -1422,12 +1422,15 @@ env.ACTIONS.velnits_lament = {
 	desc: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
 	verb: "lament",
 	help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
+	crit: 0.2,
+	amt: 2,
 	exec: function(user,target) {
 		if (hasStatus(target, "surge")) {
 			removeStatus(target, "surge")
-			addStatus(target,"wild_surge")
+			addStatus(target, "wild_surge")
 			if (target == user) {
 				addStatus(user, "vulnerable")
+				addStatus(user, "stun")
 			}
 		}
 	}

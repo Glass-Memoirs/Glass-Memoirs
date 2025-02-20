@@ -1399,7 +1399,44 @@ env.ACTIONS.method_acting = {
 	exec: function(user,target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()
-		if (hasStatus(target, "stun")) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action,
+			user,
+			target,
+			hitSfx: {
+				name: 'chomp',
+				rate: 0.7
+			},
+			critExec: ({target}) =>{
+				if (hasStatus(target, "stun")) {
+					if (pickedConsequence == "rot") {
+						consequenceLength = 1
+					} else {
+						consequenceLength = 2
+					}
+					combatHit(target, {amt: 1, autohit: true, redirectable: false})
+					addStatus({target:target, status: pickedConsequence, length: consequenceLength})
+					removeStatus(target, "stun")
+				} else {
+					addStatus({target: target,status: "evasion",legnth: 3})
+				}
+			},
+			hitExec: ({target}) =>{
+				if (hasStatus(target, "stun")) {
+					if (pickedConsequence == "rot") {
+						consequenceLength = 2
+					} else {
+						consequenceLength = 3
+					}
+					combatHit(target, {amt: 2, autohit: true, redirectable: false})
+					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
+					removeStatus(target, "stun")
+				} else {
+					addStatus(target, "evasion")
+				}
+			}
+		})
+		/*if (hasStatus(target, "stun")) {
 			env.GENERIC_ACTIONS.singleTarget({
 				action,
 				user,
@@ -1446,7 +1483,7 @@ env.ACTIONS.method_acting = {
 					addStatus(target, "evasion")
 				}
 			})
-		}
+		}*/
 	}
 },
 

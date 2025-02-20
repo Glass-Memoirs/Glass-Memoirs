@@ -1,5 +1,5 @@
-
-/*page.path == '/local/beneath/embassy/'
+/*
+WARNING: I ([]^[]) AM PROBABLY LIABLE FOR ANY DISTRESS OR RAGE READING THIS PRODUCES. I AM SORRY
 OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  Credits:
  - EE for ideas, playtesting, status effect icons, and also making the undithered gif for entropy
@@ -33,10 +33,8 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
 */
 
 //Dialogue changing
-document.addEventListener('corru_entered', ()=>{
+//document.addEventListener('corru_entered', ()=>{
     if( page.path == '/local/ozo/') {
-document.addEventListener("readystatechange", (event) => {
-	if(document.readyState == 'complete') {
 		env.dialogues["dreammod"] = generateDialogueObject(`
 loop
     basterminal
@@ -176,7 +174,7 @@ sfer
             HIDEREAD::
 `)
 	}
-} ) ;
+//} ) ;
 
 document.addEventListener("readystatechange", (event) => {
 	if(document.readyState == 'complete'){
@@ -189,7 +187,7 @@ document.addEventListener("readystatechange", (event) => {
 				bone: 30,
 				eyes: 30,
 				entropy: 30,
-                    surging: 30,
+                surging: 30,
 			}
 			
 			page.party[0].components["primary"] = "claws"
@@ -249,7 +247,6 @@ document.addEventListener("readystatechange", (event) => {
 		}
 	}
 });
-}
 if (page.path == '/local/beneath/embassy/') {
 	//CSS
 	content.insertAdjacentHTML('beforeend', `<style>
@@ -1704,5 +1701,4 @@ for (const componentName of ["surging"]) {
      env.e3a2.merchant.commerce.push(commerceObject)
 }
 addResources(["https://adenator.neocities.org/corrumods/literallyTooManyHumors.js"])
-	}
-})
+}

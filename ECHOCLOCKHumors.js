@@ -830,7 +830,7 @@ env.STATUS_EFFECTS.surging_two = {
 		}
 	},
 	help: "gives surge on fight start."
-}
+},
 
 env.STATUS_EFFECTS.surging_set = {
 	slug: "surging_set",
@@ -846,7 +846,7 @@ env.STATUS_EFFECTS.surging_set = {
 		},
 	},
 	help: "gain 2T:STUN when REGEN is removed"
-}
+},
 
 env.STATUS_EFFECTS.surging_pace = {
 	slug: "surging_pace",
@@ -859,7 +859,36 @@ env.STATUS_EFFECTS.surging_pace = {
 			addStatus(this.status.affecting, "surge")
 		}
 	}
+},
+
+env.STATUS_EFFECTS.surging_story = {
+	slug: "surging_story",
+	name: "My Story Now",
+	passive: true,
+	beneficial: true,
+	icon: "https://glass-memoirs.githuonb.io/Glass-Memoirs/MyStory.png",
+	impulse: {type: "common", component: "surging"},
+	events:{
+		onAction: function({actionObj}) {
+			let actionSlug = actionObj.slug
+			let utility = env.ACTIONS[user.actions[2]]
+			if(!actionSlug == utility.slug) return;
+			addStatus(this.status.affecting, "surge")
+		}
+	}
 }
+
+/*env.STATUS_EFFECTS.entropy_reaction = {
+	slug: "surging_improvised",
+	name: "ACTION:: IMPROVISED SCRIPTWRITING",
+	passive: true,
+	beneficial: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/eyew.gif",
+	impulse: {type: "action", component: "surging"},
+	events: {
+		
+	}
+}*/
 
 //COMBAT ACTIONS
 //ENTROPY

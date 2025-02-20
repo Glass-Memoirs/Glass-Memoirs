@@ -864,7 +864,8 @@ env.STATUS_EFFECTS.surging_pace = {
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	events: {
 		onTurn: function() {
-			addStatus(this.status.affecting, "surge")
+			let being = this.status.affecting
+			addStatus(being, "surge")
 		}
 	},
 	help: "Gain SURGE each turn"

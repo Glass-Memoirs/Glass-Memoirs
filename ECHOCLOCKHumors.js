@@ -33,7 +33,6 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
 */
 
 //Dialogue changing
-//document.addEventListener('corru_entered', ()=>{
     if( page.path == '/local/ozo/' || page.path == '/local/beneath/embassy') {
 		env.dialogues["dreammod"] = generateDialogueObject(`
 loop
@@ -174,7 +173,6 @@ sfer
             HIDEREAD::
 `)
 	}
-//} ) ;
 
 if(page.party){
 		switch(check("e3a2_newcomp")) {
@@ -1222,7 +1220,7 @@ env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest
 	}
 },
 
-env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :]
+env.ACTIONS.player_overload = { //THis will let you traumatize the firmament 
 	slug: 'player_overload',
 	name: 'Exponential Surge',
 	type: 'self+autohit+support',

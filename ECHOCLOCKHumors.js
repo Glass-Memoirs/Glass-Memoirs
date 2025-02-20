@@ -449,7 +449,7 @@ env.MODIFIERS.entropy_eternal = {
 	alterations: {
 		all: [ ["STATUS", "entropy_eternal"] ]
 	}
-}
+},
 
 env.MODIFIERS.entropy_eyes = {
 	name: "Shattered Eyes",
@@ -457,7 +457,7 @@ env.MODIFIERS.entropy_eyes = {
 	alterations: {
 		all: [ ["STATUS", "entropy_eyes"] ]
 	}
-}
+},
 
 env.MODIFIERS.entropy_clock = {
 	name: "Broken Clock",
@@ -465,7 +465,7 @@ env.MODIFIERS.entropy_clock = {
 	alterations: {
 		all: [["STATUS", "entropy_clock"]]
 	}
-}
+},
 
 env.MODIFIERS.entropy_heat ={
 	name: "Heat Death",
@@ -473,7 +473,7 @@ env.MODIFIERS.entropy_heat ={
 	alterations: {
 		all: [["STATUS", "entropy_heat"]]
 	}
-}
+},
 //surging
 env.MODIFIERS.surging_two = {
 	name: "Two Time",
@@ -481,7 +481,7 @@ env.MODIFIERS.surging_two = {
 	alterations:{
 		all: [["STATUS", "surging_two"]]
 	}
-}
+},
 
 env.MODIFIERS.surging_story = {
 	name: "Temporary Setback",
@@ -489,7 +489,8 @@ env.MODIFIERS.surging_story = {
 	alterations:{
 		all:[["STATUS", "surging_set"]]
 	}
-}
+},
+
 env.MODIFIERS.surging_pace = {
 	name: "Double The Pace",
 	getHelp: ()=> {return env.STATUS_EFFECTS.surging_pace},

@@ -34,7 +34,7 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
 
 //Dialogue changing
 //document.addEventListener('corru_entered', ()=>{
-    if( page.path == '/local/ozo/') {
+    if( page.path == '/local/ozo/' || page.path == '/local/beneath/embassy') {
 		env.dialogues["dreammod"] = generateDialogueObject(`
 loop
     basterminal

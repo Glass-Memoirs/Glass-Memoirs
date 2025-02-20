@@ -418,6 +418,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
 env.ACTOR_AUGMENTS.showmanship = {
 	slug: "showmanship",
 	name: "SHOWMANSHIP",
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
 	alteration: [["tormenting_delight", "showmanship"]],
 	component: ["primary", "surging"],
@@ -427,6 +428,7 @@ env.ACTOR_AUGMENTS.showmanship = {
 env.ACTOR_AUGMENTS.method_acting = {
 	slug: "method_acting",
 	name: "Method Acting",
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
 	alteration: [["back_to_stage", "method_acting"]],
 	component: ["secondary", "surging"],
@@ -436,6 +438,7 @@ env.ACTOR_AUGMENTS.method_acting = {
 env.ACTOR_AUGMENTS.sacrificial_act = {
 	slug: "sacrificial_act",
 	name: "Sacrifical Act",
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
 	alteration: [["velnits_lament", "sacrificial_act"]],
 	component: ["evade", "surging"],

@@ -441,7 +441,7 @@ env.ACTOR_AUGMENTS.sacrificial_act = {
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
 	alteration: [["velnits_lament", "sacrificial_act"]],
-	component: ["evade", "surging"],
+	component: ["utility", "surging"],
 	cost: 2
 }
 

@@ -5,7 +5,7 @@
  - Lustre for making the dithered version of the fractal gif
  - Sola for making the monochrome eye for Entropy's action as well as the ditherd soul hotpocket gif
  - Narri, Kuvi, and Adr for judging my code
- - Adenator for the code for making the status pool because i was probably not gonna figure that out at all
+ - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
  - Mewo for helping with StupidHorrible text
  SECTIONS:
  1. Dialogue changing

@@ -1,12 +1,12 @@
-document.addEventListener('corru_entered', ()=>{
-    if(page.path == '/local/beneath/embassy/' || page.path == '/local/ozo/') {
-/*
- OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
+
+/*page.path == '/local/beneath/embassy/'
+OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  Credits:
  - EE for ideas, playtesting, status effect icons, and also making the undithered gif for entropy
  - Lustre for making the dithered version of the fractal gif
  - Sola for making the monochrome eye for Entropy's action as well as the ditherd soul hotpocket gif
- - Narri, Kuvi, and Adr for judging my code
+ - Narra, Kuvi, and Adr for judging my code
+ - Narra and Adr for helping with the loader as well.
  - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
  - And also with showing me ([]^[]) how to format the description for the recent update, pointing out enegrgy, and overall helping with fixing the code.
  - Mewo for helping with StupidHorrible text
@@ -24,9 +24,16 @@ document.addEventListener('corru_entered', ()=>{
 + Make Entropy's 2nd action
 + Make the modifiers for surging
 + work on meat, stupidhorrible, and SiIva
+		+ SiIva humor ideas so far
+		+ primary: rip
+		+ secondary: (we'll figure it out)
+		+ utility: Snow Halation
+		+ utility augment (use 7 SiIvas): The MF Like Button
 */
 
 //Dialogue changing
+document.addEventListener('corru_entered', ()=>{
+    if( page.path == '/local/ozo/') {
 document.addEventListener("readystatechange", (event) => {
 	if(document.readyState == 'complete') {
 		env.dialogues["dreammod"] = generateDialogueObject(`
@@ -241,50 +248,51 @@ document.addEventListener("readystatechange", (event) => {
 		}
 	}
 });
-
-//CSS
-content.insertAdjacentHTML('beforeend', `<style>
-/* for making player cards not overflow offscreen */
-#ally-team .actor {
-    background-color: var(--dark-color);
-    margin-top: 50px;
 }
+if (page.path == '/local/beneath/embassy/') {
+	//CSS
+	content.insertAdjacentHTML('beforeend', `<style>
+	/* for making player cards not overflow offscreen */
+	#ally-team .actor {
+    	background-color: var(--dark-color);
+    	margin-top: 50px;
+	}
 
-#ally-team {
-    bottom: 5vh;
-    flex-wrap: wrap;
-    z-index: 29;
-}
+	#ally-team {
+    	bottom: 5vh;
+    	flex-wrap: wrap;
+    	z-index: 29;
+	}
 
-#crittaresult, #crittaresult * {
-    transition: transform 2s ease-in-out, opacity 2s ease-in-out;
-    text-align: center;
-    z-index: 30;
-}
+	#crittaresult, #crittaresult * {
+    	transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+    	text-align: center;
+		z-index: 30;
+	}
 
 
-/* humor styling */
-[component="entropy"] {
-    --background: url(https://glass-memoirs.github.io/Glass-Memoirs/ENTROPYHUMORundithered.gif);
-    --organelle-background: url(https://glass-memoirs.github.io/Glass-Memoirs/ENTROPYHUMORundithered.gif);    
-    --background-small:  url(https://glass-memoirs.github.io/Glass-Memoirs/ENTROPYHUMORundithered.gif);
-    --background-size: auto;
-    --background-position: center;
-    --background-color: var(--dark-color);
-    --accent-color: var(--bright-color);
-    --font-color: var(--neutral-color);
-}
-[component="surging"] {
-    --background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoristelf.png);
-    --organelle-background: url(/img/textures/yneural.gif);
-    --background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/surgingHumor.png);
-    --background-size: auto;
-    --background-position: center;
-    --background-color: var(--dark-color);
-    --accent-color: var(--friend-color);
-    --font-color: var(--fundfriend-color);
-}
-</style>`);
+	/* humor styling */
+	[component="entropy"] {
+    	--background: url(https://glass-memoirs.github.io/Glass-Memoirs/ENTROPYHUMORundithered.gif);
+    	--organelle-background: url(https://glass-memoirs.github.io/Glass-Memoirs/ENTROPYHUMORundithered.gif);    
+    	--background-small:  url(https://glass-memoirs.github.io/Glass-Memoirs/ENTROPYHUMORundithered.gif);
+    	--background-size: auto;
+    	--background-position: center;
+    	--background-color: var(--dark-color);
+    	--accent-color: var(--bright-color);
+    	--font-color: var(--neutral-color);
+	}
+	[component="surging"] {
+    	--background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoristelf.png);
+    	--organelle-background: url(/img/textures/yneural.gif);
+    	--background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/surgingHumor.png);
+    	--background-size: auto;
+    	--background-position: center;
+    	--background-color: var(--dark-color);
+    	--accent-color: var(--friend-color);
+    	--font-color: var(--fundfriend-color);
+	}
+	</style>`);
 //HUMORS
 env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",

@@ -420,7 +420,7 @@ env.ACTOR_AUGMENTS.showmanship = {
 	name: "SHOWMANSHIP",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
-	alteration: [["tormenting_delight", "showmanship"]],
+	alteration: [["tormenting_delight", "surging_show"]],
 	component: ["primary", "surging"],
 	cost: 2
 }
@@ -430,7 +430,7 @@ env.ACTOR_AUGMENTS.method_acting = {
 	name: "Method Acting",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-	alteration: [["back_to_stage", "method_acting"]],
+	alteration: [["back_to_stage", "surging_act"]],
 	component: ["secondary", "surging"],
 	cost: 2
 }
@@ -440,7 +440,7 @@ env.ACTOR_AUGMENTS.sacrificial_act = {
 	name: "Sacrifical Act",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
-	alteration: [["velnits_lament", "sacrificial_act"]],
+	alteration: [["velnits_lament", "surging_sacri"]],
 	component: ["utility", "surging"],
 	cost: 2
 }
@@ -1437,7 +1437,7 @@ env.ACTIONS.velnits_lament = {
 },
 
 env.ACTIONS.showmanship = {
-	slug: "showmanship",
+	slug: "surging_show",
 	name: "SHOWMANSHIP",
 	type: 'target',
 	desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
@@ -1484,7 +1484,7 @@ env.ACTIONS.showmanship = {
 },
 
 env.ACTIONS.method_acting = {
-	slug: "method_acting",
+	slug: "surging_act",
 	name: "BREAKS END",
 	type: 'autohit',
 	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
@@ -1582,7 +1582,7 @@ env.ACTIONS.method_acting = {
 },
 
 env.ACTIONS.sacrificial_act = {
-	slug: "sacrifical_act",
+	slug: "surging_sacri",
 	name: "Sacrifical Act",
 	type: 'autohit+target',
 	desc: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",

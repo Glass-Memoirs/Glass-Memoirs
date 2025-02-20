@@ -844,7 +844,7 @@ env.STATUS_EFFECTS.surging_set = {
 	name: "Temporary Setback",
 	passive: "modifier",
 	beneficial: false,
-	icon: "https://glass-memoirs.githuonb.io/Glass-Memoirs/twotime.png",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	events:{
 		onRemoveStatus: function({target, removingStatusName}) {
 			if(removingStatusName == "regen") {
@@ -860,7 +860,7 @@ env.STATUS_EFFECTS.surging_pace = {
 	name: "Double The Pace",
 	passive: true,
 	beneficial: false,
-	icon: "https://glass-memoirs.githuonb.io/Glass-Memoirs/twotime.png",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	events: {
 		onTurn: function() {
 			addStatus(this.status.affecting, "surge")
@@ -874,7 +874,7 @@ env.STATUS_EFFECTS.surging_story = {
 	name: "My Story Now",
 	passive: true,
 	beneficial: true,
-	icon: "https://glass-memoirs.githuonb.io/Glass-Memoirs/MyStory.png",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/MyStory.png",
 	impulse: {type: "common", component: "surging"},
 	events:{
 		onAction: function({actionObj}) {

@@ -176,8 +176,7 @@ sfer
 	}
 //} ) ;
 
-document.addEventListener("readystatechange", (event) => {
-	if(document.readyState == 'complete'){
+if(page.party){
 		switch(check("e3a2_newcomp")) {
 		case "too many":
 			page.flags.components = {
@@ -246,7 +245,6 @@ document.addEventListener("readystatechange", (event) => {
                })
 		}
 	}
-});
 if (page.path == '/local/beneath/embassy/') {
 	//CSS
 	content.insertAdjacentHTML('beforeend', `<style>

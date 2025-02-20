@@ -858,7 +858,8 @@ env.STATUS_EFFECTS.surging_pace = {
 		onTurn: function() {
 			addStatus(this.status.affecting, "surge")
 		}
-	}
+	},
+	help: "Gain SURGE each turn"
 },
 
 env.STATUS_EFFECTS.surging_story = {
@@ -875,7 +876,8 @@ env.STATUS_EFFECTS.surging_story = {
 			if(!actionSlug == utility.slug) return;
 			addStatus(this.status.affecting, "surge")
 		}
-	}
+	},
+	help: "when using UTILITY ACTION, gain SURGE"
 }
 
 /*env.STATUS_EFFECTS.entropy_reaction = {

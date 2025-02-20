@@ -490,7 +490,6 @@ env.MODIFIERS.surging_story = {
 		all:[["STATUS", "surging_set"]]
 	}
 }
-
 env.MODIFIERS.surging_pace = {
 	name: "Double The Pace",
 	getHelp: ()=> {return env.STATUS_EFFECTS.surging_pace},
@@ -828,7 +827,7 @@ env.STATUS_EFFECTS.surging_two = {
 	slug: "surging_two",
 	name: "Two Time",
 	beneficial: true,
-	passive: true,
+	passive: "modifier",
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	impulse: {type: "common",component: "surging"},
 	events: {
@@ -858,7 +857,7 @@ env.STATUS_EFFECTS.surging_set = {
 env.STATUS_EFFECTS.surging_pace = {
 	slug: "surging_pace",
 	name: "Double The Pace",
-	passive: true,
+	passive: "modifier",
 	beneficial: false,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	events: {

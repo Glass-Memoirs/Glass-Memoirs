@@ -419,7 +419,7 @@ env.ACTOR_AUGMENTS.generic.showmanship = {
 	slug: "showmanship",
 	name: "SHOWMANSHIP",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
-	description: "'SEE HOW THEY FALL!','THEY THOUGHT THEY WERE LAUGHING DOWN AT US','ONLY FOR US TO SWEEP THEIR KNEES!'",
+	description: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
 	alteration: [["tormenting_delight", "surging_show"]],
 	component: ["primary", "surging"],
 	cost: 2

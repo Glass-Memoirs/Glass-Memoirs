@@ -898,23 +898,36 @@ env.ACTIONS.momentum = { //couldnt figure out how to make this thing actually mu
 	slug: "momentum",
 	name: "Momentum",
 	type: 'target',
-	desc: "'redirect beneficial effects into power';'removes them once the hit connects'",
+	//desc: "'redirect beneficial effects into power';'removes them once the hit connects'",
 	anim: "basic-attack",
-	help: "'100% -2HP + (XT:REGEN/FOCUS)\nSELF::-REGEN/FOCUS'",
+	//help: "'100% -2HP + (XT:REGEN/FOCUS)\nSELF::-REGEN/FOCUS'",
+	details: {
+		flavour: "'redirect beneficial effects into power';'removes them once the hit connects'",
+		onUse: "'repeat for every T:[STATUS::regen] and T:[STATUS::focused]';'lose all [STATUS::regen] and [STATUS::focused]'",
+		onHit: "'[STAT::amt]'",
+		onCrit: "'[STATUS::stun]'",
+	},
 	usage: {
 		act: "%USER CHANNELS ENERGY INTO A SPRINT",
 		crit: "%TARGET GETS KNOCKED OVER",
 		hit: "%TARGET GETS SLAMMED INTO",
 		miss: "%TARGET SIDESTEPS"
 	},
-	accuracy: 1,
-	crit: 0.1,
-	amt: 2,
+	stats: {
+		accuracy: 1,
+		crit: 0.1,
+		amt: 2,
+		status: {
+			regen: {name: "regen", showReference:true},
+			focused: {name: "focused", showReference:true},
+			stun: {name:"stun", length: 1},
+		},
+	},
 	exec: function(user, target) {
 		let action = this
 		//console.log(hasStatus(user, 'focused'))
 		//The looping part
-		for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen'))); i++) {
+		for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')))+1; i++) {
 			env.GENERIC_ACTIONS.singleTarget({
 				action,
 				user,
@@ -1225,6 +1238,7 @@ env.ACTIONS.tormenting_delight = {
 	type: 'target',
 	desc: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
 	anim: "basic-attack",
+	verb: "Torment",
 	help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
 	usage: {
 		act: "%USER READIES A SWING",
@@ -1236,7 +1250,7 @@ env.ACTIONS.tormenting_delight = {
 	exec: function(user, target) {
 		let includeFocus = false
 		env.GENERIC_ACTIONS.singleTarget({
-			action,
+			action: this,
 			user,
 			target,
 			hitSfx: {
@@ -1263,6 +1277,7 @@ env.ACTIONS.back_to_stage = {
 	name: "Back to stage",
 	type: 'target',
 	desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
+	verb: "Return",
 	help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
 	beneficial: true,
 	crit: 0.3,
@@ -1272,7 +1287,7 @@ env.ACTIONS.back_to_stage = {
 		let pickedConsequence = consequenceChoices.sample()
 
 		env.GENERIC_ACTIONS.singleTarget({
-			action,
+			action: this,
 			user,
 			target,
 			hitSfx: {
@@ -1363,6 +1378,7 @@ env.ACTIONS.velnits_lament = {
 	name: "velnit's lament",
 	type: 'support+target+self+autohit',
 	desc: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
+	verb: "lament",
 	help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
 	exec: function(user,target) {
 		if (hasStatus(target, "surge")) {
@@ -1380,6 +1396,7 @@ env.ACTIONS.showmanship = {
 	name: "SHOWMANSHIP",
 	type: 'target',
 	desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
+	verb: "Heckle",
 	help: "",
 	usage: {
 	},
@@ -1426,12 +1443,13 @@ env.ACTIONS.method_acting = {
 	name: "BREAKS END",
 	type: 'autohit',
 	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
+	verb: "Break",
 	help: "",
 	exec: function(user,target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()
 		env.GENERIC_ACTIONS.singleTarget({
-			action,
+			action: this,
 			user,
 			target,
 			hitSfx: {
@@ -1524,8 +1542,38 @@ env.ACTIONS.sacrificial_act = {
 	type: 'autohit+target',
 	desc: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
 	help: "IF TARGET HAS SURGE, -SURGE +WILDSURGE +1T EMPOWERED +2T FOCUSED/nIF ON SELF:-4HP,+2T FEAR, +1T STUN, +1T VULNERABLE +1T WILD",
+	verb: "Empower",
 	exec: function(user,target){
-		if (target == user) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action,
+			user,
+			target,
+			hitSfx: {
+				name: 'chomp',
+				rate: 3
+			},
+			genExec: ({user}) => {
+				if (target == user) {
+					combatHit(user, {amt:4, autohit: true, redirectable:false})
+					if (hasStatus(user,"surge")) {
+						removeStatus(user,"surge")
+					}
+					addStatus(user,"wild_surge")
+					addStatus({target: user, status:"fear", length:2})
+					addStatus(user, "stun")
+					addStatus(user, "vulnerable")
+				} else {
+					combatHit(user, {amt:4, autohit:true, redirectable:false})
+					if (hasStatus(target,"surge")) {
+						removeStatus(target,"surge")
+						addStatus(target,"wild_surge")
+					}
+					addStatus({target: target, status: "empowered", length: 2})
+					addStatus({target: target, status: "focused", length: 3})
+				}
+			}
+		})
+		/*if (target == user) {
 			env.GENERIC_ACTIONS.singleTarget({
 				action,
 				user,
@@ -1564,7 +1612,7 @@ env.ACTIONS.sacrificial_act = {
 					addStatus({target: target, status: "focused", length: 3})
 				}
 			})
-		}
+		}*/
 	}
 }
 

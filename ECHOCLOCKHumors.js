@@ -887,7 +887,7 @@ env.STATUS_EFFECTS.surging_story = {
 			addStatus(this.status.affecting, "surge")
 		}
 	},
-	help: "when using UTILITY ACTION, gain SURGE"
+	help: "when using UTILITY ACTION gain SURGE"
 }
 
 /*env.STATUS_EFFECTS.surging_improvised = {

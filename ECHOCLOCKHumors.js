@@ -29,6 +29,7 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
 		+ secondary: (we'll figure it out)
 		+ utility: Snow Halation
 		+ utility augment (use 7 SiIvas): The MF Like Button
+		+ action does a random move that is strong, but requires a buildup of energy to do so
 */
 
 //Dialogue changing

@@ -280,8 +280,8 @@ if (page.path == '/local/beneath/embassy/') {
 	}
 	[component="surging"] {
     	--background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoritself.gif);
-    	--organelle-background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoritself.gif);
-    	--background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/surgingHumor.png);
+    	--organelle-background: url(https://glass-memoirs.github.io/Glass-Memoirs/surgingHumor.png;
+    	--background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoritself.gif);
     	--background-size: auto;
     	--background-position: center;
     	--background-color: var(--dark-color);

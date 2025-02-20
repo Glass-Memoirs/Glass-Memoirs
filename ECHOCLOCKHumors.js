@@ -6,6 +6,7 @@
  - Sola for making the monochrome eye for Entropy's action as well as the ditherd soul hotpocket gif
  - Narri, Kuvi, and Adr for judging my code
  - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
+ - And also with showing me ([]^[]) how to format the description for the recent update, pointing out enegrgy, and overall helping with fixing the code.
  - Mewo for helping with StupidHorrible text
  SECTIONS:
  1. Dialogue changing
@@ -776,7 +777,7 @@ env.STATUS_EFFECTS.burnout = {
 	slug: "burnout",
 	name: "Burnout",
 	beneficial: false,
-	icon: "https://glass-memoirs.github.io/Glass-Memoirs/Hhhot p oc k e t.gif",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/Hhhotpocket.gif",
 	events:{
 		onCrit: function({subject, attack, originalEventTarget}) {
 			removeStatus(this.status.affecting, 'burnout',{runEvents: false})
@@ -787,7 +788,7 @@ env.STATUS_EFFECTS.burnout = {
 				size: 1,
 			})
 			readoutAdd({
-				message: `${this.status.affecting.name} puts out the flame on their enegrgy`, 
+				message: `${this.status.affecting.name} puts out the flame on their energy`, 
 				name: "sourceless", 
 				type: "sourceless combat minordetail",
 				show: false,
@@ -900,6 +901,7 @@ env.ACTIONS.momentum = { //couldnt figure out how to make this thing actually mu
 	type: 'target',
 	//desc: "'redirect beneficial effects into power';'removes them once the hit connects'",
 	anim: "basic-attack",
+	verb: "sprint at",
 	//help: "'100% -2HP + (XT:REGEN/FOCUS)\nSELF::-REGEN/FOCUS'",
 	details: {
 		flavour: "'redirect beneficial effects into power';'removes them once the hit connects'",
@@ -948,6 +950,7 @@ env.ACTIONS.player_law = { //Funky little move, had to change it up just like mo
 	type: 'target',
 	desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
 	anim: "basic-attack",
+	verb: "Barrel towards",
 	help: "'100% -2HP * (XT:REGEN+FOCUS) 15%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
 	usage: {
 		act: "%USER CHANNELS ENERGY INTO A SPRINT",
@@ -1063,6 +1066,7 @@ env.ACTIONS.player_rig = {
 	type: "target",
 	desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
 	anim: "basic-attack",
+	verb: "rig",
 	help: "'FOES:: 80%  -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: 80% -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
 	usage: {
 		act: "%USER SHUFFLES THE POWER",
@@ -1139,6 +1143,7 @@ env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest
 	type: 'target',
 	desc: "'flail around';'a chance to keep hitting'",
 	anim: "basic-attack",
+	verb: "flail at",
 	help: "100% -2HP, 15%C USE THIS ACTION AGAIN ON RANDOM TARGET",
 	usage: {
 		act: "%USER BEGINS TO FLAIL",
@@ -1187,6 +1192,7 @@ env.ACTIONS.player_overload = { //THis will let you traumatize the firmament :]
 	type: 'self+autohit+support',
 	desc: "'focus flailing into a long barrage';'next attack is used across entire team';'long period of focus tires shell out and stuns'",
 	anim: "",
+	verb: "overload",
 	help: "+1T:FOCUSED +EXPONENTIAL SURGE",
 	usage: {
 		act: "%USER HONES IN"

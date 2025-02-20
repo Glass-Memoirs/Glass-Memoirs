@@ -415,7 +415,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
 //SURGING
 env.ACTOR_AUGMENTS.generic.showmanship = {
 	slug: "showmanship",
-	name: "SHOWMANSHIP",
+	name: "Showmanship",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
 	alteration: [["tormenting_delight", "surging_show"]],

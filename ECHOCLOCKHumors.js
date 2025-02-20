@@ -1,3 +1,5 @@
+document.addEventListener('corru_entered', ()=>{
+    if(page.path == '/local/beneath/embassy/' || page.path == '/local/ozo/') {
 /*
  OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  Credits:
@@ -1692,3 +1694,6 @@ for (const componentName of ["surging"]) {
      })
      env.e3a2.merchant.commerce.push(commerceObject)
 }
+addResources(["https://adenator.neocities.org/corrumods/literallyTooManyHumors.js"])
+	}
+})

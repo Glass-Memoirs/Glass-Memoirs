@@ -887,7 +887,7 @@ env.STATUS_EFFECTS.surging_story = {
 	help: "when using UTILITY ACTION, gain SURGE"
 }
 
-/*env.STATUS_EFFECTS.entropy_reaction = {
+/*env.STATUS_EFFECTS.surging_improvised = {
 	slug: "surging_improvised",
 	name: "ACTION:: IMPROVISED SCRIPTWRITING",
 	passive: true,
@@ -897,7 +897,19 @@ env.STATUS_EFFECTS.surging_story = {
 	events: {
 		
 	}
-}*/
+},
+
+env.STATUS_EFFECTS.surging_second = {
+	slug: "surging_second",
+	name: "Second Act",
+	passive: "modifier",
+	beneficial: false,
+	icon: "fuck",
+	events: {
+	
+	}
+}
+*/
 
 //COMBAT ACTIONS
 //ENTROPY

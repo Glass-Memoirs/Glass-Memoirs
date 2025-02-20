@@ -415,7 +415,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      cost: 2
 }
 //SURGING
-env.ACTOR_AUGMENTS.showmanship = {
+env.ACTOR_AUGMENTS.generic.showmanship = {
 	slug: "showmanship",
 	name: "SHOWMANSHIP",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
@@ -425,7 +425,7 @@ env.ACTOR_AUGMENTS.showmanship = {
 	cost: 2
 }
 
-env.ACTOR_AUGMENTS.method_acting = {
+env.ACTOR_AUGMENTS.generic.method_acting = {
 	slug: "method_acting",
 	name: "Method Acting",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
@@ -435,7 +435,7 @@ env.ACTOR_AUGMENTS.method_acting = {
 	cost: 2
 }
 
-env.ACTOR_AUGMENTS.sacrificial_act = {
+env.ACTOR_AUGMENTS.generic.sacrificial_act = {
 	slug: "sacrificial_act",
 	name: "Sacrifical Act",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",

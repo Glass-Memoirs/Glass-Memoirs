@@ -878,8 +878,8 @@ env.STATUS_EFFECTS.surging_story = {
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/MyStory.png",
 	impulse: {type: "common", component: "surging"},
 	events:{
-		onAction: function({actionObj}) {
-			let actionSlug = actionObj.slug
+		onAction: function({action}) {
+			let actionSlug = action.slug
 			let utility = env.ACTIONS[user.actions[2]]
 			if(!actionSlug == utility.slug) return;
 			addStatus(this.status.affecting, "surge")

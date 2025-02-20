@@ -948,19 +948,34 @@ env.ACTIONS.player_law = { //Funky little move, had to change it up just like mo
 	slug: "player_law",
 	name: "3rd Law",
 	type: 'target',
-	desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
+	//desc: "'barrel towards foes';'chance to stun and apply vulnerable'",
 	anim: "basic-attack",
 	verb: "Barrel towards",
-	help: "'100% -2HP * (XT:REGEN+FOCUS) 15%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
+	//help: "'100% -2HP * (XT:REGEN+FOCUS) 15%C +2T STUN +3T VULNERABLE\nSELF:: #T/2 REGEN/FOCUS/EVASION'",
+	details :{
+		flavour: "'barrel towards foes';'chance to stun and apply vulnerable'",
+		onUse: "'Repeat for every T:[STATUS::regen], T:[STATUS::focused], and T:[STATUS::evasion]';'Half all [STATUS::regen], [STATUS::focused], and [STATUS::evasion]'",
+		onHit: "'[STAT::amt]'",
+		onCrit: "'[STATUS::stun] and [STATUS::vulnerable]'"
+	},
 	usage: {
 		act: "%USER CHANNELS ENERGY INTO A SPRINT",
 		crit: "%TARGET GETS KNOCKED OVER",
 		hit: "%TARGET GETS SLAMMED INTO",
 		miss: "%TARGET SIDESTEPS"
 	},
-	accuracy: 1,
-	crit: 0.15,
-	amt: 2,
+	stats: {
+		accuracy: 1,
+		crit: 0.15,
+		amt: 2,
+		status: {
+			regen:{name: "regen", showReference: true},
+			focused:{name: "focused", showReference: true},
+			vulnerable:{name: "vulnerable", length: 2},
+			evasion:{name: "evasion", showReference:true},
+			stun:{name: "stun", length:1},
+		},
+	},
 	exec: function(user, target) {
 		let action = this
 		for (let i = 1; i <= (Math.floor(hasStatus(user, 'focused')) + Math.floor(hasStatus(user, 'regen')) + Math.floor(hasStatus(user, 'evasion'))); i++) {

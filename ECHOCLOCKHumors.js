@@ -823,7 +823,7 @@ env.STATUS_EFFECTS.hotpocket = {
 			combatHit(this.status.affecting, {amt: 1000, autohit: true, redirectable: false})
 		}
 	},
-	help: "Explode! :}"
+	help: "Explode!"
 },
 
 //surging

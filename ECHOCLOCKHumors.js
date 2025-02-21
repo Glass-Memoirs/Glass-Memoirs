@@ -1029,18 +1029,28 @@ env.ACTIONS.level_statuses ={ //this would not deal damage for me at all so i ma
 	slug: "level_statuses",
 	name: "Level",
 	type: 'target',
-	desc: "'collapse beyond both yourself and the foe';'remove all statuses'",
+	//desc: "'collapse beyond both yourself and the foe';'remove all statuses'",
 	anim: "basic-attack",
-	help: "80% REMOVE MOST STATUS EFFECTS, 15%C REMOVE WINDUP",
+	//help: "80% REMOVE MOST STATUS EFFECTS, 15%C REMOVE WINDUP",
+	details: {
+		flavour: "'collapse beyond both yourself and the foe';'remove all statuses'",
+		onUse: "'80% chance to remove most statuses excluding impulses and modifiers'",
+		onCrit: "'15% chance to remove [STATUS::windup]'"
+	},
 	usage: {
 		act: "%USER REACHES OUT",
 		crit: "%USER AND %TARGET FEEL SOMETHING GET TORN AWAY",
 		hit: "%TARGET GETS CLAWED",
 		miss: "%TARGET SWATS %USER AWAY"
 	},
-	accuracy: 0.8,
-	crit: 0.15,
-	amt: 0,
+	stats: {
+		accuracy: 0.8,
+		crit: 0.15,
+		amt: 0,
+		status: {
+			windup: {name: "windup", showReference: true}
+		},
+	},
 	exec: function(user, target) {
 		let statusPool = []
 		for (let i in env.STATUS_EFFECTS) {
@@ -1101,19 +1111,26 @@ env.ACTIONS.player_rig = {
 	slug: "player_rig",
 	name: "Rig Field",
 	type: "target",
-	desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
+	//desc: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
 	anim: "basic-attack",
 	verb: "rig",
-	help: "'FOES:: 80%  -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: 80% -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
+	//help: "'FOES:: 80%  -POSITIVE STATUS, 10%C 2*T NEGATIVE STATUS\nUSER:: 80% -NEGATIVE STATUS, 10%C 2*T POSITIVE STATUS'",
+	details :{
+		flavour: "'use foe resources to remove negative statuses';'chance of doubling status duration'",
+		onUse: "'FOES: 80% chance to remove all positive statuses';'USER: 80% chance to remove all negative statuses'",
+		onCrit: "'FOES: 10% to double all negative statuses';'USER: 10% chance to double all positives'",
+	},
 	usage: {
 		act: "%USER SHUFFLES THE POWER",
 		crit: "%TARGET FEELS DREAD",
 		hit: "%TARGET LOOSES THEIR ENERGY",
 		miss: "%USER GOT DISTRACTED"
 	},
-	accuracy: 0.8,
-	crit: 0.1,
-	amt: 0,
+	stats :{
+		accuracy: 0.8,
+		crit: 0.1,
+		amt: 0,
+	},
 	exec: function(user,target) {
 		let statusPool = []
 		for (let i in env.STATUS_EFFECTS) {
@@ -1178,19 +1195,26 @@ env.ACTIONS.wild_frenzy = { //yknow this was what i thought would be the hardest
 	slug: "wild_frenzy",
 	name: "Frenzied Flail",
 	type: 'target',
-	desc: "'flail around';'a chance to keep hitting'",
+	//desc: "'flail around';'a chance to keep hitting'",
 	anim: "basic-attack",
 	verb: "flail at",
-	help: "100% -2HP, 15%C USE THIS ACTION AGAIN ON RANDOM TARGET",
+	//help: "100% -2HP, 15%C USE THIS ACTION AGAIN ON RANDOM TARGET",
+	details: {
+		flavour: "'flail around';'a chance to keep hitting'",
+		onHit: "'[STAT::amt]'",
+		onCrit: "'15% chance to hit again'",
+	},
 	usage: {
 		act: "%USER BEGINS TO FLAIL",
 		crit: "%USER KEEPS FLAILING",
 		hit: "%TARGET GETS WHACKED",
 		miss: "%TARGET EVADES"
 	},
-	accuracy: 1,
-	crit: 0.15,
-	amt: 2,
+	stats:{
+		accuracy: 1,
+		crit: 0.15,
+		amt: 2,
+	},
 	exec: function(user, target) { //stole a bit of frenzy's code,
 		let action = this
 		let targetTeam
@@ -1227,12 +1251,21 @@ env.ACTIONS.player_overload = { //THis will let you traumatize the firmament
 	slug: 'player_overload',
 	name: 'Exponential Surge',
 	type: 'self+autohit+support',
-	desc: "'focus flailing into a long barrage';'next attack is used across entire team';'long period of focus tires shell out and stuns'",
+	//desc: "'focus flailing into a long barrage';'next attack is used across entire team';'long period of focus tires shell out and stuns'",
 	anim: "",
 	verb: "overload",
-	help: "+1T:FOCUSED +EXPONENTIAL SURGE",
+	//help: "+1T:FOCUSED +EXPONENTIAL SURGE",
+	details: {
+		flavour: "'focus flailing into a long barrage';'next attack is used across entire team';'long period of focus tires shell out and stuns'",
+		onUse: "'[STATUS::exp_over]'",
+	},
 	usage: {
 		act: "%USER HONES IN"
+	},
+	stats:{
+		status: {
+			exp_over: {name: "exp_over", showReference: true}
+		},
 	},
 	beneficial: true,
 	disableIf: (actor)=>{ if(hasStatus(actor, "fear")) return "PROHIBITED BY FEAR" },

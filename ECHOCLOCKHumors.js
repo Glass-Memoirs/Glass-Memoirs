@@ -418,7 +418,7 @@ env.ACTOR_AUGMENTS.generic.showmanship = {
 	name: "Showmanship",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
-	alteration: [["tormenting_delight", "surging_show"]],
+	alteration: [["tormenting_delight", "player_show"]],
 	component: ["primary", "surging"],
 	cost: 2
 }
@@ -428,7 +428,7 @@ env.ACTOR_AUGMENTS.generic.method_acting = {
 	name: "Method Acting",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-	alteration: [["back_to_stage", "surging_act"]],
+	alteration: [["back_to_stage", "player_act"]],
 	component: ["secondary", "surging"],
 	cost: 2
 }
@@ -438,7 +438,7 @@ env.ACTOR_AUGMENTS.generic.sacrificial_act = {
 	name: "Sacrifical Act",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	description: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VEIW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
-	alteration: [["velnits_lament", "surging_sacri"]],
+	alteration: [["velnits_lament", "player_sacri"]],
 	component: ["utility", "surging"],
 	cost: 2
 }
@@ -1436,7 +1436,7 @@ env.ACTIONS.velnits_lament = {
 },
 
 env.ACTIONS.showmanship = {
-	slug: "surging_show",
+	slug: "player_show",
 	name: "SHOWMANSHIP",
 	type: 'target',
 	desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
@@ -1483,11 +1483,11 @@ env.ACTIONS.showmanship = {
 },
 
 env.ACTIONS.method_acting = {
-	slug: "surging_act",
+	slug: "player_act",
 	name: "BREAKS END",
 	type: 'autohit',
 	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-	verb: "Break",
+	verb: "Work",
 	help: "",
 	exec: function(user,target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
@@ -1581,7 +1581,7 @@ env.ACTIONS.method_acting = {
 },
 
 env.ACTIONS.sacrificial_act = {
-	slug: "surging_sacri",
+	slug: "player_act",
 	name: "Sacrifical Act",
 	type: 'autohit+target',
 	desc: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",

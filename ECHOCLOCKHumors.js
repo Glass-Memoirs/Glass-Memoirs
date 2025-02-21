@@ -484,7 +484,7 @@ env.MODIFIERS.surging_two = {
 	}
 }
 
-env.MODIFIERS.surging_story = {
+env.MODIFIERS.surging_set = {
 	name: "Temporary Setback",
 	getHelp: ()=> {return env.STATUS_EFFECTS.surging_set.help},
 	alterations:{

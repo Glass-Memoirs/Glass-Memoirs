@@ -1536,7 +1536,7 @@ env.ACTIONS.player_act = {
 	name: "BREAKS END",
 	type: 'autohit+target',
 	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-	verb: "Work",
+	verb: "Work on",
 	help: "aaaaaaaaaa",
 	exec: function(user,target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]

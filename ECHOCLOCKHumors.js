@@ -1492,6 +1492,7 @@ env.ACTIONS.player_show = {
 	help: "aaaaaaaa",
 	//usage: {
 	//},
+	accuracy: 0.9,
 	crit: 0.2,
 	amt: 2,
 	exec: function(user, target) {
@@ -1533,7 +1534,7 @@ env.ACTIONS.player_show = {
 env.ACTIONS.player_act = {
 	slug: "player_act",
 	name: "BREAKS END",
-	type: 'autohit',
+	type: 'autohit+target',
 	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
 	verb: "Work",
 	help: "aaaaaaaaaa",

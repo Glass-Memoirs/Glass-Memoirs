@@ -1589,7 +1589,7 @@ env.ACTIONS.player_sacri = {
 	verb: "Empower",
 	exec: function(user,target){
 		env.GENERIC_ACTIONS.singleTarget({
-			action,
+			action: this,
 			user,
 			target,
 			hitSfx: {

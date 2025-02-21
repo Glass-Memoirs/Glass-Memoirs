@@ -391,7 +391,7 @@ env.ACTOR_AUGMENTS.generic.third_law = {
 	alterations: [["momentum", "player_law"]],
 	component: ["primary", "entropy"],
 	cost: 2
-}
+},
 
 env.ACTOR_AUGMENTS.generic.rig_field = {
 	slug: "rig_field",
@@ -401,7 +401,7 @@ env.ACTOR_AUGMENTS.generic.rig_field = {
 	alterations: [["level_statuses", "player_rig"]],
 	component: ["secondary", "entropy"],
 	cost: 2
-}
+},
 
 env.ACTOR_AUGMENTS.generic.exp_overload = {
      slug: "exp_overload",
@@ -411,7 +411,7 @@ env.ACTOR_AUGMENTS.generic.exp_overload = {
      alterations: [["wild_frenzy", "player_overload"]],
      component: ["utility", "entropy"],
      cost: 2
-}
+},
 //SURGING
 env.ACTOR_AUGMENTS.generic.showmanship = {
 	slug: "showmanship",
@@ -421,7 +421,7 @@ env.ACTOR_AUGMENTS.generic.showmanship = {
 	alteration: [["tormenting_delight", "surging_show"]],
 	component: ["primary", "surging"],
 	cost: 2
-}
+},
 
 env.ACTOR_AUGMENTS.generic.method_acting = {
 	slug: "method_acting",
@@ -431,7 +431,7 @@ env.ACTOR_AUGMENTS.generic.method_acting = {
 	alteration: [["back_to_stage", "surging_act"]],
 	component: ["secondary", "surging"],
 	cost: 2
-}
+},
 
 env.ACTOR_AUGMENTS.generic.sacrificial_act = {
 	slug: "sacrificial_act",

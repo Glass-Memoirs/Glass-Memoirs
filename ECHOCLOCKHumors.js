@@ -1312,17 +1312,30 @@ env.ACTIONS.tormenting_delight = {
 	slug: "tormenting_delight",
 	name: "Tormenting delight",
 	type: 'target',
-	desc: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
+	//desc: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
 	anim: "basic-attack",
 	verb: "Torment",
 	help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
+	details: {
+		flavour: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
+		onHit: "'[STAT::amt]';'25% [STATUS::stun]';'USER 25% [STATUS::surge]'",
+		onCrit: "'2T:[STATUS::stun]';'USER 2T:[STATUS::focused]+[STATUS::surge]'",
+	},
 	usage: {
 		act: "%USER READIES A SWING",
 		hit: "%TARGET IS STRUCK",
 		crit: "%TARGET IS STUNNED",
 	},
-	crit: 0.2,
-	amt: 3,
+	stats: {
+		accuracy: 1.0,
+		crit: 0.2,
+		amt: 3,
+		status: {
+			stun: {name: "stun", length:1},
+			surge: {name: "surge", showReference: true},
+			focused: {name: "focused", showReference: true},
+		},
+	},
 	exec: function(user, target) {
 		let includeFocus = false
 		env.GENERIC_ACTIONS.singleTarget({

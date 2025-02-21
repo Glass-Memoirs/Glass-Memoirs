@@ -1365,17 +1365,25 @@ env.ACTIONS.back_to_stage = {
 	slug: "back_to_stage",
 	name: "Back to stage",
 	type: 'target',
-	desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
+	//desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
 	verb: "Call back",
-	help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
+	help: "IF STUN: +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
 	beneficial: true,
+	details: {
+		flavour: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
+		onHit: "'[STAT::amt]';'If [STATUS::stun] then +1-3T:[STATUS::rot]/[STATUS::destabilized]/[STATUS::vulnerable]/[STATUS::puncture]';'if no [STATUS::stun] then 1T:[STATUS::evasion]'",
+		onCrit: "'if [STATUS::stun] then +2-3T:[STATUS::rot]/[STATUS::destabilized]/[STATUS::vulnerable]/[STATUS::puncture]';'if no [STATUS::stun] then 3T:[STATUS::evasion]'",
+	},
 	stats: {
 		crit: 0.3,
-		amt: 1,
+		amt: 2,
 		status:{
 			stun: {name: "stun", length:1},
 			rot: {name: "rot", showReference: true},
 			destabilized: {name: "destabilized", showReference: true},
+			vulnerable: {name: "vulnerable", showReference: true},
+			puncture: {name: "puncture", showReference: true},
+			evasion: {name: "evasion", showReference: true},
 		}
 	},
 	exec: function(user, target) {
@@ -1410,7 +1418,6 @@ env.ACTIONS.back_to_stage = {
 					} else {
 						consequenceLength = 3
 					}
-					combatHit(target, {amt: 2, autohit: true, redirectable: false})
 					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
 					removeStatus(target, "stun")
 				} else {

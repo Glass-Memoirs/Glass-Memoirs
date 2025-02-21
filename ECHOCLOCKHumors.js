@@ -864,8 +864,7 @@ env.STATUS_EFFECTS.surging_pace = {
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	events: {
 		onTurn: function() {
-			let being = this.status.affecting
-			addStatus(being, "surge")
+			addStatus({target: this.status.affecting, status: "surge", noReact: true, length: 1})
 		}
 	},
 	help: "Gain SURGE each turn"
@@ -883,7 +882,7 @@ env.STATUS_EFFECTS.surging_story = {
 			let actionSlug = action.slug
 			let utility = env.ACTIONS[user.actions[2]]
 			if(!actionSlug == utility.slug) return;
-			addStatus(this.status.affecting, "surge")
+			addStatus({target: this.status.affecting, status: "surge", noReact: true, length: 1})
 		}
 	},
 	help: "when using UTILITY ACTION gain SURGE"

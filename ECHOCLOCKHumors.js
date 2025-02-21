@@ -834,7 +834,9 @@ env.STATUS_EFFECTS.surging_two = {
 	impulse: {type: "common",component: "surging"},
 	events: {
 		onCreated: function({statusObj}) {
-			addStatus({target: this.status.affecting, status: "surge", noReact: true, length: 1})
+			if(statusObj.slug == this.status.slug){
+				addStatus({target: this.status.affecting, status: "surge", noReact: true, length: 1})
+			}
 		}
 	},
 	help: "gives surge on fight start."

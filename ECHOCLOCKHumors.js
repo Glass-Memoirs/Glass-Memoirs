@@ -1315,7 +1315,7 @@ env.ACTIONS.tormenting_delight = {
 	//desc: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
 	anim: "basic-attack",
 	verb: "Torment",
-	help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
+	//help: "100% -3HP 25% +1T STUN, +SURGE USER/n20%C -6HP +2T STUN, 25% +1T STUN, +2T FOCUSED +SURGE USER",
 	details: {
 		flavour: "'Oh how crude!';'laugh at us more';'it only inspires us to keep hitting while you are on your last legs!'",
 		onHit: "'[STAT::amt]';'25% [STATUS::stun]';'USER 25% [STATUS::surge]'",

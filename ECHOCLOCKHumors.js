@@ -1369,8 +1369,15 @@ env.ACTIONS.back_to_stage = {
 	verb: "Call back",
 	help: "IF STUN: -1/2HP, +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
 	beneficial: true,
-	crit: 0.3,
-	amt: 1,
+	stats: {
+		crit: 0.3,
+		amt: 1,
+		status:{
+			stun: {name: "stun", length:1},
+			rot: {name: "rot", showReference: true},
+			destabilized: {name: "destabilized", showReference: true},
+		}
+	},
 	exec: function(user, target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()
@@ -1466,11 +1473,23 @@ env.ACTIONS.velnits_lament = {
 	slug: "velnits_lament",
 	name: "velnit's lament",
 	type: 'support+target+self+autohit',
-	desc: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
+	//desc: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
 	verb: "lament",
-	help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
-	crit: 0.2,
-	amt: 2,
+	//help: "IF TEAMMATE: -SURGE +WILD SURGE\nIF SELF: -SURGE +WILDSURGE +1T STUN +2T VULNERABLE",
+	details: {
+		flavour: "'O, so my act come to an end';'a well earned break from this play!';'for you however';'must pick up the pace!'",
+		onHit: "'TEAMMATE: -[STATUS::surge] +[STATUS::wild_surge]';'SELF: -[STATUS::surge] [STATUS::stun] [STATUS::vulnerable] [STATUS::wild_surge]'",
+	},
+	stats: {
+		crit: 0.2,
+		amt: 2,
+		status: {
+			surge: {name: "surge", showReference: true},
+			wild_surge: {name: "wild_surge", showReference:true},
+			stun: {name: "stun", length: 1},
+			vulnerable: {name: "vulnerable", length: 2},
+		},
+	},
 	exec: function(user,target) {
 		if (hasStatus(target, "surge")) {
 			removeStatus(target, "surge")
@@ -1487,46 +1506,68 @@ env.ACTIONS.player_show = {
 	slug: "player_show",
 	name: "SHOWMANSHIP",
 	type: 'target',
-	desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
+	//desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
 	verb: "Heckle",
-	help: "aaaaaaaa",
+	//help: "aaaaaaaa",
+	details: {
+		flavour: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
+		onHit: "'90% Target 3: [STAT::amt] 50% [STATUS::vulnerable]'",
+		onCrit: "'20% Teamwide: [STAT::amt] 10% [STATUS::stun] 75% [STATUS::vulnerable]'"
+	},
 	//usage: {
 	//},
-	accuracy: 0.9,
-	crit: 0.2,
-	amt: 2,
+	stats: {
+		accuracy: 0.9,
+		crit: 0.2,
+		amt: 2,
+		status:{
+			vulnerable: {name: "vulnerable", length: 2},
+			stun: {name: "stun", length: 1},
+		},
+	},
 	exec: function(user, target) {
-		hitExec: ({user,target}) =>{
-			let action = this
-			let targetTeam
-			switch(user.team.name) {
-				case "ally": targetTeam = env.rpg.enemyTeam; break;
-				case "enemy": targetTeam = env.rpg.allyTeam; break;
-			}
-			let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
-			if(validTargets.length) for (let i = 1; i <=3; i++) {
-				if (validTargets) {
-					let target = validTargets.sample()
-					setTimeout(()=>{
-						env.GENERIC_ACTIONS.singleTarget({
-							action,
-							user,
-							target,
-							hitSfx: { name: 'shot2' },
-							critSfx: { name: 'shot6' },
-						})
-					}, 500)
-				}
-			}
+		let action = this
+		let targetTeam
+		switch(user.team.name) {
+			case "ally": targetTeam = env.rpg.enemyTeam; break;
+			case "enemy": targetTeam = env.rpg.allyTeam; break;
 		}
-		critExec: ({target}) => {
-			env.GENERIC_ACTIONS.teamWave({
-				team: target.team,
-				exec: (actor, i) => {
-					if(actor == target) return; // we skip the original target
-					useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
-				}
-			})
+		let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
+		if(validTargets.length) for (let i = 1; i <=3; i++) {
+			if (validTargets) {
+				let target = validTargets.sample()
+				setTimeout(()=>{
+					env.GENERIC_ACTIONS.singleTarget({
+						action,
+						user,
+						target,
+						hitSfx: { name: 'shot2' },
+						critSfx: { name: 'shot6' },
+						hitExec: ({target}) => {
+							if (Math.random() < 0.5) {
+								addStatus(target, "vulnerable")
+							}
+						},
+						critExec: ({target}) => {
+							if (i<2) {
+								env.GENERIC_ACTIONS.teamWave({
+									team: target.team,	
+									exec: (actor, i) => {
+										if(actor == target) return; // we skip the original target
+										if (Math.random() < 0.1) {
+											addStatus(target, "stun")
+										}
+										if (Math.random() < 0.75) {
+											addStatus({target: target,status: "vulnerable",length: 2})
+										}
+										useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Showmanship"})
+									}
+								})
+							}
+						}
+					})
+				}, 500)
+			}
 		}
 	}
 },

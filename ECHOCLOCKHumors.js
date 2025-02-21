@@ -833,7 +833,7 @@ env.STATUS_EFFECTS.surging_two = {
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	impulse: {type: "common",component: "surging"},
 	events: {
-		onCreated: function() {
+		onCreated: function({statusObj}) {
 			addStatus(this.status.affecting,"surge")
 		}
 	},
@@ -1435,15 +1435,15 @@ env.ACTIONS.velnits_lament = {
 	}
 },
 
-env.ACTIONS.showmanship = {
+env.ACTIONS.player_show = {
 	slug: "player_show",
 	name: "SHOWMANSHIP",
 	type: 'target',
 	desc: "'SEE HOW THEY FALL!';'THEY THOUGHT THEY WERE LAUGHING DOWN AT US';'ONLY FOR US TO SWEEP THEIR KNEES!'",
 	verb: "Heckle",
-	help: "",
-	usage: {
-	},
+	help: "aaaaaaaa",
+	//usage: {
+	//},
 	crit: 0.2,
 	amt: 2,
 	exec: function(user, target) {
@@ -1482,13 +1482,13 @@ env.ACTIONS.showmanship = {
 	}
 },
 
-env.ACTIONS.method_acting = {
+env.ACTIONS.player_act = {
 	slug: "player_act",
 	name: "BREAKS END",
 	type: 'autohit',
 	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
 	verb: "Work",
-	help: "",
+	help: "aaaaaaaaaa",
 	exec: function(user,target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()
@@ -1580,7 +1580,7 @@ env.ACTIONS.method_acting = {
 	}
 },
 
-env.ACTIONS.sacrificial_act = {
+env.ACTIONS.player_sacri = {
 	slug: "player_act",
 	name: "Sacrifical Act",
 	type: 'autohit+target',

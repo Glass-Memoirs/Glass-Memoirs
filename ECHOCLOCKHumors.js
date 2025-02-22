@@ -500,6 +500,14 @@ env.MODIFIERS.surging_pace = {
 	}
 }
 
+env.MODIFIERS.surging_second = {
+	name: "Second Act",
+	getHelp: ()=> {return env.STATUS_EFFECTS.surging_second.help},
+	alterations:{
+		all:[["STATUS", "surging_second"]]
+	}
+}
+
 //STATUS EFFECTS
 /*
 + Yeah these needed doccumenting
@@ -927,7 +935,7 @@ env.STATUS_EFFECTS.surging_improvised = {
 			}
 		}
 	}
-}
+},
 
 env.STATUS_EFFECTS.surging_second = {
 	slug: "surging_second",
@@ -963,7 +971,8 @@ env.STATUS_EFFECTS.surging_second = {
                 }, env.ADVANCE_RATE * 0.2)
             }
         },
-	}
+	},
+	help: "'on actor death, give half damage to random actor'"
 }
 
 //COMBAT ACTIONS

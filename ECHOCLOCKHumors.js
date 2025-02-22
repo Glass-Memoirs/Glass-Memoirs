@@ -172,24 +172,30 @@ sfer
             EXEC::change("e3a2_sfer", 999)
             HIDEREAD::
 `)*/
-env.dialogues["dreammod"].humors.responses[0].replies.push({
-	"name":"entropy",
-	"destination":"loop",
-	"exec": Function('change("e3a2_newcomp","entropy")'),
-	"hideRead":true
-})
-env.dialogues["dreammod"].humors.responses[0].replies.push({
-	"name":"surge",
-	"destination":"loop",
-	"exec": Function('change("e3a2_newcomp","surge")'),
-	"hideRead":true
-})
-env.dialogues["dreammod"].sfer.responses[0].replies.push({
-	"name":"mod tester's delight (999)",
-	"destination":"loop",
-	"exec": Function('change("e3a2_sfer",999)'),
-	"hideRead":true
-})
+if(!env.dialogues["dreammod"].humors.responses[0].replies.includes("entropy")) {
+	env.dialogues["dreammod"].humors.responses[0].replies.push({
+		"name":"entropy",
+		"destination":"loop",
+		"exec": Function('change("e3a2_newcomp","entropy")'),
+		"hideRead":true
+	})
+	}
+	if(!env.dialogues["dreammod"].humors.responses[0].replies.includes("surge")) {
+	env.dialogues["dreammod"].humors.responses[0].replies.push({
+		"name":"surge",
+		"destination":"loop",
+		"exec": Function('change("e3a2_newcomp","surge")'),
+		"hideRead":true
+	})
+	}
+	if(!env.dialogues["dreammod"].humors.responses[0].replies.includes("mod tester's delight (999)")) {
+	env.dialogues["dreammod"].sfer.responses[0].replies.push({
+		"name":"mod tester's delight (999)",
+		"destination":"loop",
+		"exec": Function('change("e3a2_sfer",999)'),
+		"hideRead":true
+	})
+	}
 	}
 
 if(page.party){

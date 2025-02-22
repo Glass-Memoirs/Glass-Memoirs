@@ -182,10 +182,10 @@ if(page.party){
 				claws: 30,
 				light: 30,
 				bone: 30,
-				eyes: 30,
-				entropy: 30,
-                surging: 30,
+				eyes: 30
 			}
+			page.flags.components.entropy = 30
+			page.flags.components.surging = 30
 			
 			page.party[0].components["primary"] = "claws"
 			page.party[0].components["secondary"] = "claws"
@@ -206,10 +206,10 @@ if(page.party){
 				claws: 3,
 				light: 3,
 				bone: 3,
-				eyes: 3,
-				entropy: 3,
-                surging: 3,
+				eyes: 3
 			}
+			page.flags.components.entropy = 3
+			page.flags.components.surging = 3
 			
 			page.party[0].components["primary"] = "claws"
 			page.party[0].components["secondary"] = "claws"

@@ -910,35 +910,61 @@ env.STATUS_EFFECTS.surging_improvised = {
                         target: user,
                         type: "arbitrary",
                         specialClass: "action",
-                        arbitraryString: `SECOND ACT::${utility.name}`,
+                        arbitraryString: `IMPROVISED SCRIPWRITING::${utility.name}`,
                         size: 1.5,
                     })
 
                     readoutAdd({
-                        message: `${user.name} acts alongside!`, 
+                        message: `${user.name} improvizes alongside!`, 
                         name: "sourceless", 
                         type: "sourceless combat minordetail", 
                         show: false,
                         sfx: false
                     })
                     
-                    useAction(user, utility, subject, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Second Act"})
+                    useAction(user, utility, subject, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Improvised Scripwriting"})
                 }, 500)
 			}
 		}
 	}
 }
 
-/*env.STATUS_EFFECTS.surging_second = {
+env.STATUS_EFFECTS.surging_second = {
 	slug: "surging_second",
 	name: "Second Act",
 	passive: "modifier",
 	beneficial: false,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
+	impulse: {type: "common", component: "surging"},
 	events: {
-		
+		GLOBAL_onDeath: function({attack}) {
+            let hit = Math.floor(attack / 2)
+            if(hit > 0) {
+                let validTargets = env.rpg.turnOrder.filter(actor => (actor != this.status.affecting) && (actor.state != "dead"))
+                setTimeout(()=>{
+                    play("chomp")
+                    let target = validTargets.sample()
+
+                    combatHit(target, {amt: hit, beneficial: false, autohit: true, type: "hp"});
+
+                    sendFloater({
+                        target,
+                        type: "arbitrary",
+                        arbitraryString: "Second Act!",
+                    })
+                    
+                    readoutAdd({
+                        message: `${target.name} is hit by the second act for ${hit} HP! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+                        name: "sourceless", 
+                        type: "sourceless combat minordetail", 
+                        show: false,
+                        sfx: false
+                    })
+                }, env.ADVANCE_RATE * 0.2)
+            }
+        },
 	}
-}*/
+}
 
 //COMBAT ACTIONS
 //ENTROPY

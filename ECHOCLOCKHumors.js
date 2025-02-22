@@ -195,13 +195,15 @@ env.dialogues["dreammod"].sfer.responses[0].replies.push({
 if(page.party){
 		switch(check("e3a2_newcomp")) {
 		case "too many":
-			page.flags.components = {
-				ichor: 30,
-				claws: 30,
-				light: 30,
-				bone: 30,
-				eyes: 30
-			}
+			if (typeof page.flags.components == undefined){
+                page.flags.components = {
+                    ichor: 30,
+                    claws: 30,
+                    light: 30,
+                    bone: 30,
+                    eyes: 30
+                }
+            }
 			page.flags.components.entropy = 30
 			page.flags.components.surging = 30
 			

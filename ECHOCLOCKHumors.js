@@ -946,14 +946,14 @@ env.STATUS_EFFECTS.surging_second = {
 	impulse: {type: "common", component: "surging"},
 	events: {
 		GLOBAL_onDeath: function({attack}) {
-            let hit = Math.floor(attack / 2)
-            if(hit > 0) {
+            let hitpow = Math.floor(attack / 2)
+            if(hitpow > 0) {
                 let validTargets = env.rpg.turnOrder.filter(actor => (actor != this.status.affecting) && (actor.state != "dead"))
                 setTimeout(()=>{
                     play("chomp")
                     let target = validTargets.sample()
 
-                    combatHit(target, {amt: hit, beneficial: false, autohit: true, type: "hp"});
+                    combatHit(target, {amt: hitpow, autohit: true, redirectable: false, runEvents: false});
 
                     sendFloater({
                         target,
@@ -962,7 +962,7 @@ env.STATUS_EFFECTS.surging_second = {
                     })
                     
                     readoutAdd({
-                        message: `${target.name} is hit by the second act for ${hit} HP! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+                        message: `${target.name} is hit by the second act for ${hitpow} HP! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
                         name: "sourceless", 
                         type: "sourceless combat minordetail", 
                         show: false,

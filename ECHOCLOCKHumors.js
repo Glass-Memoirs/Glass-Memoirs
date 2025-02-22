@@ -915,7 +915,7 @@ env.STATUS_EFFECTS.surging_improvised = {
                     })
 
                     readoutAdd({
-                        message: `${user.name} acts alongside! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+                        message: `${user.name} acts alongside!`, 
                         name: "sourceless", 
                         type: "sourceless combat minordetail", 
                         show: false,

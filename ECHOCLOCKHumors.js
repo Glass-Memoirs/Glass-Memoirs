@@ -208,7 +208,7 @@ if(page.party){
 				bone: 3,
 				eyes: 3,
 				entropy: 3,
-                    surging: 3,
+                surging: 3,
 			}
 			
 			page.party[0].components["primary"] = "claws"
@@ -1738,7 +1738,7 @@ env.ACTIONS.player_act = {
 },
 
 env.ACTIONS.player_sacri = {
-	slug: "player_act",
+	slug: "player_sacri",
 	name: "Sacrifical Act",
 	type: 'autohit+target',
 	desc: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",

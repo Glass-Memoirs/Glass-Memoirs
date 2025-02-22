@@ -188,7 +188,7 @@ if(!env.dialogues["dreammod"].humors.responses[0].replies.includes("entropy")) {
 		"hideRead":true
 	})
 	}
-	if(!env.dialogues["dreammod"].humors.responses[0].replies.includes("mod tester's delight (999)")) {
+	if(!env.dialogues["dreammod"].sfer.responses[0].replies.includes("mod tester's delight (999)")) {
 	env.dialogues["dreammod"].sfer.responses[0].replies.push({
 		"name":"mod tester's delight (999)",
 		"destination":"loop",

@@ -342,7 +342,7 @@ env.COMBAT_COMPONENTS.surging = {
                maxhp: 2
           }
      },
-     combatModifiers: ["surging_two", "surging_set","surging_pace"]
+     combatModifiers: ["surging_two", "surging_set","surging_pace", "surging_second"]
 }
 
 /*

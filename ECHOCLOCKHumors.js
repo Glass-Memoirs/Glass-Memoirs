@@ -34,7 +34,7 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
 
 //Dialogue changing
     if( page.path == '/local/ozo/' || page.path == '/local/beneath/embassy') {
-		env.dialogues["dreammod"] = generateDialogueObject(`
+		/*env.dialogues["dreammod"] = generateDialogueObject(`
 loop
     basterminal
         ALTERED
@@ -171,7 +171,25 @@ sfer
         mod tester's delight(999)<+>loop
             EXEC::change("e3a2_sfer", 999)
             HIDEREAD::
-`)
+`)*/
+env.dialogues["dreammod"].humors.responses[0].replies.push({
+	"name":"entropy",
+	"destination":"loop",
+	"exec": Function('change("e3a2_newcomp","entropy")'),
+	"hideRead":true
+})
+env.dialogues["dreammod"].humors.responses[0].replies.push({
+	"name":"surge",
+	"destination":"loop",
+	"exec": Function('change("e3a2_newcomp","surge")'),
+	"hideRead":true
+})
+env.dialogues["dreammod"].sfer.responses[0].replies.push({
+	"name":"mod tester's delight (999)",
+	"destination":"loop",
+	"exec": Function('change("e3a2_sfer",999)'),
+	"hideRead":true
+})
 	}
 
 if(page.party){

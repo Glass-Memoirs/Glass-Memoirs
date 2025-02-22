@@ -889,9 +889,9 @@ env.STATUS_EFFECTS.surging_story = {
 		}
 	},
 	help: "when using UTILITY ACTION gain SURGE"
-}
+},
 
-/*env.STATUS_EFFECTS.surging_improvised = {
+env.STATUS_EFFECTS.surging_improvised = {
 	slug: "surging_improvised",
 	name: "ACTION:: IMPROVISED SCRIPTWRITING",
 	passive: true,
@@ -899,21 +899,46 @@ env.STATUS_EFFECTS.surging_story = {
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/eyew.gif",
 	impulse: {type: "action", component: "surging"},
 	events: {
-		
-	}
-},
+		GLOBAL_onRemoveStatus: function({subject, origin, attack, beneficial,removingStatusName}){
+			if(removingStatusName = "surge") {
+				let user = this.status.affecting
+				if(beneficial || user.team.members.includes(subject) || user.state == "dead" || !user.actions[2] || hasStatus(user, "fear")) return;
+				let utility = env.ACTIONS[user.actions[2]]
 
-env.STATUS_EFFECTS.surging_second = {
+				setTimeout(()=>{
+                    sendFloater({
+                        target: user,
+                        type: "arbitrary",
+                        specialClass: "action",
+                        arbitraryString: `SECOND ACT::${utility.name}`,
+                        size: 1.5,
+                    })
+
+                    readoutAdd({
+                        message: `${user.name} acts alongside! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+                        name: "sourceless", 
+                        type: "sourceless combat minordetail", 
+                        show: false,
+                        sfx: false
+                    })
+                    
+                    useAction(user, utility, subject, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Second Act"})
+                }, 500)
+			}
+		}
+	}
+}
+
+/*env.STATUS_EFFECTS.surging_second = {
 	slug: "surging_second",
 	name: "Second Act",
 	passive: "modifier",
 	beneficial: false,
-	icon: "fuck",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
 	events: {
-	
+		
 	}
-}
-*/
+}*/
 
 //COMBAT ACTIONS
 //ENTROPY

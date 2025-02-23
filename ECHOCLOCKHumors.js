@@ -19,8 +19,9 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  5. Combat Modifiers
  6. Status Effects
  7. Combat Actions
- 8. Combat Actors
- 9. Merchant Code
+ 8. Personality
+ 9. Combat Actors
+ 10. Merchant Code
 
  TO DO:
 + Make the modifiers for surging (almost done!!!)
@@ -1878,7 +1879,33 @@ env.ACTIONS.player_sacri = {
 	}
 }
 
-//ACTORS
+//Personality
+
+env.COMBAT_ACTORS.generic.reactionPersonalities.entropy = {
+	evade: ["..."],
+    crit: [ "get bent", "time ever winds, but yours shall be cut short"],
+    crit_buff: [ "the clock will decay", "need more time?", "don't collapse now"],
+    miss: ["stay still", "why must you move?", "fucker"],
+    dead: ["..."],
+    puncture: ["There still is time!", "oiuch"],
+    regen: ["I... I live more?"],
+    destabilized: ["everything's blurry"],
+    stun: ["NONONONONONONO"],
+	laugh: ["hehehehe", "ahaha!", "heehee!", "ehehehe!"],
+    sacrifice: ["fuck this"],
+    receive_hit: ["Ã…ÃÂ£"],
+    receive_crit: [" µ|ðy€Cæá CHü!!","fuck"," µ|ðy€Cæá CHü!!"," µ|ðy€Cæá CHü!!"," µ|ðy€Cæá CHü!!"," µ|ðy€Cæá CHü!!"," µ|ðy€Cæá CHü!!"," µ|ðy€Cæá CHü!!"],
+    receive_puncture: ["oh, some energy", "wanna see me ruin this?"],
+    receive_buff: ["more energy?", "the end is delayed for now?"],
+    receive_destabilized: ["¶Ê ´ ç] Ÿ§Ú"],
+    receive_rez: ["i feel sick"],
+    receive_carapace: ["this wont help", ""],
+    receive_repairs: ["oh, more time"],
+    receive_fear: ["i see the end...","where am i??"],
+    receive_redirection: ["i'll make sure they dont kill you", "you will be hurt, and they will pay"],
+}
+
+//Combat Actors
 
 env.COMBAT_ACTORS.immobile_actor = {
 	name: "immobile critta",

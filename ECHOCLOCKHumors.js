@@ -501,6 +501,7 @@ env.MODIFIERS.entropy_heat ={
 		all: [["STATUS", "entropy_heat"]]
 	}
 }
+
 //surging
 env.MODIFIERS.surging_two = {
 	name: "Two Time",
@@ -856,6 +857,16 @@ env.STATUS_EFFECTS.hotpocket = {
 		}
 	},
 	help: "Explode!"
+},
+
+env.STATUS_EFFECTS.entropy_call = {
+	slug: "entropy_call",
+	name: "Fragmented Call",
+	passive: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/BSTRDIZEDHOTPOCKET.gif",
+	impulse: {type: "common", component: "entropy"},
+	grantsActions: ["entropy_call"],
+	help: "Allows shell to call forth new targets"
 },
 
 //surging
@@ -1391,6 +1402,32 @@ env.ACTIONS.entropy_burnout = {
 				addStatus({target, origin: user, status: "burnout", length:5});
 			}
 		})
+	}
+},
+
+env.ACTIONS.entropy_call = {
+	slug: "entropy_call",
+	name: "Send Signal",
+	type: "autohit",
+	details: {
+		flavour: "'Call out with a strained and distorted voice';'summon more casualties'",
+		onUse: "'Summon more foes that cannot attack'",
+	},
+	usage: {
+		act: "%USER CALLS OUT",
+	},
+	exec: function() {
+		let rand = Math.random()
+		let casualty_list = ['container','hallucination','husk']
+		let casualty = casualty_list.sample()
+		play('talkfairy', 0.5);
+		if (rand > 0.5) {
+			midCombatActorAdd(env.rpg.enemyTeam, casualty, 'left')
+			addStatus({target:env.rpg.enemyTeam[0], status: "immobile", length: 1})
+		} else {
+			midCombatActorAdd(env.rpg.enemyTeam, casulaty, 'right')
+			addStatus({target: env.rpg.enemyTeam[(env.rpg.enemyTeam.length)-1], status: "immobile", length: 1 })
+		}
 	}
 },
 //SURGING

@@ -1423,10 +1423,10 @@ env.ACTIONS.entropy_call = {
 		play('talkfairy', 0.5);
 		if (rand > 0.5) {
 			midCombatActorAdd(env.rpg.enemyTeam, casualty, 'left')
-			addStatus({target:env.rpg.enemyTeam[0], status: "immobile", length: 1})
+			//addStatus({target:env.rpg.enemyTeam[0], status: "immobile", length: 1})
 		} else {
 			midCombatActorAdd(env.rpg.enemyTeam, casulaty, 'right')
-			addStatus({target: env.rpg.enemyTeam[(env.rpg.enemyTeam.length)-1], status: "immobile", length: 1 })
+			//addStatus({target: env.rpg.enemyTeam[(env.rpg.enemyTeam.length)-1], status: "immobile", length: 1 })
 		}
 	}
 },

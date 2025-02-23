@@ -1903,6 +1903,30 @@ env.COMBAT_ACTORS.generic.reactionPersonalities.entropy = {
     receive_repairs: ["oh, more time"],
     receive_fear: ["i see the end...","where am i??"],
     receive_redirection: ["i'll make sure they dont kill you", "you will be hurt, and they will pay"],
+},
+
+env.COMBAT_ACTORS.generic.reactionPersonalities.surging = {
+	evade: ["AGAIN!","COME ON TRY HARDER!!!","WHEEEEEEE"],
+    crit: [ "AHAHAHAHA!!!", "BLEED FOR VELZIE!!!!","DID THAT HURTTTTT?"],
+    crit_buff: [ "GO GO GOOOOO", "HURRY UP!!! VELZIE WATCHES!!", "VELZIE'S BLESSINGSSS"],
+    miss: ["AHA PART OF THE ACT!!!", "IT SAID IT IN THE SCRIPT!!", "BLAME VELZIE!!!"],
+    dead: ["I SHALL BE BACK!!!!"],
+    puncture: ["OUHHH VELZIEEEE WATCH THIS", "AAHAHA MY INSIDES ARE ON DISPLAY!!!"],
+    regen: ["NOOOOOOUUUHOUHGHHHH","STOPPPP STOP!!!!!","BUT VELZIE!!!!!"],
+    destabilized: ["MY PlAYyyyYY!!","WoUUNd MEEEeEeEE!!!","IM vELZIesS SPeCiaL aCTOrrr"],
+    stun: ["LET ME SHOWWWW OFFF!!!","IM FAIILINGGG!!!","LEEET ME GOOOOOOOOOO"],
+    laugh: ["KEHEHHAHHEHAEEEE", "AKEJKEHEKKEKEJ", "SCREAMMHEHHEHEHEHE!!!!", "AHHEEEEE LIKE VELZIEEE!!!"],
+    sacrifice: ["WITNESS MEEEE VELZIEE!!! LAUGH!!!!!"],
+    receive_hit: ["YES YES JUST LIKE THAT!!!","WOUND WOUND WOUND!!!!","SHOW OFF!!!","FAVOUR MEEE!!!"],
+    receive_crit: ["GET OUT GO AWAY OFF MY STAGE!!!!","BURN UNDER VELZIES GAZE","NO NO THIS IS MY STAGE!!! MY ACT!!!"],
+    receive_puncture: ["YESSSSS BEHOLD MEEE", "SPLAY MY CORE!!!","NOTHING BUT SLUDGE!!!!!"],
+    receive_buff: ["LET ME BLEED!!!", "STOPPPP BURDENING MEE!!!", "VELZIE CAN PROVIDE!!!!","LEEE T T   ME  D  DIE EE."],
+    receive_destabilized: ["I CaN sEeEeeEEE HomE hEheHEHElEEp","MyYYY AAaCTTT!!!! ITT wAaATCHheSS!!"],
+    receive_rez: ["I TOLD YOU SOOOOO HEHAHAH!!!"],
+    receive_carapace: ["LEAVE ME BEEE!!!", "I HHOPE YOU BLEEDD","DDD IE."],
+    receive_repairs: ["LISTTEN LISTENNN STO OOP.","EN D    Y  OUR  AC T."],
+    receive_fear: ["S TT OP HOME   IS GG GONE.","LLET ME AC T   IN P EEACE."," CCE ACE E"],
+    receive_redirection: ["AA IM FOR TT HEM BETTE R.", "G GG OD GOOD."],
 }
 
 //Combat Actors

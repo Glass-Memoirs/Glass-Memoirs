@@ -7,6 +7,7 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  - Sola for making the monochrome eye for Entropy's action as well as the ditherd soul hotpocket gif
  - Narra, Kuvi, and Adr for judging my code
  - Narra and Adr for helping with the loader as well.
+ - Narra for immobile_actor
  - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
  - And also with showing me ([]^[]) how to format the description for the recent update, pointing out enegrgy, and overall helping with fixing the code.
  - Mewo for helping with StupidHorrible text
@@ -18,11 +19,11 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  5. Combat Modifiers
  6. Status Effects
  7. Combat Actions
- 8. Merchant Code
+ 8. Combat Actors
+ 9. Merchant Code
 
  TO DO:
-+ Make Entropy's 2nd action
-+ Make the modifiers for surging
++ Make the modifiers for surging (almost done!!!)
 + work on meat, stupidhorrible, and SiIva
 		+ SiIva humor ideas so far
 		+ primary: rip
@@ -1418,14 +1419,12 @@ env.ACTIONS.entropy_call = {
 	},
 	exec: function() {
 		let rand = Math.random()
-		let casualty_list = ['container','hallucination','husk']
-		let casualty = casualty_list.sample()
 		play('talkfairy', 0.5);
 		if (rand > 0.5) {
-			midCombatActorAdd(env.rpg.enemyTeam, casualty, 'left')
+			midCombatActorAdd(env.rpg.enemyTeam, 'immobile_actor', 'left')
 			//addStatus({target:env.rpg.enemyTeam[0], status: "immobile", length: 1})
 		} else {
-			midCombatActorAdd(env.rpg.enemyTeam, casulaty, 'right')
+			midCombatActorAdd(env.rpg.enemyTeam, 'immobile_actor', 'right')
 			//addStatus({target: env.rpg.enemyTeam[(env.rpg.enemyTeam.length)-1], status: "immobile", length: 1 })
 		}
 	}
@@ -1878,6 +1877,30 @@ env.ACTIONS.player_sacri = {
 			})
 		}*/
 	}
+}
+
+//ACTORS
+
+env.COMBAT_ACTORS.immobile_actor = {
+	name: "immobile critta",
+	maxhp: 15,
+	hp: 15,
+	actions: ["nothing"],
+	initialStatusEffects: [["immobile", 1], ["ethereal", 1]],
+	graphic: `
+		<div class="sprite-wrapper golemsprite dullzika" id="%SLUG-sprite-wrapper">
+			<img src="/img/sprites/combat/foes/turboglazika.gif" id="%SLUG-golemsprite-base" class="sprite golemsprite-base">
+			
+			<div class="sprite golemsprite-head">
+				<img src="/img/sprites/combat/foes/turboglazika-hat.gif" id="%SLUG-golemsprite-head">
+			</div>
+			<img src="/img/sprites/combat/foes/turboglazika-eyes.gif" id="%SLUG-golemsprite-neck" class="sprite golemsprite-neck">
+			<img src="/img/sprites/combat/foes/turboglazika-body.gif" id="%SLUG-golemsprite-body" class="sprite golemsprite-body">
+
+			<div class="target" entity="dullzika"></div>
+		</div>
+		`,
+	reactions: {} //SILENT CREATURE
 }
 
 //Merchant code

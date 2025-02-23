@@ -973,7 +973,8 @@ env.STATUS_EFFECTS.surging_improvised = {
                 }, 500)
 			}
 		}
-	}
+	},
+	help: "When actor utilizes a surge, the shell this is on uses its utility"
 },
 
 env.STATUS_EFFECTS.surging_second = {

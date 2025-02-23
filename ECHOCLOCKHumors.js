@@ -369,7 +369,7 @@ env.COMBAT_COMPONENTS.surging = {
                maxhp: 2
           }
      },
-     combatModifiers: ["surging_two", "surging_set","surging_pace", "surging_second"]
+     combatModifiers: ["surging_set","surging_pace","surging_second"]
 }
 
 /*
@@ -981,7 +981,6 @@ env.STATUS_EFFECTS.surging_second = {
 	passive: "modifier",
 	beneficial: false,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/twotime.png",
-	impulse: {type: "common", component: "surging"},
 	events: {
 		GLOBAL_onDeath: function({attack}) {
             let hitpow = Math.floor(attack / 2)

@@ -1671,7 +1671,7 @@ env.ACTIONS.player_show = {
 			case "enemy": targetTeam = env.rpg.allyTeam; break;
 		}
 		let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
-		if(validTargets.length) for (let i = 1; i <=3; i++) {
+		//if(validTargets.length) for (let i = 1; i <=3; i++) //{
 			if (validTargets) {
 				let target = validTargets.sample()
 				setTimeout(()=>{

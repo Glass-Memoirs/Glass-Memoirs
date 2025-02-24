@@ -2088,6 +2088,9 @@ env.ACTIONS.puncture_bomb = {
 					target,
 					hitSfx: { name: 'shot2' },
 					critSfx: { name: 'shot6' },
+					genExec: ({target}) => {
+						addStatus({target: target, status: "puncture", length: 5})
+					}
 				})
 			}, 500)
 		})

@@ -1671,7 +1671,7 @@ env.ACTIONS.player_show = {
 			case "enemy": targetTeam = env.rpg.allyTeam; break;
 		}
 		let validTargets = targetTeam.members.filter(member => member.state != "dead" && member.state != "lastStand")
-		//if(validTargets.length) for (let i = 1; i <=3; i++) //{
+		if(validTargets.length) for (let i = 1; i <=3; i++) {
 			if (validTargets) {
 				let target = validTargets.sample()
 				setTimeout(()=>{
@@ -1685,7 +1685,7 @@ env.ACTIONS.player_show = {
 							if (Math.random() < 0.5) {
 								addStatus(target, "vulnerable")
 							}
-							useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Showmanship"})
+							//useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Showmanship"})
 						},
 						critExec: ({target}) => {
 							if (i<2) {

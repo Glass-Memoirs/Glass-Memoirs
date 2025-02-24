@@ -1489,7 +1489,7 @@ env.ACTIONS.tormenting_delight = {
 env.ACTIONS.back_to_stage = {
 	slug: "back_to_stage",
 	name: "Back to stage",
-	type: 'target',
+	type: 'upport+target+self',
 	//desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
 	verb: "Call back",
 	help: "IF STUN: +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
@@ -1500,6 +1500,7 @@ env.ACTIONS.back_to_stage = {
 		onCrit: "'if [STATUS::stun] then +2-3T:[STATUS::rot]/[STATUS::destabilized]/[STATUS::vulnerable]/[STATUS::puncture]';'if no [STATUS::stun] then 3T:[STATUS::evasion]'",
 	},
 	stats: {
+		accuracy: 1,
 		crit: 0.3,
 		amt: 2,
 		status:{
@@ -1679,6 +1680,7 @@ env.ACTIONS.player_show = {
 							if (Math.random() < 0.5) {
 								addStatus(target, "vulnerable")
 							}
+							useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Showmanship"})
 						},
 						critExec: ({target}) => {
 							if (i<2) {
@@ -1692,7 +1694,7 @@ env.ACTIONS.player_show = {
 										if (Math.random() < 0.75) {
 											addStatus({target: target,status: "vulnerable",length: 2})
 										}
-										useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Showmanship"})
+										//useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "Showmanship"})
 									}
 								})
 							}

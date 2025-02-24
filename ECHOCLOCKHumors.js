@@ -1657,7 +1657,7 @@ env.ACTIONS.player_show = {
 	stats: {
 		accuracy: 0.9,
 		crit: 0.2,
-		amt: 2,
+		amt: 1,
 		status:{
 			vulnerable: {name: "vulnerable", length: 2},
 			stun: {name: "stun", length: 1},

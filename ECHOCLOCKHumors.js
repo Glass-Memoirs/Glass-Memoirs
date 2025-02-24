@@ -2001,7 +2001,7 @@ env.ACTIONS.pin_pull = {
 			user,
 			target,
 			genExec:({user}) => {
-				combatHit(user,{amt: amt, autohit: true, redirectable:false})
+				combatHit(user,{amt: 5, autohit: true, redirectable:false})
 			}
 		})
 	}
@@ -2080,7 +2080,7 @@ env.ACTIONS.puncture_bomb = {
 				AllTargets.push(target)
 			}
 		})
-		AllTargets.forEach((user,target)=> {
+		AllTargets.forEach((target)=> {
 			setTimeout(()=>{
 				env.GENERIC_ACTIONS.singleTarget({
 					action,

@@ -1489,10 +1489,10 @@ env.ACTIONS.tormenting_delight = {
 env.ACTIONS.back_to_stage = {
 	slug: "back_to_stage",
 	name: "Back to stage",
-	type: 'upport+target+self',
+	type: 'support+target+self',
 	//desc: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
 	verb: "Call back",
-	help: "IF STUN: +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
+	//help: "IF STUN: +1-3T [ROT/DESTABILIZED/VULNERABLE/PUNCTURE]\nIF NO STUN: +2/3T EVASION",
 	beneficial: true,
 	details: {
 		flavour: "'oh not just yet!';'you cannot be unable to dance now!';'far too important for you to leave so early!'",
@@ -1709,10 +1709,28 @@ env.ACTIONS.player_show = {
 env.ACTIONS.player_act = {
 	slug: "player_act",
 	name: "BREAKS END",
-	type: 'autohit+target',
-	desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
+	type: 'autohit+target+self',
+	//desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
 	verb: "Work on",
-	help: "aaaaaaaaaa",
+	//help: "aaaaaaaaaa",
+	details: {
+		flavour: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
+		onHit: "'[STAT::amt], remove [STATUS::stun] add [STATUS::surge] and [STATUS::destabilized],[STATUS::vulnerable],[STATUS::puncture], or [STATUS::rot]'",
+		onCrit: "'remove [STATUS::stun], add [STATUS::surge] and 3T:[STATUS::destabilized]'"
+	},
+	stats: {
+		accuracy: 1,
+		crit:0.25,
+		amt:2,
+		stauts: {
+			surge: {name: "surge", showReference: true},
+			stun: {name: "stun", showReference: true},
+			destabilized: {name: "destabilized", showReference: true},
+			vulnerable: {name: "vulnerable", showReference: true},
+			puncture: {name: "puncture", showReference: true},
+			rot: {name: "rot", showReference: true},
+		}
+	},
 	exec: function(user,target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]
 		let pickedConsequence = consequenceChoices.sample()

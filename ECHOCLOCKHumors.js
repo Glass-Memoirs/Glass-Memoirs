@@ -1267,25 +1267,30 @@ env.ACTIONS.player_rig = {
 		userEffects.forEach((status) => {
 			if (!status.beneficial) removeStatus(user, status.slug)
 		})
-		critExec: (status) => {
-			if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
-			if(status == "windup") {
-				sendFloater({
-					target: target,
-					type: "arbitrary",
-					arbitraryString: "LMAO",
-					size: 1.5,
-				})
-				readoutAdd({
-					message: `${target.name} forgot what it was doing.`, 
-					name: "sourceless", 
-					type: "sourceless combat minordetail", 
-					show: false,
-					sfx: false
-				})
-				removeStatus(target, status)
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			critExec: (status) => {
+				if(!status.beneficial) addStatus({target:target, status: status.slug, length: Math.floor(hasStatus(target, status.slug))})
+				if(status == "windup") {
+					sendFloater({
+						target: target,
+						type: "arbitrary",
+						arbitraryString: "LMAO",
+						size: 1.5,
+					})
+					readoutAdd({
+						message: `${target.name} forgot what it was doing.`, 
+						name: "sourceless", 
+						type: "sourceless combat minordetail", 
+						show: false,
+						sfx: false
+					})
+					removeStatus(target, status)
+				}
 			}
-		}
+		})
 		userEffects.forEach((status) => {
 			if (status.beneficial) addStatus({target: user, status: status.slug, length: Math.floor(hasStatus(user, status.slug))})
 		})
@@ -1826,9 +1831,25 @@ env.ACTIONS.player_sacri = {
 	slug: "player_sacri",
 	name: "Sacrifical Act",
 	type: 'autohit+target',
-	desc: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
-	help: "IF TARGET HAS SURGE, -SURGE +WILDSURGE +1T EMPOWERED +2T FOCUSED/nIF ON SELF:-4HP,+2T FEAR, +1T STUN, +1T VULNERABLE +1T WILD",
+	//desc: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
+	//help: "IF TARGET HAS SURGE, -SURGE +WILDSURGE +1T EMPOWERED +2T FOCUSED/nIF ON SELF:-4HP,+2T FEAR, +1T STUN, +1T VULNERABLE +1T WILD",
 	verb: "Empower",
+	details: {
+		flavour: "'LET THE SHOW GO FORTH! AGAIN!';'LET VELZIE VIEW OUR CRUDE IMMITATIONS';'FOR THAT WILL ONLY INSPIRE US MORE!'",
+		onUse: "'if target has [STATUS::surge], remove [SATUS::surge] and add [STATUS::wild_surge]';'if target is self: -4HP, +2T:[STATUS::fear], [STATUS::stun], [STATUS::vulnerable], [STATUS::wild_surge]'"
+	},
+	stats: {
+		accuracy: 1,
+		crit: 0.5,
+		amt: 3,
+		status: {
+			surge: { name: "surge", showReference: true},
+			wild_surge: {name: "wild_surge", showReference: true},
+			stun: {name: "stun", length: 1},
+			vulnerable: {name: "vulnerable", length: 1},
+			fear: {name: "fear", length: 2}
+		},
+	},
 	exec: function(user,target){
 		env.GENERIC_ACTIONS.singleTarget({
 			action: this,

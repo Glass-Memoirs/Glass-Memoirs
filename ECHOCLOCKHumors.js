@@ -190,6 +190,14 @@ if(!env.dialogues["dreammod"].humors.responses[0].replies.includes("entropy")) {
 		"hideRead":true
 	})
 	}
+	if(!env.dialogues["dreammod"].humors.responses[0].replies.includes("stupidhorrible")) {
+		env.dialogues["dreammod"].humors.responses[0].replies.push({
+			"name":"stupidhorrible",
+			"destination":"loop",
+			"exec": Function('change("e3a2_newcomp","stupidhorrible")'),
+			"hideRead":true
+		})
+		}
 	if(!env.dialogues["dreammod"].sfer.responses[0].replies.includes("mod tester's delight (999)")) {
 	env.dialogues["dreammod"].sfer.responses[0].replies.push({
 		"name":"mod tester's delight (999)",
@@ -214,6 +222,7 @@ if(page.party){
             }
 			page.flags.components.entropy = 30
 			page.flags.components.surging = 30
+			page.flags.components.stupidhorrible = 30 
 			
 			page.party[0].components["primary"] = "claws"
 			page.party[0].components["secondary"] = "claws"
@@ -240,6 +249,7 @@ if(page.party){
 			}
 			page.flags.components.entropy = 3
 			page.flags.components.surging = 3
+			page.flags.components.stupidhorrible = 3
 			
 			page.party[0].components["primary"] = "claws"
 			page.party[0].components["secondary"] = "claws"
@@ -263,14 +273,23 @@ if(page.party){
 				member.components["utility"] = "entropy"
 			})
 
-          case "surge":
-               page.flags.components = { surging: 12}
+        case "surge":
+            page.flags.components = { surging: 12}
 
-               page.party.forEach(member=>{
-                    member.components["primary"] = "surging"
-                    member.components["secondary"] = "surging"
-                    member.components["utility"] = "surging"
-               })
+            page.party.forEach(member=>{
+                member.components["primary"] = "surging"
+                member.components["secondary"] = "surging"
+                member.components["utility"] = "surging"
+           })
+		
+		case "stupidhorrible":
+			page.flags.components = {stupidhorrible: 12}
+
+			page.party.forEach(member=>{
+				member.components["primary"]="stupidhorrible"
+				member.components["secondary"]="stupidhorrible"
+				member.components["utility"]="stupidhorrible"
+			})
 		}
 	}
 if (page.path == '/local/beneath/embassy/') {
@@ -315,6 +334,16 @@ if (page.path == '/local/beneath/embassy/') {
     	--background-color: var(--dark-color);
     	--accent-color: var(--friend-color);
     	--font-color: var(--fundfriend-color);
+	}
+	[component="stupidhorrible"] {
+    	--background: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoritself.gif);
+    	--organelle-background: url(https://glass-memoirs.github.io/Glass-Memoirs/surgingHumor.png);
+    	--background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/surginghumoritself.gif);
+    	--background-size: auto;
+    	--background-position: center;
+    	--background-color: var(--dark-color);
+    	--accent-color: var(--friend-color);
+    	--font-color: var(--neutral-color);
 	}
 	</style>`);
 //HUMORS
@@ -373,6 +402,33 @@ env.COMBAT_COMPONENTS.surging = {
           }
      },
      combatModifiers: ["surging_set","surging_pace","surging_second"]
+}
+
+env.COMBAT_COMPONENTS.stupidhorrible = {
+	name: "StupidHorrible",
+    slug: "stupidhorrible",
+	description: "'idk man velzie just inspired me to make some madness';'and so i listened';'and now were here';'thanks velzie'",
+    help: "'why would you do this';'bad decision making';'anything else would be better'",
+
+    primary: {
+        alterations: [["primary", "pin_pull"]],
+        stats: {
+            maxhp: 0
+        }
+    },
+    secondary: {
+        alterations: [["secondary", "brrrttrttt"]],
+        stats: {
+            maxhp: 0
+        }
+    },
+    utility: {
+        alterations: [["evade", "puncture_bomb"]], //surging surge lmao. like yeah thats what it does - note::velnits lamet use to be called surging surge
+        stats: {
+            maxhp: 0
+        }
+    },
+    combatModifiers: []
 }
 
 /*

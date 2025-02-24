@@ -229,12 +229,14 @@ if(page.party){
 				break
 
 		case "abundant":
-			page.flags.components = {
-				ichor: 3,
-				claws: 3,
-				light: 3,
-				bone: 3,
-				eyes: 3
+			if (typeof page.flags.components == undefined) {
+				page.flags.components = {
+					ichor: 3,
+					claws: 3,
+					light: 3,
+					bone: 3,
+					eyes: 3
+				}
 			}
 			page.flags.components.entropy = 3
 			page.flags.components.surging = 3

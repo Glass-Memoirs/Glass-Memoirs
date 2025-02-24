@@ -1977,6 +1977,27 @@ env.ACTIONS.player_sacri = {
 			})
 		}*/
 	}
+},
+//stupidhorrible
+env.ACTIONS.pin_pull = {
+	slug: "pin_pull",
+	name: "Pin Pull",
+	type: "autohit+target",
+	verb: "ask",
+	details: {
+		flavour: "'Hey mind holding thsi for a second?';'yeah sure'",
+		onUse: "'[STAT::amt] to user and target'"
+	},
+	usage: {
+		act: "%USER HANDS %TARGET A COOKING BOMB",
+		hit: "BOTH %USER AND %TARGET GET EXPLODED",
+	},
+	stats: {
+		amt: 10,
+	},
+	exec: {
+		
+	}
 }
 
 //Personality

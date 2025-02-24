@@ -1070,6 +1070,42 @@ env.STATUS_EFFECTS.surging_second = {
         },
 	},
 	help: "'on actor death, give half damage to random actor'"
+},
+
+env.STATUS_EFFECTS.fated_surging = {
+	slug: "fated_surging",
+	name: "FATED::SURGE",
+	passive: true,
+	beneficial: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/surginghumoritself.gif",
+	impulse: {
+		type: "fated",
+		component: "surging",
+	},
+	events: {
+		onCreated: function({statusObj}) {
+			if(statusObj.slug != this.status.slug) return;
+			
+			this.status.power = 0
+			if(this.status.affecting?.member?.components) for (const [slotName, slotContents] of Object.entries(this.status.affecting.member.components)) {
+				if(slotContents == "surging") this.status.power++
+			}
+
+			if(this.status.affecting?.member?.augments) for (const augmentSlug of this.status.affecting.member.augments) {
+				let augment = env.ACTOR_AUGMENTS.generic[augmentSlug]
+				if(augment?.component) if(augment.component[1] == "surging") this.status.power += 2
+			}
+		},
+		
+		onTurn: function() {
+			let target = this.status.affecting
+			if (Math.random() < (0.05*(0.05*this.status.power))) {
+				if (Math.floor(hasStatus(user, "stun"))) {
+				removeStatus(target, stun)
+				}
+			}
+		}
+	}
 }
 
 //COMBAT ACTIONS

@@ -1993,17 +1993,17 @@ env.ACTIONS.pin_pull = {
 		hit: "BOTH %USER AND %TARGET GET EXPLODED",
 	},
 	stats: {
-		amt: 10,
+		amt: 5,
 	},
-	exec: function(){
-		env.GENERIC_ACTIONS.singleTarget = {
+	exec: function(user, target){
+		env.GENERIC_ACTIONS.singleTarget({
 			action: this,
 			user,
 			target,
 			genExec:({user}) => {
 				combatHit(user,{amt: amt, autohit: true, redirectable:false})
 			}
-		}
+		})
 	}
 },
 
@@ -2021,7 +2021,7 @@ env.ACTIONS.brrrttrttt = {
 		crit: 0.2,
 		amt: 1,
 	},
-	exec: function() {
+	exec: function(user,target) {
 		let action = this
 		let AllTargets = []
 			env.rpg.enemyTeam.members.forEach((target) => {
@@ -2067,7 +2067,7 @@ env.ACTIONS.puncture_bomb = {
 			puncture: {name: "puncture", showReference: true},
 		},
 	},
-	exec: function() {
+	exec: function(user,target) {
 		let action = this
 		let AllTargets = []
 		env.rpg.enemyTeam.members.forEach((target) => {
@@ -2080,7 +2080,7 @@ env.ACTIONS.puncture_bomb = {
 				AllTargets.push(target)
 			}
 		})
-		AllTargets.forEach((target)=> {
+		AllTargets.forEach((user,target)=> {
 			setTimeout(()=>{
 				env.GENERIC_ACTIONS.singleTarget({
 					action,

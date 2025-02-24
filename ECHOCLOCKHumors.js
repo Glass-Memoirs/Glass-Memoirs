@@ -528,6 +528,15 @@ env.ACTOR_AUGMENTS.generic.sacrificial_act = {
 	component: ["utility", "surging"],
 	cost: 2
 }
+//stupidhorrible
+/*env.ACTOR_AUGMENTS.generic.stupidhorrible_colonthree ={ 
+	slug: "stupidhorrible_colonthree",
+	name: "Realistic :3",
+	description: "'Oh boy waht a nice GUN','i love GUN'",
+	alterations: [["brrrttrttt", "stupidhorrible_colonthree"]],
+	component: ["secondary", "stupidhorrible"],
+	cost: 2
+}*/
 
 //COMBAT MODIFIERS
 env.MODIFIERS.entropy_eternal = {

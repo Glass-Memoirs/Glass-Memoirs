@@ -1099,10 +1099,13 @@ env.STATUS_EFFECTS.fated_surging = {
 		
 		onTurn: function() {
 			let target = this.status.affecting
-			if (Math.random() < (0.05*(0.05*this.status.power))) {
+			if (Math.random() < (0.2+(0.2*this.status.power))) {
 				if (Math.floor(hasStatus(user, "stun"))) {
 				removeStatus(target, stun)
 				}
+			}
+			if (Math.random() < (0.1+(0.1*this.status.power))) {
+				addStatus(target, "wild_surge")
 			}
 		}
 	}

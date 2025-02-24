@@ -1995,8 +1995,102 @@ env.ACTIONS.pin_pull = {
 	stats: {
 		amt: 10,
 	},
-	exec: {
-		
+	exec: function(){
+		env.GENERIC_ACTIONS.singleTarget = {
+			action: this,
+			user,
+			target,
+			genExec:({user}) => {
+				combatHit(user,{amt: amt, autohit: true, redirectable:false})
+			}
+		}
+	}
+},
+
+env.ACTIONS.brrrttrttt = {
+	slug: "brrrttrttt",
+	name: "Brrrttrttt",
+	type: "autohit",
+	details: {
+		flavour: "Hehe the cousins combined one of their arms with dull technology';'now we have a mized arms weapon!'",
+		onUse: "'Hit 12 random actors'",
+		onHit: "'[STAT::amt]'"
+	},
+	stats: {
+		accuracy: 1,
+		crit: 0.2,
+		amt: 1,
+	},
+	exec: function() {
+		let action = this
+		let AllTargets = []
+			env.rpg.enemyTeam.members.forEach((target) => {
+				if (target => target.state != "dead" && target.state != "lastStand") {
+					AllTargets.push(target)
+				}
+			})
+			env.rpg.allyTeam.members.forEach((target)=> {
+				if (target => target.state != "dead" && target.state != "lastStand") {
+					AllTargets.push(target)
+				}
+			})
+		if(AllTargets.length) for (let i = 1; i <=12; i++) {
+			if (AllTargets) {
+				let target = AllTargets.sample()
+				setTimeout(()=>{
+					env.GENERIC_ACTIONS.singleTarget({
+						action,
+						user,
+						target,
+						hitSfx: { name: 'shot2' },
+						critSfx: { name: 'shot6' },
+					})
+				}, 500)
+			}
+		}
+	}
+},
+
+env.ACTIONS.puncture_bomb = {
+	slug:"puncture_bomb",
+	name: "Puncture Bomb",
+	type: "autohit",
+	details: {
+		flavour: "'This is just like that one time i was an effigy!';'family guy cutaway gag here'",
+		onUse: "'+5T:[STATUS::puncture] to everyone'",
+		onHit: "'[STAT::amt]'",
+	},
+	stats: {
+		amt: 1,
+		crit: 0,
+		status: {
+			puncture: {name: "puncture", showReference: true},
+		},
+	},
+	exec: function() {
+		let action = this
+		let AllTargets = []
+		env.rpg.enemyTeam.members.forEach((target) => {
+			if (target => target.state != "dead" && target.state != "lastStand") {
+				AllTargets.push(target)
+			}
+		})
+		env.rpg.allyTeam.members.forEach((target)=> {
+			if (target => target.state != "dead" && target.state != "lastStand") {
+				AllTargets.push(target)
+			}
+		})
+		AllTargets.forEach((target)=> {
+			setTimeout(()=>{
+				env.GENERIC_ACTIONS.singleTarget({
+					action,
+					user,
+					target,
+					hitSfx: { name: 'shot2' },
+					critSfx: { name: 'shot6' },
+				})
+			}, 500)
+		})
 	}
 }
 

@@ -529,14 +529,15 @@ env.ACTOR_AUGMENTS.generic.sacrificial_act = {
 	cost: 2
 }
 //stupidhorrible
-/*env.ACTOR_AUGMENTS.generic.stupidhorrible_colonthree ={ 
+env.ACTOR_AUGMENTS.generic.stupidhorrible_colonthree ={ 
 	slug: "stupidhorrible_colonthree",
 	name: "Realistic :3",
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/colonthree.png",
 	description: "'Oh boy waht a nice GUN','i love GUN'",
 	alterations: [["brrrttrttt", "stupidhorrible_colonthree"]],
 	component: ["secondary", "stupidhorrible"],
 	cost: 2
-}*/
+}
 
 //COMBAT MODIFIERS
 env.MODIFIERS.entropy_eternal = {
@@ -2142,6 +2143,60 @@ env.ACTIONS.puncture_bomb = {
 				})
 			}, 500)
 		})
+	}
+},
+
+env.ACTIONS.stupidhorrible_colonthree = {
+	slug: "stupidhorrible_colonthree",
+	name: "Realistic MP5",
+	type: "autohit",
+	details: {
+		flavour: "Oh boy waht a nice GUN';'i love GUNs'",
+		onUse: "'Hit random actors'",
+		onHit: "'[STAT::amt]'",
+		onCrit: "'[STATUS::empowered], end barrage'"
+	},
+	stats: {
+		accuracy: 1,
+		crit: 0.05,
+		amt: 1,
+		status: {
+			empowered: {name: "empowered", showReference: true}
+		}
+	},
+	exec: function(user,target) {
+		let action = this
+		let AllTargets = []
+			env.rpg.enemyTeam.members.forEach((target) => {
+				if (target => target.state != "dead" && target.state != "lastStand") {
+					AllTargets.push(target)
+				}
+			})
+			env.rpg.allyTeam.members.forEach((target)=> {
+				if (target => target.state != "dead" && target.state != "lastStand") {
+					AllTargets.push(target)
+				}
+			})
+		if(AllTargets.length) for (let i = 1; i <=1; i++) {
+			if (AllTargets) {
+				let target = AllTargets.sample()
+				setTimeout(()=>{
+					env.GENERIC_ACTIONS.singleTarget({
+						action,
+						user,
+						target,
+						hitSfx: { name: 'shot2' },
+						critSfx: { name: 'shot6' },
+						hitExec: ({user}) => {
+							useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "just a silly littol guy"})
+						},
+						critExec: ({user}) => {
+							addStatus(user, "empowered")
+						},
+					})
+				}, 500)
+			}
+		}
 	}
 }
 

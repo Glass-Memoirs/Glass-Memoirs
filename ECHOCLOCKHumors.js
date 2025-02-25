@@ -2164,7 +2164,7 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 			empowered: {name: "empowered", showReference: true}
 		}
 	},
-	exec: function(user,target) {
+	exec: function(user) {
 		let action = this
 		let AllTargets = []
 			env.rpg.enemyTeam.members.forEach((target) => {

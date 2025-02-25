@@ -2177,7 +2177,7 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 					AllTargets.push(target)
 				}
 			})
-		if(AllTargets.length) for (let i = 1; i <2; i++) {
+		if(AllTargets.length) {
 			if (AllTargets) {
 				let target = AllTargets.sample()
 				setTimeout(()=>{

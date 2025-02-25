@@ -2146,7 +2146,7 @@ env.ACTIONS.puncture_bomb = {
 	}
 },
 
-env.ACTIONS.stupidhorrible_colonthree = {
+env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 	slug: "stupidhorrible_colonthree",
 	name: "Realistic MP5",
 	type: "autohit",

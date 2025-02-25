@@ -1026,10 +1026,16 @@ env.STATUS_EFFECTS.surging_improvised = {
 	passive: true,
 	beneficial: true,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/eyew.gif",
+	inUse: false,
 	impulse: {type: "action", component: "surging"},
 	events: {
-		GLOBAL_onRemoveStatus: function({subject, origin, attack, beneficial,removingStatusName}){
+		onTurn: function() {
+			env.STATUS_EFFECTS.metal_autonomous.inUse = false //tell the game it hasn't been used yet
+		},
+		GLOBAL_onRemoveStatus: function({subject, origin, beneficial,removingStatusName}){
 			if(removingStatusName = "surge") {
+				if(env.STATUS_EFFECTS.metal_autonomous.inUse) return
+				else env.STATUS_EFFECTS.metal_autonomous.inUse = true
 				let user = this.status.affecting
 				if(beneficial || user.team.members.includes(subject) || user.state == "dead" || !user.actions[2] || hasStatus(user, "fear")) return;
 				let utility = env.ACTIONS[user.actions[2]]
@@ -2427,6 +2433,18 @@ env.COMBAT_ACTORS.immobile_actor = {
 		`,
 	reactions: {} //SILENT CREATURE
 }
+
+//Items
+/*env.ITEM_LIST.odd_battery = {
+	slug: "odd_battery",
+	name: "Odd Battery",
+	image: "/img/sprites/combat/items/aimacyst_dither.gif",
+	group: "offense",
+	description: `'receptor-tied targeting cyst';'traditional hunting implement';'useful for multitasking'`,
+	combatAction: env.ACTIONS.special_spy_all,
+	max: 10,
+	batches: 2
+}*/
 
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it

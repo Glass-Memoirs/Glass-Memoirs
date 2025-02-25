@@ -2166,7 +2166,6 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 	},
 	exec: function(user,target) {
 		let action = this
-		let repeatattack = true
 		let AllTargets = []
 			env.rpg.enemyTeam.members.forEach((target) => {
 				if (target => target.state != "dead" && target.state != "lastStand") {
@@ -2189,13 +2188,12 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 						hitSfx: { name: 'shot2' },
 						critSfx: { name: 'shot6' },
 						hitExec: ({target}) => {
-							if(target.hp > 0 && target.state != "lastStand" && repeatattack) {
+							if(target.hp > 0 && target.state != "lastStand") {
 								useAction(user, this, target, {beingUsedAsync: true, reason: "just a littol guy"})
 							}
 						},
 						critExec: ({user}) => {
 							addStatus({target: user, status: "empowered", length: 1})
-							repeatattack = flase
 						},
 					})
 				}, 500)

@@ -2191,7 +2191,7 @@ env.ACTIONS.stupidhorrible_colonthree = {
 							useAction(user, this, target, {beingUsedAsync: true, reason: "just a littol guy"})
 						},
 						critExec: ({user}) => {
-							addStatus(user, "empowered")
+							addStatus({target: user, status: "empowered", length: 1})
 						},
 					})
 				}, 500)

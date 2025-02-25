@@ -2152,12 +2152,12 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 	type: "autohit",
 	details: {
 		flavour: "Oh boy waht a nice GUN';'i love GUNs'",
-		onUse: "'Hit random actors'",
+		onUse: "'75% to target 30 random actors'",
 		onHit: "'[STAT::amt]'",
-		onCrit: "'[STATUS::empowered], end barrage'"
+		onCrit: "'[STATUS::empowered]'"
 	},
 	stats: {
-		accuracy: 1,
+		accuracy: 0.75,
 		crit: 0.09,
 		amt: 1,
 		status: {
@@ -2177,7 +2177,7 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 					AllTargets.push(target)
 				}
 			})
-		if(AllTargets.length) for(let i=0; i<1; i++){
+		if(AllTargets.length) for(let i=0; i<30; i++){
 			if (AllTargets) {
 				let target = AllTargets.sample()
 				setTimeout(()=>{
@@ -2187,13 +2187,6 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 						target,
 						hitSfx: { name: 'shot2' },
 						critSfx: { name: 'shot6' },
-						hitExec: ({target}) => {
-							if(target.hp > 0 && target.state != "lastStand") {
-								env.setTimeout(()=>{
-									useAction(user, this, target, {beingUsedAsync: true, reason: "stupidhorrible_colonthree"})
-								}, 200)
-							}
-						},
 						critExec: ({user}) => {
 							addStatus({target: user, status: "empowered", length: 1})
 						},

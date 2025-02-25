@@ -896,7 +896,7 @@ env.STATUS_EFFECTS.exp_over = { //This was what spurred this entire idea. The in
 			if(statusObj.slug == this.status.slug) this.status.justGotSurge = true
 		},
 	},
-	help: "on next active targeted action, gain 1T:STUN, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
+	help: "on next active targeted action, gain 2T:STUN and 3T:VULNERABLE, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
 },
 
 env.STATUS_EFFECTS.burnout = {
@@ -1030,12 +1030,12 @@ env.STATUS_EFFECTS.surging_improvised = {
 	impulse: {type: "action", component: "surging"},
 	events: {
 		onTurn: function() {
-			env.STATUS_EFFECTS.metal_autonomous.inUse = false //tell the game it hasn't been used yet
+			env.STATUS_EFFECTS.surging_improvised.inUse = false //tell the game it hasn't been used yet
 		},
 		GLOBAL_onRemoveStatus: function({subject, origin, beneficial,removingStatusName}){
 			if(removingStatusName = "surge") {
-				if(env.STATUS_EFFECTS.metal_autonomous.inUse) return
-				else env.STATUS_EFFECTS.metal_autonomous.inUse = true
+				if(env.STATUS_EFFECTS.surging_improvised.inUse) return
+				else env.STATUS_EFFECTS.surging_improvised.inUse = true
 				let user = this.status.affecting
 				if(beneficial || user.team.members.includes(subject) || user.state == "dead" || !user.actions[2] || hasStatus(user, "fear")) return;
 				let utility = env.ACTIONS[user.actions[2]]
@@ -1139,6 +1139,65 @@ env.STATUS_EFFECTS.fated_surging = {
 			}
 		}
 	}
+},
+
+env.STATUS_EFFECTS.tetration_shock = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting
+	slug: "tetration_shock",
+	name: "Tetration Shock",
+	beneficial: true,
+	infinite: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/Overclocked.png",
+	events: {
+		onTurn: function() { 
+			reactDialogue(this.status.affecting, 'surge') 
+			delete this.status.justGotSurge
+		},
+		onAction: function({user, action, target, beingUsedAsync}) {
+			if(this.status.justGotSurge || beingUsedAsync || ["incoherent_", "steer", "floor", "windup", "intrusive"].some(slugpart => action.slug.includes(slugpart)) ||
+				 !action.type.includes("target") ||(!action.beneficial && target.team.name == "ally") ||(action.beneficial && target.team.name == "enemy")) return;
+			setTimeout(()=>{
+				sendFloater({
+					target: user,
+					type: "arbitrary",
+					arbitraryString: "Tetrated Shock",
+					size: 1.5,
+				})
+				readoutAdd({
+					message: `This just isnt fair to the enemies (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+					name: "sourceless", 
+					type: "sourceless combat minordetail", 
+					show: false,
+					sfx: false
+				})
+				env.GENERIC_ACTIONS.teamWave({
+					team: target.team,
+					exec: (actor, i) => {
+						if(actor == target) return;
+						env.GENERIC_ACTIONS.teamWave({
+							team: target.team,
+							exec: (actor, i) => {
+								if(actor == target) return; // we skip the original target
+								env.GENERIC_ACTIONS.teamWave({
+									team: target.team,
+									exec: (actor, i) => {
+										if(actor == target) return; // we skip the original target
+										useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "exponential overload"})
+									}
+								})
+							}
+						})
+					}
+				})
+			}, 500)
+			removeStatus(this.status.affecting, "tetration_shock")
+			addStatus({target:user, status: 'stun', length: 4, noReact: true})
+			addStatus({target:user, status: 'vulnerable', length: 5, noReact: true})
+		},
+		onCreated: function({statusObj}) {
+			if(statusObj.slug == this.status.slug) this.status.justGotSurge = true
+		},
+	},
+	help: "on next active targeted action, gain 4T:STUN and 5T:VULNERABLE, and use across the entire target team\nif beneficial, action used on all allies\nif offensive, action used on all foes"
 }
 
 //COMBAT ACTIONS
@@ -2358,6 +2417,32 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 			}
 		}
 	}
+},
+
+env.ACTIONS.energizer = {
+	slug: "energizer",
+	name: "energizer",
+	type: "autohit+target+self",
+	itemAction: true,
+	exec: function(user) {
+		let choice = Math.random()
+		env.GENERIC_ACTIONS.singleTarget({
+			action:this,
+			user,
+			target,
+			genExec: ({target}) => {
+				if (choice < 0.5) {
+					addStatus(target, "surge")
+				} else if (choice > 0.5 && choice < 0.8) {
+					addStatus(target, "wild_surge")
+				} else if (choice > 0.8 && choice < 0.99) {
+					addStatus(target, "exponential_overload")
+				} else {
+					addStatus(target, "tetration_shock")
+				}
+			}
+		})
+	}
 }
 
 //Personality
@@ -2435,16 +2520,16 @@ env.COMBAT_ACTORS.immobile_actor = {
 }
 
 //Items
-/*env.ITEM_LIST.odd_battery = {
+env.ITEM_LIST.odd_battery = {
 	slug: "odd_battery",
 	name: "Odd Battery",
-	image: "/img/sprites/combat/items/aimacyst_dither.gif",
-	group: "offense",
-	description: `'receptor-tied targeting cyst';'traditional hunting implement';'useful for multitasking'`,
-	combatAction: env.ACTIONS.special_spy_all,
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/odd_battery.png",
+	group: "support",
+	description: `'a cousinly container';'why was it in the depths?'`,
+	combatAction: env.ACTIONS.energizer,
 	max: 10,
 	batches: 2
-}*/
+}
 
 //Merchant code
 for (const componentName of ["entropy"]) { // this probably isn't a function but i don't know where else to put it

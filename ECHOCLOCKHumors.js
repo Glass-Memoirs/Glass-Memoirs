@@ -2333,6 +2333,5 @@ for (const componentName of ["surging"]) {
      })
      env.e3a2.merchant.commerce.push(commerceObject)
 }
-addResources(["https://adenator.neocities.org/corrumods/literallyTooManyHumors.js"])
 console.log("LOADED::CHAOS+ 'go forth and kill bestie'")
 }

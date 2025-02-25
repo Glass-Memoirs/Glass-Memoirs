@@ -2092,9 +2092,9 @@ env.ACTIONS.brrrttrttt = {
 						user,
 						target,
 						hitSfx: { name: 'shot2' },
-						critSfx: { name: 'shot6' },
+						critSfx: { name: 'shot6' }
 					})
-				}, 500)
+				}, 200)
 			}
 		}
 	}

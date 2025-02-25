@@ -2189,7 +2189,7 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 						critSfx: { name: 'shot6' },
 						hitExec: ({target}) => {
 							if(target.hp > 0 && target.state != "lastStand") {
-								useAction(user, this, target, {beingUsedAsync: true, reason: "stupidhorrible_colonthree"})
+								useAction(user, action, target, {beingUsedAsync: true, reason: "stupidhorrible_colonthree"})
 							}
 						},
 						critExec: ({user}) => {

@@ -2188,7 +2188,9 @@ env.ACTIONS.stupidhorrible_colonthree = {
 						hitSfx: { name: 'shot2' },
 						critSfx: { name: 'shot6' },
 						hitExec: ({target}) => {
-							useAction(user, this, target, {beingUsedAsync: true, reason: "just a littol guy"})
+							if(target.hp > 0 && target.state != "lastStand") {
+								useAction(user, this, target, {beingUsedAsync: true, reason: "just a littol guy"})
+							}
 						},
 						critExec: ({user}) => {
 							addStatus({target: user, status: "empowered", length: 1})

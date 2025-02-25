@@ -2166,7 +2166,7 @@ env.ACTIONS.stupidhorrible_kaber = {
 	type: "target",
 	details: {
 		flavour: "'What makes me a good Demoman?';'If I were a bad Demoman,';'I wouldn't be sittin' here, discussin' it with you now would I?'",
-		onHit: "'[STAT:amt] to taget and user'",
+		onHit: "'[STAT::amt] to taget and user'",
 	},
 	stats: {
 		amt: 5,
@@ -2249,14 +2249,14 @@ env.ACTIONS.stupidhorrible_taunt = {
 		onCrit: "'[STATUS::empowered]'",
 	},
 	stats:{
-		amt: 10,
+		amt: 6,
 		crit: 0.1,
 		status: {
 			windup: {name: "windup", showReference: true},
 			empowered: {name: "empowered", length: 3},
 		},
 	},
-	exec: function(user) {
+	exec: function(user,target) {
 		removeStatus(user, "windup")
 		env.GENERIC_ACTIONS.singleTarget({
 			action: this,
@@ -2287,7 +2287,7 @@ env.ACTIONS.stupidhorrible_blood = {
 			focused: {name: "focused", length: 2},
 		},
 	},
-	exec: function(user) {
+	exec: function(user,target) {
 		env.GENERIC_ACTIONS.singleTarget({
 			action: this,
 			user,

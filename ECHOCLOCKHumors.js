@@ -2262,7 +2262,7 @@ env.ACTIONS.stupidhorrible_taunt = {
 			action: this,
 			user,
 			target,
-			critexec: ({user}) => {
+			critexec: ({target}) => {
 				addStatus({target: user, status: "empowered", length: 3})
 			},
 		})
@@ -2292,10 +2292,10 @@ env.ACTIONS.stupidhorrible_blood = {
 			action: this,
 			user,
 			target,
-			hitExec: ({user}) => {
+			hitExec: ({target}) => {
 				addStatus({target: user, status: "windup", length: 1})
 			},
-			critexec: ({user}) => {
+			critexec: ({target}) => {
 				addStatus({target: user, status: "empowered", length: 2})
 				addStatus({target: user, status: "focused", length: 2})
 			},

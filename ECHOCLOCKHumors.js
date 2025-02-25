@@ -2194,7 +2194,6 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 						},
 						critExec: ({user}) => {
 							addStatus({target: user, status: "empowered", length: 1})
-							break
 						},
 					})
 				}, 500)

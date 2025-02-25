@@ -2270,7 +2270,7 @@ env.ACTIONS.stupidhorrible_taunt = {
 },
 
 env.ACTIONS.stupidhorrible_blood = {
-	slug: "stupihorrible_blood",
+	slug: "stupidhorrible_blood",
 	name: "Bloodshed",
 	type: 'target',
 	details: {

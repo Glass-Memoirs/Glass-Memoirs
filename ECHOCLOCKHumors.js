@@ -529,6 +529,17 @@ env.ACTOR_AUGMENTS.generic.sacrificial_act = {
 	cost: 2
 }
 //stupidhorrible
+env.ACTOR_AUGMENTS.generic.stupidhorrible_kabluey = {
+	slug: "stupidhorrible_kabluey",
+	name: "KaBLLLUEYYYYYY!!!",
+	image: "",
+	description: "'oh boy the tf2 youtube channel just uploaded!'",
+	alterations: [["pin_pull", "stupidhorrible_kaber"],
+				["ADD", "stupidhorrible_claymore"]],
+	component: ["primary", "stupidhorrible"],
+	cost: 3
+}
+
 env.ACTOR_AUGMENTS.generic.stupidhorrible_colonthree ={ 
 	slug: "stupidhorrible_colonthree",
 	name: "Realistic :3",
@@ -2142,6 +2153,58 @@ env.ACTIONS.puncture_bomb = {
 					}
 				})
 			}, 500)
+		})
+	}
+},
+
+env.ACTIONS.stupidhorrible_kaber = {
+	slug: "stupidhorrible_kaber",
+	name: "Kaber",
+	type: "target",
+	details: {
+		flavour: "'What makes me a good Demoman?';'If I were a bad Demoman,';'I wouldn't be sittin' here, discussin' it with you now would I?'",
+		onHit: "'[STAT:amt] to taget and user'",
+	},
+	stats: {
+		amt: 5,
+	},
+	exec: function(user,target) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			hitExec: ({user}) => {
+				combatHit(user,{amt: 5, autohit: true, redirectable:false})
+			}
+		})
+	}
+},
+
+env.ACTIONS.stupidhorrible_claymore = {
+	slug: "stupidhorrible_claymore",
+	name: "Claymore",
+	type: "target",
+	details: {
+		flavour: "'Lets do it!';'Not one of yas gonna survive this!'",
+		onHit: "'[STAT::amt]'",
+		onCrit: "'[STATUS::puncture]'",
+	},
+	stats:{
+		amt: 3,
+		accuracy: 0.8,
+		crit: 0.15,
+		status:{
+			puncture: {name: "puncture", length:5}
+		}
+	},
+	exec: function(user,target) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action:this,
+			user,
+			target,
+			critExec: ({user}) => {
+				addStatus({target: user, status: "puncture", length: 5})
+			}
 		})
 	}
 },

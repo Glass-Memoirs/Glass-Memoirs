@@ -2187,10 +2187,10 @@ env.ACTIONS.stupidhorrible_colonthree = {
 						target,
 						hitSfx: { name: 'shot2' },
 						critSfx: { name: 'shot6' },
-						hitExec: ({user}) => {
+						hitExec: () => {
 							useAction(user, action, actor, {triggerActionUseEvent: false, beingUsedAsync: true, reason: "just a silly littol guy"})
 						},
-						critExec: ({user}) => {
+						critExec: () => {
 							addStatus(user, "empowered")
 						},
 					})

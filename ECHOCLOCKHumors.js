@@ -532,10 +532,13 @@ env.ACTOR_AUGMENTS.generic.sacrificial_act = {
 env.ACTOR_AUGMENTS.generic.stupidhorrible_kabluey = {
 	slug: "stupidhorrible_kabluey",
 	name: "KaBLLLUEYYYYYY!!!",
-	image: "",
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/demoflower.png",
 	description: "'oh boy the tf2 youtube channel just uploaded!'",
 	alterations: [["pin_pull", "stupidhorrible_kaber"],
-				["ADD", "stupidhorrible_claymore"]],
+				["ADD", "stupidhorrible_claymore"],
+				["ADD", "stupidhorrible_charge"],
+				["ADD_WINDUP", "stupidhorrible_taunt"],
+				["ADD_WINDUP", "stupidhorrible_blood"]],
 	component: ["primary", "stupidhorrible"],
 	cost: 3
 }
@@ -2205,6 +2208,97 @@ env.ACTIONS.stupidhorrible_claymore = {
 			critExec: ({user}) => {
 				addStatus({target: user, status: "puncture", length: 5})
 			}
+		})
+	}
+},
+
+env.ACTIONS.stupidhorrible_charge = {
+	slug: "stupidhorrible_charge",
+	name: "Charge",
+	type: "autohit",
+	details: {
+		flavour: "'One crossed wire, one wayward pinch of potassium chlorate, one errant twitch... and kablooie!'",
+		onUse: "'[STATUS::windup] [STATUS::focused]'",
+	},
+	stats: {
+		status: {
+			windup: {
+				name: 'windup',
+				length: 1
+			},
+			focused: {
+				name: 'focused',
+				length: 2
+			},
+		},
+	},
+	exec: function(user) {
+		addStatus({target: user, status: "windup", length: 1})
+		addStatus({target: user, status: "focused", length: 2})
+	}
+},
+
+env.ACTIONS.stupidhorrible_taunt = {
+	slug: "stupidhorrible_taunt",
+	name: "Taunt Kill",
+	type: "target",
+	details: {
+		flavour: "'So Tall you fine dandies so proud, so cocksure!';'Prancin aboot with your heads full of eyeballs!';'Come and get me I say!'",
+		onUse: "'-[STATUS::windup]'",
+		onHit: "'[STAT::amt]'",
+		onCrit: "'[STATUS::empowered]'",
+	},
+	stats:{
+		amt: 10,
+		crit: 0.1,
+		status: {
+			windup: {name: "windup", showReference: true},
+			empowered: {name: "empowered", length: 3},
+		},
+	},
+	exec: function(user) {
+		removeStatus(user, "windup")
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			critexec: ({user}) => {
+				addStatus({target: user, status: "empowered", length: 3})
+			},
+		})
+	}
+},
+
+env.ACTIONS.stupidhorrible_blood = {
+	slug: "stupihorrible_blood",
+	name: "Bloodshed",
+	type: 'target',
+	details: {
+		flavour: "'Ill be waiting on ya with a whiff of the ol brimstone.';'Im a grim bloody fable... with an unhappy bloody end!';'Oh, theyre going to have to glue you back together... in hell!'",
+		onHit: "'[STAT::amt] [STATUS::windup]'",
+		onCrit: "'[STATUS::focused] [STATUS::empowered]'",
+	},
+	stats: {
+		amt: 6,
+		crit: 0.15,
+		status: {
+			windup: {name: "windup", showReference: true},
+			empowered: {name: "empowered", length: 2},
+			focused: {name: "focused", length: 2},
+		},
+	},
+	exec: function(user) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			hitExec: ({user}) => {
+				addStatus({target: user, status: "windup", length: 1})
+			},
+			critexec: ({user}) => {
+				addStatus({target: user, status: "empowered", length: 2})
+				addStatus({target: user, status: "focused", length: 2})
+			},
 		})
 	}
 },

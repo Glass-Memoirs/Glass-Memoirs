@@ -2158,7 +2158,7 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 	},
 	stats: {
 		accuracy: 1,
-		crit: 0.05,
+		crit: 0.09,
 		amt: 1,
 		status: {
 			empowered: {name: "empowered", showReference: true}
@@ -2177,7 +2177,7 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 					AllTargets.push(target)
 				}
 			})
-		if(AllTargets.length) {
+		if(AllTargets.length) for(let i=0; i<1; i++){
 			if (AllTargets) {
 				let target = AllTargets.sample()
 				setTimeout(()=>{
@@ -2189,7 +2189,9 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 						critSfx: { name: 'shot6' },
 						hitExec: ({target}) => {
 							if(target.hp > 0 && target.state != "lastStand") {
-								useAction(user, action, target, {beingUsedAsync: true, reason: "stupidhorrible_colonthree"})
+								env.setTimeout(()=>{
+									useAction(user, this, target, {beingUsedAsync: true, reason: "stupidhorrible_colonthree"})
+								}, 200)
 							}
 						},
 						critExec: ({user}) => {

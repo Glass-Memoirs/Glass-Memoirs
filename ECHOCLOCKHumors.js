@@ -2427,6 +2427,10 @@ env.ACTIONS.energizer = {
 	name: "energizer",
 	type: "autohit+target+self",
 	itemAction: true,
+	decription: {
+		flavour: "'It still seems to have power';'Why did a bright cousin throw it down there?'",
+		onUse: "'Grant random level of surge'",
+	},
 	exec: function(user) {
 		let choice = Math.random()
 		env.GENERIC_ACTIONS.singleTarget({
@@ -2553,6 +2557,7 @@ env.ITEM_LIST.odd_battery = {
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/odd_battery.png",
 	group: "support",
 	description: `'a cousinly container';'why was it in the depths?'`,
+	oocnote: "'Grants a random level of surge'",
 	combatAction: env.ACTIONS.energizer,
 	max: 10,
 	batches: 2

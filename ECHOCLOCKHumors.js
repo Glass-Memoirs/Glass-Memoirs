@@ -1812,15 +1812,22 @@ env.ACTIONS.velnits_lament = {
 			vulnerable: {name: "vulnerable", length: 2},
 		},
 	},
-	exec: function(user,target) {
-		if (hasStatus(target, "surge")) {
-			removeStatus(target, "surge")
-			addStatus(target, "wild_surge")
-			if (target == user) {
-				addStatus(user, "vulnerable")
-				addStatus(user, "stun")
+	exec: function(user, target) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			genExec: ({target, user}) => {
+				if (hasStatus(target, "surge")) {
+					removeStatus(target, "surge")
+					addStatus(target, "wild_surge")
+					if (target == user) {
+						addStatus(user, "vulnerable")
+						addStatus(user, "stun")
+					}
+				}
 			}
-		}
+		})
 	}
 },
 
@@ -2493,6 +2500,30 @@ env.COMBAT_ACTORS.generic.reactionPersonalities.surging = {
     receive_repairs: ["LISTTEN LISTENNN STO OOP.","EN D    Y  OUR  AC T."],
     receive_fear: ["S TT OP HOME   IS GG GONE.","LLET ME AC T   IN P EEACE."," CCE ACE E"],
     receive_redirection: ["AA IM FOR TT HEM BETTE R.", "G GG OD GOOD."],
+},
+
+env.COMBAT_ACTORS.generic.reactionPersonalities.stupidhorrible = {
+	evade: ["nice try buddy"],
+                crit: [ "im so sigma! ... i meant that ironically okay ?", "yeah idiots do it me style lets go gng."],
+                crit_buff: [ "are you like. good", "walk it off like a wheelchair user. okay?", "lock in lock in."],
+                miss: ["erm. oospies.", "thats my bad gng", "no its js a delayed maneuver. trust."],
+                dead: ["theyre making me fight in the Bone War."],
+                puncture: ["can some1 get it 2gether & help me.", "no dw ignore the blood im good."],
+                regen: ["Oogh Yeah That's The Fent."],
+                destabilized: ["a"],
+                stun: ["is it just me or am i moving so fast i cant move."],
+                laugh: ["> kekekeke", "roflmao lol", "teehee owo", "im js a sillay thang."],
+                sacrifice: ["um. this is awkjward."],
+                receive_hit: ["my bones."],
+                receive_crit: ["my organs."],
+                receive_puncture: ["this shit aint nothin 2 me man.", "ygs cld NOT survive that. 42n8ly, yours Truly,"],
+                receive_buff: ["omg thank you my baby gorilla", "ohhh ily my sigma bbg", "my baba grill yr so kind 2 me."],
+                receive_destabilized: ["i think yr All beneath me but i js dont talk abt it. 4 yr sakes,"],
+                receive_rez: ["were goodie gng lemme js lock in rq."],
+                receive_carapace: ["im not a little bug alr im fine.", "since you INSIST."],
+                receive_repairs: ["this is js like the convenience store: convenient!"],
+                receive_fear: ["gordon ramsay voice fuck me thats frightening. bloody hell."],
+                receive_redirection: ["what the fuck are you smoking.", "oh so yr like cooked. okay (not) nice knowing you."],
 }
 
 //Combat Actors

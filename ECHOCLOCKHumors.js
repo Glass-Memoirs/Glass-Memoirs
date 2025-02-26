@@ -1955,12 +1955,14 @@ env.ACTIONS.player_act = {
 						consequenceLength = 3
 					}
 					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
-					removeStatus(target, "stun")
 				} else {
 					addStatus({target: target, status: "evasion", length: 2})
 				}
 			}
 		})
+		if (hasStatus(target, "stun")) {
+			removeStatus(target, "stun")
+		}
 		/*if (hasStatus(target, "stun")) {
 			env.GENERIC_ACTIONS.singleTarget({
 				action,
@@ -2044,7 +2046,7 @@ env.ACTIONS.player_sacri = {
 				name: 'chomp',
 				rate: 3
 			},
-			genExec: ({user}) => {
+			genExec: ({target}) => {
 				if (target == user) {
 					combatHit(user, {amt:4, autohit: true, redirectable:false})
 					if (hasStatus(user,"surge")) {

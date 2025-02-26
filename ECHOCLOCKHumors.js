@@ -2050,23 +2050,24 @@ env.ACTIONS.player_sacri = {
 				if (target == user) {
 					combatHit(user, {amt:4, autohit: true, redirectable:false})
 					if (hasStatus(user,"surge")) {
-						removeStatus(user,"surge")
+						addStatus({target: user, status: "wild_surge", length: 1})
+						addStatus({target: user, status:"fear", length:2})
+						addStatus({target: user, status: "stun", length: 1})
+						addStatus({target: user, status: "vulnerable", length: 1})
 					}
-					addStatus(user,"wild_surge")
-					addStatus({target: user, status:"fear", length:2})
-					addStatus(user, "stun")
-					addStatus(user, "vulnerable")
 				} else {
 					combatHit(user, {amt:4, autohit:true, redirectable:false})
 					if (hasStatus(target,"surge")) {
-						removeStatus(target,"surge")
-						addStatus(target,"wild_surge")
+						addStatus({target: target, status: "wild_surge", length: 1})
+						addStatus({target: target, status: "empowered", length: 2})
+						addStatus({target: target, status: "focused", length: 3})
 					}
-					addStatus({target: target, status: "empowered", length: 2})
-					addStatus({target: target, status: "focused", length: 3})
 				}
 			}
 		})
+		if (hasStatus(target, "surge")) {
+			removeStatus(user,"surge")
+		}
 		/*if (target == user) {
 			env.GENERIC_ACTIONS.singleTarget({
 				action,

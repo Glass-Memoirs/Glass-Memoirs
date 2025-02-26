@@ -1905,13 +1905,13 @@ env.ACTIONS.player_show = {
 env.ACTIONS.player_act = {
 	slug: "player_act",
 	name: "BREAKS END",
-	type: 'autohit+target+self',
+	type: 'support+autohit+target+self',
 	//desc: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
 	verb: "Work on",
 	//help: "aaaaaaaaaa",
 	details: {
 		flavour: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-		onHit: "'[STAT::amt], remove [STATUS::stun] add [STATUS::surge] and [STATUS::destabilized],[STATUS::vulnerable],[STATUS::puncture], or [STATUS::rot]'",
+		onHit: "'[STAT::amt], remove [STATUS::stun] add [STATUS::surge] and [STATUS::destabilized],[STATUS::vulnerable],[STATUS::puncture], or [STATUS::rot]';'else [STATUS::evasion]'",
 		onCrit: "'remove [STATUS::stun], add [STATUS::surge] and 3T:[STATUS::destabilized]'"
 	},
 	stats: {
@@ -1925,6 +1925,7 @@ env.ACTIONS.player_act = {
 			vulnerable: {name: "vulnerable", showReference: true},
 			puncture: {name: "puncture", showReference: true},
 			rot: {name: "rot", showReference: true},
+			evasion: {name: "evasion", showreference: true},
 		}
 	},
 	exec: function(user,target) {
@@ -1940,16 +1941,10 @@ env.ACTIONS.player_act = {
 			},
 			critExec: ({target}) =>{
 				if (hasStatus(target, "stun")) {
-					if (pickedConsequence == "rot") {
-						consequenceLength = 1
-					} else {
-						consequenceLength = 2
-					}
-					combatHit(target, {amt: 1, autohit: true, redirectable: false})
-					addStatus({target:target, status: pickedConsequence, length: consequenceLength})
-					removeStatus(target, "stun")
+					pickedConsequence = "destabilized"
+					addStatus({target: target, status: "surge", length: 1})
 				} else {
-					addStatus({target: target,status: "evasion",legnth: 3})
+					addStatus({target: target,status: "evasion",legnth: 1})
 				}
 			},
 			hitExec: ({target}) =>{
@@ -1959,11 +1954,10 @@ env.ACTIONS.player_act = {
 					} else {
 						consequenceLength = 3
 					}
-					combatHit(target, {amt: 2, autohit: true, redirectable: false})
 					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
 					removeStatus(target, "stun")
 				} else {
-					addStatus(target, "evasion")
+					addStatus({target: target, status: "evasion", length: 2})
 				}
 			}
 		})

@@ -2424,7 +2424,7 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 
 env.ACTIONS.energizer = {
 	slug: "energizer",
-	name: "energizer",
+	name: "Energizer",
 	type: "autohit+target+self",
 	itemAction: true,
 	decription: {
@@ -2439,13 +2439,13 @@ env.ACTIONS.energizer = {
 			target,
 			genExec: ({target}) => {
 				if (choice < 0.5) {
-					addStatus(target, "surge")
+					addStatus({target: target, status: "surge", length: 1})
 				} else if (choice > 0.5 && choice < 0.8) {
-					addStatus(target, "wild_surge")
+					addStatus({target: target, status: "wild_surge", length:1 })
 				} else if (choice > 0.8 && choice < 0.99) {
-					addStatus(target, "exponential_overload")
+					addStatus({target: target, status: "exponential_overload", length: 1})
 				} else {
-					addStatus(target, "tetration_shock")
+					addStatus({target: target, status: "tetration_shock", length: 1})
 				}
 			}
 		})

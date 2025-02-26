@@ -1736,7 +1736,7 @@ env.ACTIONS.back_to_stage = {
 					addStatus({target: target, status: pickedConsequence, length: consequenceLength})
 					removeStatus(target, "stun")
 				} else {
-					addStatus(target, "evasion")
+					addStatus({target: target,status: "evasion",legnth: 3})
 				}
 			}
 		})

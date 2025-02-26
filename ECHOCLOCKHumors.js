@@ -7,7 +7,7 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  - Sola for making the monochrome eye for Entropy's action as well as the ditherd soul hotpocket gif
  - Narra, Kuvi, and Adr for judging my code
  - Narra and Adr for helping with the loader as well.
- - Narra for immobile_actor
+ - Narra for immobile_actor, the fishing minigame part as well.
  - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
  - And also with showing me ([]^[]) how to format the description for the recent update, pointing out enegrgy, and overall helping with fixing the code.
  - Mewo for helping with StupidHorrible text, and for making that humor's personality
@@ -2560,6 +2560,21 @@ env.ITEM_LIST.odd_battery = {
 	combatAction: env.ACTIONS.energizer,
 	max: 10,
 	batches: 2
+}
+
+//Fishing minigame
+FishingMinigame.fishies.odd_battery = {
+	item: "odd_battery",
+	stats: {
+		"--fishspeed-x": [3, 6], //change these to whatever you see fit
+		"--fishspeed-y": [2, 4],
+		"--fishspeed-rot": [1, 2],
+
+		jumpRate: 1.5,
+		jumpMod: 3,
+		pullMod: 1,
+		adjustMod: 1.1,
+	}
 }
 
 //Merchant code

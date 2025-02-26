@@ -1911,8 +1911,8 @@ env.ACTIONS.player_act = {
 	//help: "aaaaaaaaaa",
 	details: {
 		flavour: "'STARVED THIN AND CHITTIN SCATTERED';'YOU MUST CONTINUE!';'VELZIE DEMANDS! VELZIE COMMANDS!'",
-		onHit: "'[STAT::amt], -stun add [STATUS::surge] and [STATUS::destabilized],[STATUS::vulnerable],[STATUS::puncture], or [STATUS::rot]';'else [STATUS::evasion]'",
-		onCrit: "'-stun, add [STATUS::surge] and 3T:[STATUS::destabilized]'"
+		onHit: "'[STAT::amt] -stun add [STATUS::surge] and [STATUS::destabilized] [STATUS::vulnerable] [STATUS::puncture] or [STATUS::rot]';'else [STATUS::evasion]'",
+		onCrit: "'-stun add [STATUS::surge] and 3T:[STATUS::destabilized]'"
 	},
 	stats: {
 		accuracy: 1,

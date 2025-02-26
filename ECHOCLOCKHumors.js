@@ -10,7 +10,7 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  - Narra for immobile_actor
  - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
  - And also with showing me ([]^[]) how to format the description for the recent update, pointing out enegrgy, and overall helping with fixing the code.
- - Mewo for helping with StupidHorrible text
+ - Mewo for helping with StupidHorrible text, and for making that humor's personality
  SECTIONS:
  1. Dialogue changing
  2. CSS

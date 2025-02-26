@@ -1820,10 +1820,10 @@ env.ACTIONS.velnits_lament = {
 			genExec: ({target, user}) => {
 				if (hasStatus(target, "surge")) {
 					removeStatus(target, "surge")
-					addStatus(target, "wild_surge")
+					addStatus({target: target, status:"wild_surge", length: 1})
 					if (target == user) {
-						addStatus(user, "vulnerable")
-						addStatus(user, "stun")
+						addStatus({target:user,status: "vulnerable", length: 2})
+						addStatus({target: user,status: "stun", length: 1})
 					}
 				}
 			}

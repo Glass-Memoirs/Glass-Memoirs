@@ -1920,7 +1920,7 @@ env.ACTIONS.player_act = {
 		amt:2,
 		stauts: {
 			surge: {name: "surge", showReference: true},
-			stun: {name: "stun", showReference: true},
+			stun: {name: "stun", length: 1},
 			destabilized: {name: "destabilized", showReference: true},
 			vulnerable: {name: "vulnerable", showReference: true},
 			puncture: {name: "puncture", showReference: true},

@@ -1925,7 +1925,7 @@ env.ACTIONS.player_act = {
 			puncture: {name: "puncture", showReference: true},
 			rot: {name: "rot", showReference: true},
 			evasion: {name: "evasion", showreference: true},
-		}
+		},
 	},
 	exec: function(user,target) {
 		let consequenceChoices =["rot", "destabilized", "vulnerable", "puncture"]

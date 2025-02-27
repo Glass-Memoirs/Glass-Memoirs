@@ -557,6 +557,7 @@ env.ACTOR_AUGMENTS.generic.stupidhorrible_buncture ={
 	slug: "stupidhorrible_buncture",
 	name: "Buncture Beam",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/huehuehue.png",
+	description: "'You may have gotten this far';'but its time for you to witness just a fraction of my power!'",
 	alterations: [["puncture_bomb", "stupidhorrible_buncture"]],
 	component: ["utility", "stupidhorrible"],
 	cost: 2

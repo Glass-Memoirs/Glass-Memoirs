@@ -553,6 +553,15 @@ env.ACTOR_AUGMENTS.generic.stupidhorrible_colonthree ={
 	cost: 2
 }
 
+env.ACTOR_AUGMENTS.generic.stupidhorrible_buncture ={
+	slug: "stupidhorrible_buncture",
+	name: "Buncture Beam",
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/huehuehue.png",
+	alterations: [["puncture_bomb", "stupidhorrible_buncture"]],
+	component: ["utility", "stupidhorrible"],
+	cost: 2
+}
+
 //COMBAT MODIFIERS
 env.MODIFIERS.entropy_eternal = {
 	name: "Eternal Decay",
@@ -1354,14 +1363,14 @@ env.ACTIONS.level_statuses ={ //this would not deal damage for me at all so i ma
 		let targetEffects = []
 		target.statusEffects.forEach((status, i) => {
 			//console.log(status)
-			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+			if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) {
 				targetEffects.push(status.slug)
 			}
 		})
 		let userEffects = []
 		user.statusEffects.forEach((status, i) => {
 			//console.log(status)
-			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
+			if((!status.infinite || !status.passive) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
 				userEffects.push(status.slug)
 			}
 		})
@@ -1434,14 +1443,14 @@ env.ACTIONS.player_rig = {
 		let targetEffects = []
 		target.statusEffects.forEach((status, i) => {
 			//console.log(status)
-			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug))) {
+			if((!status.infinite || !status.passive) && (statusPool.includes(status.slug))) {
 				targetEffects.push(status)
 			}
 		})
 		let userEffects = []
 		user.statusEffects.forEach((status, i) => {
 			//console.log(status)
-			if((!status.infinite || !status.passive || !i.includes("global_")) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
+			if((!status.infinite || !status.passive) && (statusPool.includes(status.slug) && (status.slug != "windup"))) {
 				userEffects.push(status)
 			}
 		})
@@ -2418,6 +2427,51 @@ env.ACTIONS.stupidhorrible_colonthree = { //somehow githubs pushing broke.
 						},
 					})
 				}, 500)
+			}
+		}
+	}
+},
+
+env.ACTIONS.stupidhorrible_buncture ={
+	slug: "stupidhorrible_buncture",
+	name: "Buncture Beam",
+	type: "autohit",
+	details: {
+		flavour: "'You may have gotten this far';'but its time for you to witness just a fraction of my power!'",
+		onUse: "'[STATUS::puncture] to everyone';'[STATUS::rot] to allies'"
+	},
+	stats: {
+		status:{
+			puncture: {name: "puncture", length: 20},
+			rot: {name: "rot", length: 5},
+		}
+	},
+	exec: function() {
+		let AllTargets = []
+		env.rpg.enemyTeam.members.forEach((target) => {
+			if (target => target.state != "dead" && target.state != "lastStand") {
+				AllTargets.push(target)
+			}
+		})
+		env.rpg.allyTeam.members.forEach((target)=> {
+			if (target => target.state != "dead" && target.state != "lastStand") {
+				AllTargets.push(target)
+			}
+		})
+		if (AllTargets.length) {
+			for (let i = 0; index < AllTargets.length; index++) {
+			let target = AllTargets[i]
+			env.GENERIC_ACTIONS.singleTarget({
+					action: this,
+					user,
+					target,
+					genExec: ()=> {
+						if(!env.rpg.enemyTeam.members.includes(target)){
+							addStatus({target: target, status: "rot", length: 5})
+						}
+						addStatus({target: target, status: "puncture", length: 20})
+					}
+				})
 			}
 		}
 	}

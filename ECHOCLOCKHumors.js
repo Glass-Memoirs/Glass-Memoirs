@@ -2460,7 +2460,7 @@ env.ACTIONS.stupidhorrible_buncture ={
 			}
 		})
 		if (AllTargets.length) {
-			for (let i = 0; index < AllTargets.length; index++) {
+			for (let i = 0; i < AllTargets.length; i++) {
 			let target = AllTargets[i]
 			env.GENERIC_ACTIONS.singleTarget({
 					action: this,

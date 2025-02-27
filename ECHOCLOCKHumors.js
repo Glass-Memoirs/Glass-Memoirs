@@ -2609,6 +2609,7 @@ env.COMBAT_ACTORS.immobile_actor = {
 env.ITEM_LIST.odd_battery = {
 	slug: "odd_battery",
 	name: "Odd Battery",
+	imgClass: "fish",
 	image: "https://glass-memoirs.github.io/Glass-Memoirs/odd_battery.png",
 	group: "support",
 	description: `'a cousinly container';'why was it in the depths?'`,

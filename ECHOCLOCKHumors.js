@@ -2519,7 +2519,10 @@ env.ACTIONS.energizer = {
 		flavour: "'It still seems to have power';'Why did a bright cousin throw it down there?'",
 		onUse: "'Grant random level of surge'",
 	},
-	exec: function(user) {
+	stats: {
+		amt: 0,
+	},
+	exec: function(user, target) {
 		let choice = Math.random()
 		env.GENERIC_ACTIONS.singleTarget({
 			action:this,

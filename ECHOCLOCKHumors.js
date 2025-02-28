@@ -635,6 +635,14 @@ env.MODIFIERS.surging_second = {
 	}
 }
 
+env.MODIFIERS.stupidhorrible_bad = {
+	name: "GHATSHRGSGH BAD",
+	getHelp: ()=> {return env.STATUS_EFFECTS.stupidhorrible_bad},
+	alterations: {
+		all:[["STATUS", "stupidhorrible_bad"]]
+	}
+}
+
 //STATUS EFFECTS
 /*
 + Yeah these needed doccumenting
@@ -1145,16 +1153,34 @@ env.STATUS_EFFECTS.fated_surging = {
 		
 		onTurn: function(user) {
 			let target = this.status.affecting
-			if (Math.random() < (0.2+(0.2*this.status.power))) {
+			if (Math.random() < (0.15+(0.15*this.status.power))) {
 				if (Math.floor(hasStatus(user, "stun"))) {
 				removeStatus(target, "stun")
 				}
 			}
-			if (Math.random() < (0.1+(0.1*this.status.power))) {
+			if (Math.random() < (0.09+(0.09*this.status.power))) {
 				addStatus(target, "wild_surge")
 			}
 		}
-	}
+	},
+	help: "'per humor of SURGE on this shell: 15% chance to remove stun, 9% chance to add wild surge'"
+},
+
+env.STATUS_EFFECTS.stupidhorrible_bad = {
+	slug: "stupidhorrible_bad",
+	name: "GHATSHRGSGH BAD",
+	beneficial: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/cakedupvolcano.png",
+	impulse: {type: "common", component: "stupidhorrible"},
+	events: {
+		onAddStatus: function({statusObj}) {
+        	if(!statusObj.infinite && statusObj.slug == "destabilizied"){
+            	statusObj.duration = 1;
+            	statusObj.infinite = true;
+        	}
+        },
+	},
+	help: "'Destabilized becomes infinite'"
 },
 
 env.STATUS_EFFECTS.tetration_shock = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting

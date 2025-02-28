@@ -2646,18 +2646,11 @@ env.COMBAT_ACTORS.immobile_actor = {
 	maxhp: 1,
 	hp: 1,
 	actions: ["nothing"],
-	initialStatusEffects: [["immobile", 1], ["ethereal", 1]],
+	initialStatusEffects: [["immobile", 1]],
 	graphic: `
-		<div class="sprite-wrapper golemsprite dullzika" id="%SLUG-sprite-wrapper">
-			<img src="/img/sprites/combat/foes/turboglazika.gif" id="%SLUG-golemsprite-base" class="sprite golemsprite-base">
-			
-			<div class="sprite golemsprite-head">
-				<img src="/img/sprites/combat/foes/turboglazika-hat.gif" id="%SLUG-golemsprite-head">
-			</div>
-			<img src="/img/sprites/combat/foes/turboglazika-eyes.gif" id="%SLUG-golemsprite-neck" class="sprite golemsprite-neck">
-			<img src="/img/sprites/combat/foes/turboglazika-body.gif" id="%SLUG-golemsprite-body" class="sprite golemsprite-body">
-
-			<div class="target" entity="dullzika"></div>
+		<div class="sprite-wrapper dulltainer" id="%SLUG-sprite-wrapper">
+			<img class="sprite" src="" id="%SLUG-sprite">
+			<div class="target" entity="Coin"></div>
 		</div>
 		`,
 	reactions: {} //SILENT CREATURE

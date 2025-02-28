@@ -2513,7 +2513,7 @@ env.ACTIONS.stupidhorrible_buncture ={
 env.ACTIONS.energizer = {
 	slug: "energizer",
 	name: "Energizer",
-	type: "autohit+target+self",
+	type: "support+autohit+target+self",
 	itemAction: true,
 	decription: {
 		flavour: "'It still seems to have power';'Why did a bright cousin throw it down there?'",

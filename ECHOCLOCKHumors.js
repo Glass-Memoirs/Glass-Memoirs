@@ -2638,6 +2638,28 @@ env.COMBAT_ACTORS.immobile_actor = {
 	reactions: {} //SILENT CREATURE
 }
 
+/*env.COMBAT_ACTORS.bstrdcoin = {
+	name: "Coin",
+	maxhp: 1,
+	hp: 1,
+	actions: ["nothing"],
+	initialStatusEffects: [["immobile", 1], ["ethereal", 1]],
+	graphic: `
+		<div class="sprite-wrapper golemsprite dullzika" id="%SLUG-sprite-wrapper">
+			<img src="/img/sprites/combat/foes/turboglazika.gif" id="%SLUG-golemsprite-base" class="sprite golemsprite-base">
+			
+			<div class="sprite golemsprite-head">
+				<img src="/img/sprites/combat/foes/turboglazika-hat.gif" id="%SLUG-golemsprite-head">
+			</div>
+			<img src="/img/sprites/combat/foes/turboglazika-eyes.gif" id="%SLUG-golemsprite-neck" class="sprite golemsprite-neck">
+			<img src="/img/sprites/combat/foes/turboglazika-body.gif" id="%SLUG-golemsprite-body" class="sprite golemsprite-body">
+
+			<div class="target" entity="dullzika"></div>
+		</div>
+		`,
+	reactions: {} //SILENT CREATURE
+}*/
+
 //Items
 env.ITEM_LIST.odd_battery = {
 	slug: "odd_battery",

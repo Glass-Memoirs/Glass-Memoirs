@@ -1,6 +1,8 @@
 /*
 WARNING: I ([]^[]) AM PROBABLY LIABLE FOR ANY DISTRESS OR RAGE READING THIS PRODUCES. I AM SORRY
 OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
+CREATORS:
+- EmptyEchos (hey das the co-creator), ClocktowerCollective (hey das me)
  Credits:
  - EE for ideas, playtesting, status effect icons, and also making the undithered gif for entropy
  - Lustre for making the dithered version of the fractal gif
@@ -11,6 +13,8 @@ OK REDOING THIS COMMENTING BECAUSE I LOST IT AGAIN
  - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
  - And also with showing me ([]^[]) how to format the description for the recent update, pointing out enegrgy, and overall helping with fixing the code.
  - Mewo for helping with StupidHorrible text, and for making that humor's personality
+ PLAYTESTERS:
+ - ROXY, CARNAGE, FOOLFRIEND, ADR
  SECTIONS:
  1. Dialogue changing
  2. CSS

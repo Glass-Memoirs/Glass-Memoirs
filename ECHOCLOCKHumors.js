@@ -25,7 +25,9 @@ CREATORS:
  7. Combat Actions
  8. Personality
  9. Combat Actors
- 10. Merchant Code
+ 10. Items
+ 11. Fishing
+ 12. Merchant Code
 
  TO DO:
 + Make the modifiers for surging (almost done!!!)

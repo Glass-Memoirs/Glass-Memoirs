@@ -1694,7 +1694,7 @@ env.ACTIONS.tormenting_delight = {
 	},
 	exec: function(user, target) {
 		let includeFocus = false
-		env.GENERIC_ACTIONS.singleTarget({
+		return env.GENERIC_ACTIONS.singleTarget({
 			action: this,
 			user,
 			target,

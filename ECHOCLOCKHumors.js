@@ -2479,7 +2479,7 @@ env.ACTIONS.stupidhorrible_buncture ={
 			rot: {name: "rot", length: 5},
 		}
 	},
-	exec: function() {
+	exec: function(user,target) {
 		let AllTargets = []
 		env.rpg.enemyTeam.members.forEach((target) => {
 			if (target => target.state != "dead" && target.state != "lastStand") {

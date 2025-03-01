@@ -1709,7 +1709,7 @@ env.ACTIONS.tormenting_delight = {
 			genExec: ({user,target})=> {
 				if (Math.random() < 0.25) {
 					addStatus(user, "surge")
-					addStatus({target: target, status: "stun"})
+					addStatus({target: target, status: "stun", length: 1})
 					if (includeFocus) {addStatus(user, "focus")}
 				}
 			}

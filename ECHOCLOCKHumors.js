@@ -1151,10 +1151,9 @@ env.STATUS_EFFECTS.fated_surging = {
 			}
 		},
 		
-		onTurn: function(user) {
-			let target = this.status.affecting
+		onTurn: function(target) {
 			if (Math.random() < (0.15+(0.15*this.status.power))) {
-				if (Math.floor(hasStatus(user, "stun"))) {
+				if (Math.floor(hasStatus(target, "stun"))) {
 				removeStatus(target, "stun")
 				}
 			}

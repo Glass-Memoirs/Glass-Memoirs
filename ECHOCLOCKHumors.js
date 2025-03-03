@@ -434,7 +434,7 @@ env.COMBAT_COMPONENTS.stupidhorrible = {
             maxhp: 0
         }
     },
-    combatModifiers: []
+    combatModifiers: ["stupidhorrible_bad"]
 }
 
 /*

@@ -434,7 +434,7 @@ env.COMBAT_COMPONENTS.stupidhorrible = {
             maxhp: 0
         }
     },
-    combatModifiers: ["stupidhorrible_bad", "btgothwar"]
+    combatModifiers: ["stupidhorrible_bad", "btgothwar", "byothwar"]
 }
 
 /*
@@ -1184,12 +1184,29 @@ env.STATUS_EFFECTS.stupidhorrible_bad = {
 
 env.STATUS_EFFECTS.btgothwar ={
 	slug: "btgothwar",
-	name: "BTHGOTHWAR",
+	name: "BTGOTHWAR",
 	icon: "",
 	impulse: {type: "common", component: "stupidhorrible"},
 	grantsActions:["btgothwar"],
 	help: "'grants one action.';'The action to BEAT THAT GUY OVER THE HEAD WITH A ROCK'"
 },
+
+env.STATUS_EFFECTS.byothwar = {
+	slug: "byothwar",
+	name: "BYOTHWAR",
+	icon: "",
+	grantsActions: ["btgothwar"],
+	events: {
+		onAction: function(action, context) {
+			if (action.slug = "btgothwar") {
+				if (Math.random() < 0.3) {
+					context.settings.target = user
+				}
+			}
+		}
+	},
+	help: "'gives BTGOTHWAR and gives it a chance to accidentally be you hitting yourself over the head with a rock'"
+}
 
 /*env.STATUS_EFFECTS.minor_concussion = {
 	slug: "minor_concussion",
@@ -2583,7 +2600,7 @@ env.ACTIONS.btgothwar = {
 			}
 		})
 	}
-}
+},
 
 env.ACTIONS.energizer = {
 	slug: "energizer",

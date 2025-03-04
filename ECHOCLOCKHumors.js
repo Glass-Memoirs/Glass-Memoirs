@@ -1185,7 +1185,7 @@ env.STATUS_EFFECTS.stupidhorrible_bad = {
 env.STATUS_EFFECTS.btgothwar ={
 	slug: "btgothwar",
 	name: "BTGOTHWAR",
-	icon: "",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/dwaynerock.png",
 	impulse: {type: "common", component: "stupidhorrible"},
 	grantsActions:["btgothwar"],
 	help: "'grants one action.';'The action to BEAT THAT GUY OVER THE HEAD WITH A ROCK'"
@@ -1194,7 +1194,7 @@ env.STATUS_EFFECTS.btgothwar ={
 env.STATUS_EFFECTS.byothwar = {
 	slug: "byothwar",
 	name: "BYOTHWAR",
-	icon: "",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/dwaynerock.png",
 	grantsActions: ["btgothwar"],
 	events: {
 		onAction: function(action, context) {

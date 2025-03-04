@@ -643,6 +643,22 @@ env.MODIFIERS.stupidhorrible_bad = {
 	}
 }
 
+env.MODIFIERS.btgothwar = {
+	name: "BASH THAT GUY OVER THE HEAD WITH A ROCK",
+	getHelp: ()=> {return env.STATUS_EFFECTS.btgothwar},
+	alterations: {
+		all:[["STATUS", "btgothwar"]]
+	}
+}
+
+env.MODIFIERS.byothwar ={
+	name: "BASH YOURSELF OVER THE HEAD WITH A ROCK",
+	getHelp: ()=> {return env.STATUS_EFFECTS.byothwar},
+	alterations: {
+		all: [["STATUS", "byothwar"]]
+	}
+}
+
 //STATUS EFFECTS
 /*
 + Yeah these needed doccumenting

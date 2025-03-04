@@ -434,7 +434,7 @@ env.COMBAT_COMPONENTS.stupidhorrible = {
             maxhp: 0
         }
     },
-    combatModifiers: ["stupidhorrible_bad"]
+    combatModifiers: ["stupidhorrible_bad", "btgothwar"]
 }
 
 /*
@@ -1181,6 +1181,43 @@ env.STATUS_EFFECTS.stupidhorrible_bad = {
 	},
 	help: "'Destabilized becomes infinite'"
 },
+
+env.STATUS_EFFECTS.btgothwar ={
+	slug: "btgothwar",
+	name: "BTHGOTHWAR",
+	icon: "",
+	impulse: {type: "common", component: "stupidhorrible"},
+	grantsActions:["btgothwar"],
+	help: "'grants one action.';'The action to BEAT THAT GUY OVER THE HEAD WITH A ROCK'"
+},
+
+/*env.STATUS_EFFECTS.minor_concussion = {
+	slug: "minor_concussion",
+	name: "Minor Concussion",
+	beneficial: false,
+	icon: "",
+	events: {
+		onBeforeAction: function(context) {		
+			if(!context.settings.action.type.includes("target")) return;
+                
+                // alter target maybe
+			if(Math.random() < 0.3) {
+				//select from whole turnorder
+				let subject = context.user
+				let oldTarget = context.settings.target
+				let newTarget = env.rpg.turnOrder.filter(actor=>actor.state != "dead" && actor.state != "lastStand" && actor.slug != oldTarget.slug)
+				if(newTarget.length) {
+					newTarget = newTarget.sample()
+				} else return;
+
+				console.log("old target was", context.settings.target, "new target is", newTarget)
+
+				context.settings.target = newTarget
+			}
+		}
+	},
+	help: "'enemies have a chance to hit the wrong person'"
+},*/
 
 env.STATUS_EFFECTS.tetration_shock = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting
 	slug: "tetration_shock",
@@ -2508,6 +2545,45 @@ env.ACTIONS.stupidhorrible_buncture ={
 		}
 	}
 },
+
+env.ACTIONS.btgothwar = {
+	slug: "btgothwar",
+	name: "btgothwar",
+	type: "target",
+	verb: "use a rock to beat the head of",
+	details: {
+		flavour: "'do it';'fucking do it';'unleash the cain instinct'",
+		onHit: "'[STAT::amt]'",
+		onCrit: "'[STATUS::stun]'"
+	},
+	usage: {
+		act: "%USER READIES THE ROCK",
+		crit: "%TARGET GETS FUCKING BLUDGEONED",
+		hit: "%TARGET GETS BONKED",
+		miss: "%USER FUCKING FUMBLES AND FALLS BACKWARDS"
+	},
+	stats: {
+		accuracy: 0.7,
+		amt: 2,
+		status: {
+			stun: {name: "stun", showReference: true},
+		},
+	},
+	exec: function(user,target) {
+		let chancerolled = Math.random()
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			critExec: (target) => {
+				addStatus(target, "stun")
+				/*if (chancerolled < 0.3) {
+					addStatus(target, "minor_concussion")
+				}*/
+			}
+		})
+	}
+}
 
 env.ACTIONS.energizer = {
 	slug: "energizer",

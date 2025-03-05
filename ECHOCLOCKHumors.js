@@ -1184,6 +1184,7 @@ env.STATUS_EFFECTS.fated_surging = {
 env.STATUS_EFFECTS.stupidhorrible_bad = {
 	slug: "stupidhorrible_bad",
 	name: "GHATSHRGSGH BAD",
+	passive: true,
 	beneficial: true,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/cakedupvolcano.png",
 	impulse: {type: "common", component: "stupidhorrible"},
@@ -1210,6 +1211,7 @@ env.STATUS_EFFECTS.btgothwar ={
 env.STATUS_EFFECTS.byothwar = {
 	slug: "byothwar",
 	name: "BYOTHWAR",
+	passive: "modifier",
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/dwaynerock.png",
 	grantsActions: ["btgothwar"],
 	events: {

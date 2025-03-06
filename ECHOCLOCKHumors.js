@@ -1224,7 +1224,7 @@ env.STATUS_EFFECTS.byothwar = {
 		}
 	},
 	help: "'gives BTGOTHWAR and gives it a chance to accidentally be you hitting yourself over the head with a rock'"
-}
+},
 
 /*env.STATUS_EFFECTS.minor_concussion = {
 	slug: "minor_concussion",

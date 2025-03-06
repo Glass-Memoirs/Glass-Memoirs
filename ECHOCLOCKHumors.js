@@ -615,7 +615,7 @@ env.MODIFIERS.surging_set = {
 	name: "Temporary Setback",
 	getHelp: ()=> {return env.STATUS_EFFECTS.surging_set.help},
 	alterations:{
-		all:[["STATUS", "surging_set"]]
+		all: [["STATUS", "surging_set"]]
 	}
 }
 
@@ -623,7 +623,7 @@ env.MODIFIERS.surging_pace = {
 	name: "Double The Pace",
 	getHelp: ()=> {return env.STATUS_EFFECTS.surging_pace.help},
 	alterations:{
-		all:[["STATUS", "surging_pace"]]
+		all: [["STATUS", "surging_pace"]]
 	}
 }
 
@@ -631,7 +631,7 @@ env.MODIFIERS.surging_second = {
 	name: "Second Act",
 	getHelp: ()=> {return env.STATUS_EFFECTS.surging_second.help},
 	alterations:{
-		all:[["STATUS", "surging_second"]]
+		all: [["STATUS", "surging_second"]]
 	}
 }
 
@@ -639,7 +639,7 @@ env.MODIFIERS.stupidhorrible_bad = {
 	name: "GHATSHRGSGH BAD",
 	getHelp: ()=> {return env.STATUS_EFFECTS.stupidhorrible_bad},
 	alterations: {
-		all:[["STATUS", "stupidhorrible_bad"]]
+		all: [["STATUS", "stupidhorrible_bad"]]
 	}
 }
 
@@ -647,7 +647,7 @@ env.MODIFIERS.btgothwar = {
 	name: "BASH THAT GUY OVER THE HEAD WITH A ROCK",
 	getHelp: ()=> {return env.STATUS_EFFECTS.btgothwar},
 	alterations: {
-		all:[["STATUS", "btgothwar"]]
+		all: [["STATUS", "btgothwar"]]
 	}
 }
 

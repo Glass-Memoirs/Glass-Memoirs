@@ -1190,7 +1190,7 @@ env.STATUS_EFFECTS.stupidhorrible_bad = {
 	impulse: {type: "common", component: "stupidhorrible"},
 	events: {
 		onAddStatus: function({statusObj}) {
-        	if(!statusObj.infinite && statusObj.slug == "destabilizied"){
+        	if(!statusObj.infinite && statusObj.slug == "destabilized"){
             	statusObj.duration = 1;
             	statusObj.infinite = true;
         	}

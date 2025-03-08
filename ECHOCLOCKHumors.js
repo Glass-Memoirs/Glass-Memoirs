@@ -1202,6 +1202,7 @@ env.STATUS_EFFECTS.stupidhorrible_bad = {
 env.STATUS_EFFECTS.btgothwar ={
 	slug: "btgothwar",
 	name: "BTGOTHWAR",
+	passive: true,
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/dwaynerock.png",
 	impulse: {type: "common", component: "stupidhorrible"},
 	grantsActions:["btgothwar"],

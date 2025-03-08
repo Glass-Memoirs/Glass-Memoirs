@@ -637,7 +637,7 @@ env.MODIFIERS.surging_second = {
 
 env.MODIFIERS.stupidhorrible_bad = {
 	name: "GHATSHRGSGH BAD",
-	getHelp: ()=> {return env.STATUS_EFFECTS.stupidhorrible_bad},
+	getHelp: ()=> {return env.STATUS_EFFECTS.stupidhorrible_bad.help},
 	alterations: {
 		all: [["STATUS", "stupidhorrible_bad"]]
 	}
@@ -645,7 +645,7 @@ env.MODIFIERS.stupidhorrible_bad = {
 
 env.MODIFIERS.btgothwar = {
 	name: "BASH THAT GUY OVER THE HEAD WITH A ROCK",
-	getHelp: ()=> {return env.STATUS_EFFECTS.btgothwar},
+	getHelp: ()=> {return env.STATUS_EFFECTS.btgothwar.help},
 	alterations: {
 		all: [["STATUS", "btgothwar"]]
 	}
@@ -653,7 +653,7 @@ env.MODIFIERS.btgothwar = {
 
 env.MODIFIERS.byothwar ={
 	name: "BASH YOURSELF OVER THE HEAD WITH A ROCK",
-	getHelp: ()=> {return env.STATUS_EFFECTS.byothwar},
+	getHelp: ()=> {return env.STATUS_EFFECTS.byothwar.help},
 	alterations: {
 		all: [["STATUS", "byothwar"]]
 	}

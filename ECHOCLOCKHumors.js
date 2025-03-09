@@ -45,6 +45,20 @@ I - ROXY, CARNAGE, FOOLFRIEND, ADRI, hi vekoa :3 (LOOK THE LOWERCASE IS IMPORTAN
 		- SMOKE (breath)
 		- METAL (land)
 		- PLASTIC (boundary)
++ OFF humors could possibly be based off of the bosses, also add in three sumon pieces (alpha, omega, epsilon)
++ Possibly make the zodiac cards be used in peace, could make them summon allies.
+	+ Aries
+	+ Taurus
+	+ Gemini
+	+ Cancer
+	+ Leo
+	+ Virgo
+	+ Libra
+	+ Scorpio
+	+ Sagittarius
+	+ Capricorn
+	+ Aquarius
+	+ Pisces
 */
 
 //Dialogue changing

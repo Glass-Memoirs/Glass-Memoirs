@@ -20,16 +20,17 @@ I - ROXY, CARNAGE, FOOLFRIEND, ADRI, hi vekoa :3 (LOOK THE LOWERCASE IS IMPORTAN
  SECTIONS:
  1. Dialogue changing
  2. CSS
- 3. Humors
- 4. Augments
- 5. Combat Modifiers
- 6. Status Effects
- 7. Combat Actions
- 8. Personality
- 9. Combat Actors
- 10. Items
- 11. Fishing
- 12. Merchant Code
+ 3. Functions
+ 4. Humors
+ 5. Augments
+ 6. Combat Modifiers
+ 7. Status Effects
+ 8. Combat Actions
+ 9. Personality
+ 10. Combat Actors
+ 11. Items
+ 12. Fishing
+ 13. Merchant Code
 
  TO DO:
 + Make the modifiers for surging (almost done!!!)
@@ -372,7 +373,45 @@ if (page.path == '/local/beneath/embassy/') {
     	--accent-color: var(--friend-color);
     	--font-color: var(--neutral-color);
 	}
+	[component="smoke"] {
+    	--background: url(https://glass-memoirs.github.io/Glass-Memoirs/SmokeHumorIcon.gif);
+    	--organelle-background: url(https://glass-memoirs.github.io/Glass-Memoirs/SmokeHumorIcon.gif);
+    	--background-small: url(https://glass-memoirs.github.io/Glass-Memoirs/SmokeHumorIcon.gif);
+    	--background-size: auto;
+    	--background-position: center;
+    	--background-color: var(--dark-color);
+    	--accent-color: var(#90e404);
+    	--font-color: var(#90e404);
+	}
 	</style>`);
+
+//FUNCTIONS
+function midCombatAllyAdd(actorSpecifier, side = "right") {
+    if(!env.rpg.active) return false;
+    
+    let actor = initializeActor(actorSpecifier, {team: env.rpg.allyTeam, enemyTeam: env.rpg.enemyTeam, uniqify: true, side})
+    
+    if(env.rpg.settings.actorPreprocess) env.rpg.settings.actorPreprocess(actor)
+    if(actor.base?.events?.onInitialize) actor.base.events.onInitialize(actor)
+    if(actor.alterations || env.rpg.settings.teamAlterations?.enemy || env.rpg.settings.teamAlterations?.all ) actor.actions = getAlteredActorActions({member: actor, actor: actor})
+
+    initializeActorUI({actor, team: env.rpg.allyTeam, side, animateIn: false})
+
+    //update the turnorder
+    env.rpg.turnOrder = []
+    env.rpg.teams.forEach((team, i) => {
+        env.rpg.turnOrder = env.rpg.turnOrder.concat(team.members);
+    })
+    
+    //update current actor accordingly
+    if(side == "left") {
+        env.rpg.currentActorIndex = env.rpg.turnOrder.findIndex((a) => a == env.rpg.currentActor)
+    }
+
+    updateStats()
+    return actor
+}
+
 //HUMORS
 env.COMBAT_COMPONENTS.entropy = {
      name: "Entropy",
@@ -407,7 +446,7 @@ env.COMBAT_COMPONENTS.entropy = {
 env.COMBAT_COMPONENTS.surging = {
      name: "Surge",
      slug: "surging",
-     description: "'a show of maddening speeds','frenzied by velzie's eye','pick up the pace','let us finish the play!'",
+     description: "'a show of maddening speeds';'frenzied by velzie's eye';'pick up the pace';'let us finish the play!'",
      help: "'charge';'awaken';'overcharge'",
 
      primary: {
@@ -456,6 +495,33 @@ env.COMBAT_COMPONENTS.stupidhorrible = {
         }
     },
     combatModifiers: ["stupidhorrible_bad", "btgothwar", "byothwar", "stupihorrible_hard"]
+}
+
+env.COMBAT_COMPONENTS.smoke = {
+	name: "Smoke",
+	slug: "smoke",
+	description: "'As timely as the breaths taken';'As enraged as one could be'",
+	help: "'Time';'Breathe';'Chatter'",
+
+	primary: {
+		alterations: [["primary", "smoke_minute"]],
+		stats: {
+			maxhp: 3
+		}
+	},
+	secondary: {
+		alterations: [["secondary", "smoke_haze"]],
+		stats: {
+			maxhp: 3
+		}
+	},
+	utility: {
+		alterations: [["evade", "smoke_chatter"]],
+		stats: {
+			maxhp: 3
+		}
+	},
+	combatModifiers: [] //"Maddening Apathy"
 }
 
 /*
@@ -589,6 +655,27 @@ env.ACTOR_AUGMENTS.generic.stupidhorrible_buncture ={
 	component: ["utility", "stupidhorrible"],
 	cost: 2
 }
+//Smoke
+env.ACTOR_AUGMENTS.generic.smoke_hour = {
+	slug: "smoke_hour",
+	name: "Hour Hand",
+	image: "https://glass-memoirs.github.io/Glass-Memoirs/Placeholder.png",
+	description: "'Increase time i guess this text is temporary ok'",
+	alterations: [["smoke_minute","smoke_hour"]],
+	component: ["primary","smoke"],
+	cost: 2
+}
+
+
+/*env.ACTOR_AUGMENTS.generic.smoke_shout = {
+	slug: "smoke_shout",
+	name: "Shout",
+	image: "",
+	description: "",
+	alterations: [["smoke_chatter", "smoke_shout"]],
+	component: ["utility", "smoke"],
+	cost: 2
+}*/
 
 //COMBAT MODIFIERS
 env.MODIFIERS.entropy_eternal = {
@@ -2680,13 +2767,121 @@ env.ACTIONS.btgothwar = {
 			target,
 			critExec: (target) => {
 				addStatus(target, "stun")
-				/*if (chancerolled < 0.3) {
+				if (chancerolled < 0.3) {
 					addStatus(target, "minor_concussion")
-				}*/
+				}
 			}
 		})
 	}
 },
+
+env.ACTIONS.smoke_minute = {
+	slug: "smoke_minute",
+	name: "Minute Hand",
+	type: "target",
+	verb: "time",
+	details: {
+		flavour: "'A mediocre impact';'but still a timely one'",
+		onHit: "'[STAT::amt]'",
+	},
+	stats: {
+		accuracy: 0.8,
+		crit: 0.2,
+		amt: 2
+	},
+	exec: function(user,target) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action:this,
+			user,
+			target
+		})
+	}
+},
+
+env.ACTIONS.smoke_hour = {
+	slug: "smoke_hour",
+	name: "Hour Hand",
+	type: "target",
+	verb: "time",
+	details: {
+		flavour: "'Much stronger';'has a chance to stun now'",
+		onhit: "'[STAT::amt]'",
+		oncrit: "'[STATUS::stun]'",
+	},
+	stats: {
+		accuracy: 0.15,
+		crit: 0.15,
+		amt: 4,
+		status: {
+			stun: {name: "stun", showReference: true},
+		}
+	},
+	exec: function(user,target) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			critExec: (target) => {
+				addStatus(target, "stun")
+			}
+		})
+	}
+},
+
+env.ACTIONS.smoke_haze = {
+	slug: "smoke_haze",
+	name: "Haze",
+	type: "support+autoit+target+self",
+	verb: "shroud",
+	details: {
+		flavour: "'Surround an ally with smoke';'Heal them and make them harder to hit'",
+		onhit: "'2T:[STATUS::regen] + 2T:[STATUS::evasion]'",
+		oncrit: "'4T:[STATUS::regen] + 5T:[STATUS::evasion]'"
+	},
+	stats: {
+		accuracy: 1,
+		crit: 0.15,
+		amt: 0,
+		status: {
+			regen: {name: "regen", showReference: true},
+			evasion: {name: "evasion", showReference: true},
+		},
+	},
+	exec: function(user,target) {
+		env.GENERIC_ACTIONS.singleTarget({
+			action: this,
+			user,
+			target,
+			hitExec: (target) => {
+				addStatus({target: target, status: "regen", length: 2})
+				addStatus({target: target, status: "evasion", length: 2})
+			},
+			critExec: (target) => {
+				addStatus({target: target, status: "regen", length: 2})
+				addStatus({target: target, Status: "evasion", length: 3})
+			}
+		})
+	}
+},
+
+env.ACTIONS.smoke_chatter = {
+	slug: "smoke_chatter",
+	name: "Chatter",
+	type: "autohit",
+	description: {
+		flavour: "'Summon a voice';'a weak voice but a voice none the less'",
+		onUse: "'Summon Actor: Voice bubble'"
+	},
+	exec: function() {
+		let rand = Math.random()
+		play('talkfairy', 0.5);
+		if (rand > 0.5) {
+			midCombatAllyAdd("speech_bubble", "left")
+		} else {
+			midCombatAllyAdd("speech_bubble", "right")
+		}
+	}
+}
 
 env.ACTIONS.energizer = {
 	slug: "energizer",
@@ -2773,26 +2968,26 @@ env.COMBAT_ACTORS.generic.reactionPersonalities.surging = {
 
 env.COMBAT_ACTORS.generic.reactionPersonalities.stupidhorrible = {
 	evade: ["nice try buddy"],
-                crit: [ "im so sigma! ... i meant that ironically okay ?", "yeah idiots do it me style lets go gng."],
-                crit_buff: [ "are you like. good", "walk it off like a wheelchair user. okay?", "lock in lock in."],
-                miss: ["erm. oospies.", "thats my bad gng", "no its js a delayed maneuver. trust."],
-                dead: ["theyre making me fight in the Bone War."],
-                puncture: ["can some1 get it 2gether & help me.", "no dw ignore the blood im good."],
-                regen: ["Oogh Yeah That's The Fent."],
-                destabilized: ["a"],
-                stun: ["is it just me or am i moving so fast i cant move."],
-                laugh: ["> kekekeke", "roflmao lol", "teehee owo", "im js a sillay thang."],
-                sacrifice: ["um. this is awkjward."],
-                receive_hit: ["my bones."],
-                receive_crit: ["my organs."],
-                receive_puncture: ["this shit aint nothin 2 me man.", "ygs cld NOT survive that. 42n8ly, yours Truly,"],
-                receive_buff: ["omg thank you my baby gorilla", "ohhh ily my sigma bbg", "my baba grill yr so kind 2 me."],
-                receive_destabilized: ["i think yr All beneath me but i js dont talk abt it. 4 yr sakes,"],
-                receive_rez: ["were goodie gng lemme js lock in rq."],
-                receive_carapace: ["im not a little bug alr im fine.", "since you INSIST."],
-                receive_repairs: ["this is js like the convenience store: convenient!"],
-                receive_fear: ["gordon ramsay voice fuck me thats frightening. bloody hell."],
-                receive_redirection: ["what the fuck are you smoking.", "oh so yr like cooked. okay (not) nice knowing you."],
+    crit: [ "im so sigma! ... i meant that ironically okay ?", "yeah idiots do it me style lets go gng."],
+	crit_buff: [ "are you like. good", "walk it off like a wheelchair user. okay?", "lock in lock in."],
+	miss: ["erm. oospies.", "thats my bad gng", "no its js a delayed maneuver. trust."],
+	dead: ["theyre making me fight in the Bone War."],
+	puncture: ["can some1 get it 2gether & help me.", "no dw ignore the blood im good."],
+	regen: ["Oogh Yeah That's The Fent."],
+	destabilized: ["a"],
+	stun: ["is it just me or am i moving so fast i cant move."],
+	laugh: ["> kekekeke", "roflmao lol", "teehee owo", "im js a sillay thang."],
+	sacrifice: ["um. this is awkjward."],
+	receive_hit: ["my bones."],
+	receive_crit: ["my organs."],
+	receive_puncture: ["this shit aint nothin 2 me man.", "ygs cld NOT survive that. 42n8ly, yours Truly,"],
+	receive_buff: ["omg thank you my baby gorilla", "ohhh ily my sigma bbg", "my baba grill yr so kind 2 me."],
+	receive_destabilized: ["i think yr All beneath me but i js dont talk abt it. 4 yr sakes,"],
+	receive_rez: ["were goodie gng lemme js lock in rq."],
+	receive_carapace: ["im not a little bug alr im fine.", "since you INSIST."],
+	receive_repairs: ["this is js like the convenience store: convenient!"],
+	receive_fear: ["gordon ramsay voice fuck me thats frightening. bloody hell."],
+	receive_redirection: ["what the fuck are you smoking.", "oh so yr like cooked. okay (not) nice knowing you."],
 }
 
 //Combat Actors
@@ -2817,6 +3012,42 @@ env.COMBAT_ACTORS.immobile_actor = {
 		</div>
 		`,
 	reactions: {} //SILENT CREATURE
+}
+
+env.COMBAT_ACTORS.speech_bubble = {
+	name: "Speech Bubble",
+	maxhp: 12,
+	hp: 12,
+	actions: ["attack","focus"],
+	graphic: `
+		<div class="sprite-wrapper dulltainer" id="%SLUG-sprite-wrapper">
+			<img class="sprite" src="https://glass-memoirs.github.io/Glass-Memoirs/Smile.png" id="%SLUG-sprite">
+			<div class="target" entity="Coin"></div>
+		</div>
+		`,
+	reactions: {
+		evade: ["笑"],
+    	crit: [ "笑"],
+		crit_buff: [ "笑"],
+		miss: ["笑"],
+		dead: ["笑"],
+		puncture: ["笑"],
+		regen: ["笑"],
+		destabilized: ["笑"],
+		stun: ["笑"],
+		laugh: ["笑"],
+		sacrifice: ["笑"],
+		receive_hit: ["笑"],
+		receive_crit: ["笑"],
+		receive_puncture: ["笑"],
+		receive_buff: ["笑"],
+		receive_destabilized: ["笑"],
+		receive_rez: ["笑"],
+		receive_carapace: ["笑"],
+		receive_repairs: ["笑"],
+		receive_fear: ["笑"],
+		receive_redirection: ["笑"],
+	}
 }
 
 /*env.COMBAT_ACTORS.bstrdcoin = {

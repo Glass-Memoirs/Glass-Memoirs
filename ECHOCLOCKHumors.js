@@ -1051,10 +1051,12 @@ env.STATUS_EFFECTS.surging_story = {
 	events:{
 		onAction: function({action}) {
 			let actionSlug = action.slug
-			let user = this.status.affecting
-			let utility = env.ACTIONS[user.actions[2]]
-			if(!actionSlug == utility.slug) return;
-			addStatus({target: this.status.affecting, status: "surge", noReact: true, length: 1})
+			if (length(user.actions)> 3) {
+				let user = this.status.affecting
+				let utility = env.ACTIONS[user.actions[2]]
+				if(!actionSlug == utility.slug) return;
+				addStatus({target: this.status.affecting, status: "surge", noReact: true, length: 1})
+			}
 		}
 	},
 	help: "when using UTILITY ACTION gain SURGE"

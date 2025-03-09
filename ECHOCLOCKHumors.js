@@ -1051,7 +1051,7 @@ env.STATUS_EFFECTS.surging_story = {
 	events:{
 		onAction: function({action}) {
 			let actionSlug = action.slug
-			if (length(user.actions)> 3) {
+			if (length(user.actions)> 2) {
 				let user = this.status.affecting
 				let utility = env.ACTIONS[user.actions[2]]
 				if(!actionSlug == utility.slug) return;

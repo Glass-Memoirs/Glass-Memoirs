@@ -1218,7 +1218,7 @@ env.STATUS_EFFECTS.byothwar = {
 	icon: "https://glass-memoirs.github.io/Glass-Memoirs/dwaynerock.png",
 	grantsActions: ["btgothwar"],
 	events: {
-		onAction: function(action, context) {
+		onAction: function({action, context}) {
 			if (action.slug = "btgothwar") {
 				if (Math.random() < 0.3) {
 					context.settings.target = user

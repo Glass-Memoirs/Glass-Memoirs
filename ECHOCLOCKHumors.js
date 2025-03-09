@@ -1262,7 +1262,7 @@ env.STATUS_EFFECTS.stupidhorrible_hard = {
 	slug: "stupidhorrible_hard",
 	name: "Hard Mode",
 	passive: true,
-	icon: "https://glass-memoirs.github.io/Glass-Memoirs/Placeholder.png",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/hardmode.gif",
 	impulse: {type: "common", component: "stupidhorrible"},
 	events: {
 		onBeforeAction: function({context}) {

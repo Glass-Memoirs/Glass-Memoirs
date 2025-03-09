@@ -455,7 +455,7 @@ env.COMBAT_COMPONENTS.stupidhorrible = {
             maxhp: 0
         }
     },
-    combatModifiers: ["stupidhorrible_bad", "btgothwar", "byothwar"]
+    combatModifiers: ["stupidhorrible_bad", "btgothwar", "byothwar", "stupihorrible_hard"]
 }
 
 /*
@@ -677,6 +677,14 @@ env.MODIFIERS.byothwar ={
 	getHelp: ()=> {return env.STATUS_EFFECTS.byothwar.help},
 	alterations: {
 		all: [["STATUS", "byothwar"]]
+	}
+}
+
+env.MODIFIERS.stupidhorrible_hard ={
+	name: "Hard Mode",
+	getHelp: ()=> {return env.STATUS_EFFECTS.stupidhorrible_hard.help},
+	alterations: {
+		all: [["STATUS", "stupidhorrible_hard"]]
 	}
 }
 
@@ -1250,11 +1258,46 @@ env.STATUS_EFFECTS.byothwar = {
 	help: "'gives BTGOTHWAR and gives it a chance to accidentally be you hitting yourself over the head with a rock'"
 },
 
-/*env.STATUS_EFFECTS.minor_concussion = {
+env.STATUS_EFFECTS.stupidhorrible_hard = {
+	slug: "stupidhorrible_hard",
+	name: "Hard Mode",
+	passive: true,
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/Placeholder.png",
+	impulse: {type: "common", component: "stupidhorrible"},
+	events: {
+		onBeforeAction: function({context}) {
+			let ActionSwap = ["evade", "skitter" ,"malfunction" , "attack", "shell", "cower", "btgothwar"]
+			if(Math.random() < 0.35) {
+
+				context.settings.action = env.ACTIONS[ActionSwap.sample()]
+				let subject = context.settings.user
+
+				sendFloater({
+					target: subject,
+					type: "arbitrary",
+					arbitraryString: "SCRAMBLED!",
+					beneficial: false,
+					size: 2,
+				})
+
+				readoutAdd({
+					message: `${subject.name}'s action gets scrambled! (<span definition="${processHelp(this.status, {caps: true})}">${this.status.name}</span>)`, 
+					name: "sourceless", 
+					type: "sourceless combat minordetail",
+					show: false,
+					sfx: false
+				})
+			}
+		}
+	}
+},
+
+//https://glass-memoirs.github.io/Glass-Memoirs/Placeholder.png <- placeholder sprite that we can usewhen no images are made for a thing yet
+env.STATUS_EFFECTS.minor_concussion = {
 	slug: "minor_concussion",
 	name: "Minor Concussion",
 	beneficial: false,
-	icon: "",
+	icon: "https://glass-memoirs.github.io/Glass-Memoirs/concussion.png",
 	events: {
 		onBeforeAction: function(context) {		
 			if(!context.settings.action.type.includes("target")) return;
@@ -1276,7 +1319,7 @@ env.STATUS_EFFECTS.byothwar = {
 		}
 	},
 	help: "'enemies have a chance to hit the wrong person'"
-},*/
+},
 
 env.STATUS_EFFECTS.tetration_shock = { //This was what spurred this entire idea. The interaction between Bazruka and Wild Surge was interesting
 	slug: "tetration_shock",

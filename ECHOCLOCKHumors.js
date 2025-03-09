@@ -1289,7 +1289,8 @@ env.STATUS_EFFECTS.stupidhorrible_hard = {
 				})
 			}
 		}
-	}
+	},
+	help: "'all actions have a 35% chance of becoming one of a random seven less powerful actions'"
 },
 
 //https://glass-memoirs.github.io/Glass-Memoirs/Placeholder.png <- placeholder sprite that we can usewhen no images are made for a thing yet

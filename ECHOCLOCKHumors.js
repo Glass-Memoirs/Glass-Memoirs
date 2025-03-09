@@ -16,7 +16,7 @@ CREATORS:
  - Mewo for helping with StupidHorrible text, and for making that humor's personality
  - Luna from the sunset system for the updated battery image!
  PLAYTESTERS:
- - ROXY, CARNAGE, FOOLFRIEND, ADR
+ - ROXY, CARNAGE, FOOLFRIEND, ADRI, hi vekoa :3 (LOOK THE LOWERCASE IS IMPORTANT FOR THEIR NAME)
  SECTIONS:
  1. Dialogue changing
  2. CSS
@@ -40,6 +40,11 @@ CREATORS:
 		+ utility: Snow Halation
 		+ utility augment (use 7 SiIvas): The MF Like Button
 		+ action does a random move that is strong, but requires a buildup of energy to do so
+		- MEAT (hunger)
+		- SUGAR (sanity)
+		- SMOKE (breath)
+		- METAL (land)
+		- PLASTIC (boundary)
 */
 
 //Dialogue changing

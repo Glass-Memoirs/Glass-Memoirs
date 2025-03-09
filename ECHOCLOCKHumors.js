@@ -7,12 +7,14 @@ CREATORS:
  - EE for ideas, playtesting, status effect icons, and also making the undithered gif for entropy
  - Lustre for making the dithered version of the fractal gif
  - Sola for making the monochrome eye for Entropy's action as well as the ditherd soul hotpocket gif
- - Narra, Kuvi, and Adr for judging my code
- - Narra and Adr for helping with the loader as well.
+ - Narra, Kuvi, and Adri and Fyrox from the Novae for judging my code
+ - Narra and Adri from the Novae system for helping with the loader as well.
+ - Fyrox from the Novae system for helping me ([]^[]) fix a move
  - Narra for immobile_actor, the fishing minigame part as well.
  - Adenator for the code for making the status pool because i was probably not gonna figure that out at all, also for helping me ([]^[]) fix the loader with the resources
  - And also with showing me ([]^[]) how to format the description for the recent update, pointing out enegrgy, and overall helping with fixing the code.
  - Mewo for helping with StupidHorrible text, and for making that humor's personality
+ - Luna from the sunset system for the updated battery image!
  PLAYTESTERS:
  - ROXY, CARNAGE, FOOLFRIEND, ADR
  SECTIONS:

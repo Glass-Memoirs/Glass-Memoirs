@@ -27,6 +27,7 @@
 [data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_],
 [data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] {
     -webkit-text-fill-color: #f141e3;
+    text-shadow: 1px white;
 }
 
 [data-author-username="glass_of_the_soul"] [class*=messageContent_] a,

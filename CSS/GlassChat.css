@@ -1,0 +1,36 @@
+[data-author-username="glass_of_the_soul"] [class*=message_],
+[data-author-username="Glass (it/its) | Clocktower"] [class*=message_],
+[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=message_]  {
+    background-image: url(https://glass-memoirs.github.io/Glass-Memoirs/Images/Background/mw.png);
+}
+
+[data-author-username="glass_of_the_soul"] [class*=message_],
+[data-author-username="glass_of_the_soul"] [class*=messageContent_] h1,
+[data-author-username="glass_of_the_soul"] [class*=messageContent_] h2,
+[data-author-username="glass_of_the_soul"] [class*=messageContent_] h3,
+[data-author-username="Glass (it/its) | Clocktower"] [class*=message_],
+[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] h1,
+[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] h2,
+[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] h3,
+[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=message_],
+[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] h1,
+[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] h2,
+[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] h3 {
+    font-family: Fairfax HD !important;
+    border-style: groove dashed !important; 
+    border-width: 1ch;
+    border-radius: 2ch;
+    border-color: rgba(147, 70, 219, 0.568) !important;
+}
+
+[data-author-username="glass_of_the_soul"] [class*=messageContent_],
+[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_],
+[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] {
+    -webkit-text-fill-color: #f141e3;
+}
+
+[data-author-username="glass_of_the_soul"] [class*=messageContent_] a,
+[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] a,
+[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] a {
+    -webkit-text-fill-color: aqua;
+}

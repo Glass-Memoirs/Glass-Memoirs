@@ -5,11 +5,11 @@ li [data-author-username="glass_of_the_soul"], [data-author-username="Glass (it/
         background-size: cover;
     }
 
-    [class*=message].overlay  {
+    [class*=message]::after  {
         content: "";
         position: absolute;
         inset: 0;
-        background: url("https://glass-memoirs.github.io/Glass-Memoirs/Images/Overlay/shattered.gif") center / cover;
+        background: url("https://glass-memoirs.github.io/Glass-Memoirs/Images/Overlay/corruripplebastard.gif") center / cover;
         pointer-events: none;
         z-index: 5;
         mix-blend-mode: screen; 

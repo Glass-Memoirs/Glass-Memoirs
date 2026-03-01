@@ -1,39 +1,36 @@
-[data-author-username="glass_of_the_soul"] [class*=message_],
-[data-author-username="Glass (it/its) | Clocktower"] [class*=message_],
-[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=message_]  {
-    background-image: url(https://glass-memoirs.github.io/Glass-Memoirs/Images/Background/mw.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+li [data-author-username="glass_of_the_soul"], [data-author-username="Glass (it/its) | Clocktower"],  [data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] {
+    [class*=message_]  {
+        background-image: url(https://glass-memoirs.github.io/Glass-Memoirs/Images/Background/mw.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
-[data-author-username="glass_of_the_soul"] [class*=message_],
-[data-author-username="glass_of_the_soul"] [class*=messageContent_] h1,
-[data-author-username="glass_of_the_soul"] [class*=messageContent_] h2,
-[data-author-username="glass_of_the_soul"] [class*=messageContent_] h3,
-[data-author-username="Glass (it/its) | Clocktower"] [class*=message_],
-[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] h1,
-[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] h2,
-[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] h3,
-[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=message_],
-[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] h1,
-[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] h2,
-[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] h3 {
-    font-family: Fairfax HD !important;
-    border-style: groove dashed !important; 
-    border-width: 1ch;
-    border-radius: 2ch;
-    border-color: rgba(147, 70, 219, 0.568) !important;
-}
+    [class*=message].overlay  {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("https://glass-memoirs.github.io/Glass-Memoirs/Images/Overlay/shattered.gif") center / cover;
+        pointer-events: none;
+        z-index: 5;
+        mix-blend-mode: screen; 
+        opacity: 0.6; 
+    }   
 
-[data-author-username="glass_of_the_soul"] [class*=messageContent_],
-[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_],
-[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] {
-    -webkit-text-fill-color: #f141e3;
-    text-shadow: 1px 1px black, 1px -1px black, -1px -1px black, -1px 1px black;
-}
 
-[data-author-username="glass_of_the_soul"] [class*=messageContent_] a,
-[data-author-username="Glass (it/its) | Clocktower"] [class*=messageContent_] a,
-[data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] [class*=messageContent_] a {
-    -webkit-text-fill-color: aqua;
+    [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+        font-family: Fairfax HD !important;
+        border-style: groove dashed !important; 
+        border-width: 1ch;
+        border-radius: 2ch;
+        border-color: rgba(147, 70, 219, 0.568) !important;
+        text-shadow: 1px 1px  black, 1px -1px black, -1px -1px black, -1px 1px black!important;
+    }
+
+    [class*=messageContent_] {
+        -webkit-text-fill-color: #f141e3;
+    }
+
+    [class*=messageContent_] a {
+        -webkit-text-fill-color: aqua;
+    }
 }

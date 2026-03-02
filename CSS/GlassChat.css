@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono');
 
-li [data-author-username="glass_of_the_soul"], [data-author-username="Glass (it/its) | Clocktower"],  [data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] {
+li[data-author-username="glass_of_the_soul"], [data-author-username="Glass (it/its) | Clocktower"],  [data-author-username="Woven \"ven\" Mirror {ART/CAT - 4a70} | Clocktower"] {
     [class*=message_]  {
         background-image: url(https://glass-memoirs.github.io/Glass-Memoirs/Images/Background/mw.png);
         background-repeat: no-repeat;

@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Caesar Dressing';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caesardressing/v21/yYLx0hLa3vawqtwdswbotmK4vrRHdrz7.woff2) format('woff2');
+}
+
+li[data-author-username="aj1574"] {
+  [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+    font-family: 'Caesar Dressing' !important;
+  }
+}

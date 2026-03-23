@@ -19,6 +19,9 @@ li[data-author-username="aj1574"] {
   [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
     font-family: 'Caesar Dressing' !important;
   }
+  [class*=messageContent_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+    -webkit-text-fill-color: #0065cc;
+  }
 }
 
 li[data-author-username="3m0_l0z3rz"] {

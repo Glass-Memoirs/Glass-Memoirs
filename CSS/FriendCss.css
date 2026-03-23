@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono');
+
 @font-face {
   font-family: 'Caesar Dressing';
   font-style: normal;
@@ -63,5 +65,15 @@ li[data-author-username="nathanieldude"] {
   }
   [class*=messageContent_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
     -webkit-text-fill-color: #e06ce4;
+  }
+}
+
+li[data-author-username="critta.fyi"] {
+  [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+    font-family: JetBrains Mono !important;
+  }
+  [class*=message_] {
+    background-color: #000000 !important;
+    accent-color: #ff0000 !important;
   }
 }

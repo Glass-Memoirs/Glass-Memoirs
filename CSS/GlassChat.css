@@ -35,4 +35,8 @@ li[data-author-username="glass_of_the_soul"], [data-author-username="Glass (it/i
     [class*=messageContent_] a {
         -webkit-text-fill-color: aqua;
     }
+
+    [class*=messageContent_] small {
+        -webkit-text-fill-color: blue;
+    }
 }

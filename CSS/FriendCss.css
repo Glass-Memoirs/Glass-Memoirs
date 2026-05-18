@@ -35,6 +35,27 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face { /* This is literally copypasted from the website, removed the full url due to unknown permissions with neocities/corruworks, font can be found at[https://www.onlygfx.com/newspaper-cutout-font-white-on-black-ttf/], needs to be hosted elsewhere to work */
+
+
+/* Updated: Now hosted on github.*/
+    font-family: bastard;
+    src: url('https://tdcoolguy300.github.io/TD.github.io/font/newspaper.woff2') format('woff2'),
+        url('https://tdcoolguy300.github.io/TD.github.io/font/newspaper.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mali';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/mali/v12/N0ba2SRONuN4SC3EDw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 li[data-author-username="toby1574."] {
   [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
     font-family: 'Caesar Dressing' !important;
@@ -77,3 +98,35 @@ li[data-author-username="critta.fyi"] {
     accent-color: #ff0000 !important;
   }
 }
+
+li[data-author-username="comix64"] { 
+  [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+    font-family: bastard;
+    -webkit-text-fill-color: #f06;
+  }
+
+  [class*=messageContent_] {
+    font-size: 24px;
+  }
+}
+
+li[data-author-username="bluesparrowee"] {
+  [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+    font-family: bastard !important;
+    border-style: groove !important; 
+    border-width: 2ch;
+    border-color: #00ffff;
+  }
+  [class*=messageContent_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+    -webkit-text-fill-color: #00ffff;
+    font-size: 24px;
+  }
+}
+
+li [data-author-username="petalpup"] {
+  [class*=message_], [class*=messageContent_] h1, [class*=messageContent_] h2, [class*=messageContent_] h3 {
+    font-family: Mali !important;
+  }
+}
+
+

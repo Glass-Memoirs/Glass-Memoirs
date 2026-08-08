@@ -23,6 +23,7 @@ li[data-author-username="glass_of_the_soul"], [data-author-username="Glass (it/i
         font-family: 'JetBrains Mono' !important;
         border-image-source: url("https://glass-memoirs.github.io/Glass-Memoirs/Images/Borders/balloonFlower.png") !important;
         border-image-slice: 61 !important;
+        border-image-repeat: round;
         border: 1ch solid;
         text-shadow: 1px 1px  black, 1px -1px black, -1px -1px black, -1px 1px black!important;
     }
